@@ -14,7 +14,7 @@ app.get('/', function(request, response) {
 	}
   response.send(result);
 });
-/*
+
 app.get('/db', function( request, response ) {
 	pg.connect(process.env.DATABASEURL, function( err, client, done ) {
 		client.query('SELECT * FROM test_table', function( err, result) {
@@ -29,7 +29,7 @@ app.get('/db', function( request, response ) {
 		});
 	});
 });
-*/
+
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });

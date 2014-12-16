@@ -16,7 +16,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/db', function( request, response ) {
-	/*pg.connect(process.env.DATABASEURL, function( err, client, done ) {
+	pg.connect(process.env.DATABASEURL, function( err, client, done ) {
+		/*
 		client.query('SELECT * FROM test_table', function( err, result) {
 			done();
 			if(err) {
@@ -27,9 +28,8 @@ app.get('/db', function( request, response ) {
 				response.send(result.rows);
 			}
 		});
+*/
 	});
-	*/
-	response.send("ho ho");
 });
 
 app.listen(app.get('port'), function() {

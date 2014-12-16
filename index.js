@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var coolFaces = require('cool-ascii-faces');
+var pg = require('pg');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
@@ -12,6 +13,18 @@ app.get('/', function(request, response) {
 		result += coolFaces();
 	}
   response.send(result);
+});
+
+app.get('/db', function( request, response ) {
+	pg.connect(process.env.DATABASEURL, function( err, result ) {
+		if(err) {
+			console.error(err);
+			response.send("Error " + err);
+		}
+		else {
+			response.send(result.rows);
+		}
+	});
 });
 
 app.listen(app.get('port'), function() {

@@ -11,7 +11,7 @@ app.get('/', function(request, response) {
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();
 	}
-  response.send(result;
+  response.send(result);
 });
 
 app.listen(app.get('port'), function() {

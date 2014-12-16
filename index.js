@@ -32,6 +32,12 @@ app.get('/db', function( request, response ) {
 	});
 });
 
+app.get('/test', function( request, response ) {
+	response.send({
+		"testing":"test"
+	});
+});
+
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });

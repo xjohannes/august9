@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- exchange 'fakeBackend' with the real app 'Wizard' when in production (fakeBackend-->
+<html lang="en" ng-app="fakeBackend">
+<head>
+  <meta charset="utf-8">
+  <title>August9</title>
+  <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">-->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/august9Main.css">
+  
+  <!-- Third party scripts-->
+  <script src="../bower_components/jquery/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script
+  <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+  <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-mocks.js"></script>-->
+
+  <!-- August9 scripts-->
+  <script src="../augustClient/scripts/august9.js"></script>
+  <script src="../augustClient/scripts/controller.js"></script>
+  <script src="../augustClient/scripts/services.js"></script>
+  <script src="../augustClient/scripts/directives.js"></script>
+  <script src="../augustClient/scripts/filters.js"></script>
+  <script src="../augustClient/scripts/config.js"></script>
+  <!-- Remove when in production -->
+  <script src="../test/mocks/serverMock.js"></script>
+  <script src="../test/mocks/fakeBackend.js"></script> 
+</head>
+<body class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" ui-sref="wizard.start">August9 ui-router test</a>
+    </div>
+  </div>  
+
+  <div class="container">
+    <div ui-view="mainView" class="well span6" >
+      <i>Some content will load here!</i>     
+    </div>
+    <div class="well span4">
+      <div ui-view="trackView" class="well">
+        <i>Some content will load here!</i>     
+      </div>
+       <div ui-view="analyzisView" class="well">
+        <i>Some content will load here!</i>     
+      </div>
+    </div>
+  </div>
+</body>
+</html>

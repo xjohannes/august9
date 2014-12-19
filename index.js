@@ -5,7 +5,17 @@ var pg = require('pg');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
+app.use('/media', express.static(__dirname + '/media'));
 
+
+// static files:
+/*
+app.configure(function(){
+  
+  
+});
+*/
+// routes
 app.get('/', function(request, response) {
 	var result = '';
 	var times = process.env.TIMES || 5;
@@ -14,12 +24,7 @@ app.get('/', function(request, response) {
 	}
   response.send(result);
 });
-// static files:
-app.configure(function(){
-  app.use('/media', express.static(__dirname + '/media'));
-  app.use(express.static(__dirname + '/public'));
-});
-// routes
+
 app.get('/db', function( request, response ) {
 	pg.connect(process.env.DATABASE_URL, function( err, client, done ) {
 		
@@ -33,7 +38,6 @@ app.get('/db', function( request, response ) {
 				response.send(result.rows);
 			}
 		});
-
 	});
 });
 

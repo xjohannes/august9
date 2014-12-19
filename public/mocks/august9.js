@@ -4,7 +4,7 @@
 */
 (function () {
 'use strict';
-var august9 = angular.module('August9', ['controllers', 'services', 'mockServer', 
+var august9 = angular.module('august9', ['controllers', 'services', 'mockServer', 
 	'ui.router', 'ngResource']);
 
 // End outer wrapper function

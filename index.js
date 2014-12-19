@@ -34,7 +34,8 @@ app.get('/db', function( request, response ) {
 
 app.get('/test', function( request, response ) {
 	response.send({
-		"testing":"test"
+		"testing":"test",
+		'test2': 'tesg'
 	});
 });
 

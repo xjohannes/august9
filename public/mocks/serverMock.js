@@ -1,6 +1,6 @@
 (function () {
 'use strict';
-var serverMock = angular.module('ServerMock', function () {
+var mockServer = angular.module('MockServer', function () {
 
 });
 

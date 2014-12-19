@@ -14,7 +14,12 @@ app.get('/', function(request, response) {
 	}
   response.send(result);
 });
-
+// static files:
+app.configure(function(){
+  app.use('/media', express.static(__dirname + '/media'));
+  app.use(express.static(__dirname + '/public'));
+});
+// routes
 app.get('/db', function( request, response ) {
 	pg.connect(process.env.DATABASE_URL, function( err, client, done ) {
 		

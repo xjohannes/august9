@@ -12,7 +12,7 @@ august9.config( function( $provide, $stateProvider, $urlRouterProvider ) {
 	$urlRouterProvider.otherwise("/");
 $stateProvider
 		 // HOME STATES AND NESTED VIEWS ========================================
-    .state('home/', {
+    .state('home', {
         url: '/',
         templateUrl: './partials/home.html'
     })

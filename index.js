@@ -5,7 +5,7 @@ var pg = require('pg');
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
-app.use('/media', express.static(__dirname + '/media'));
+//app.use('/media', express.static(__dirname + '/media'));
 
 
 // static files:

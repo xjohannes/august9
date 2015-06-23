@@ -11,8 +11,7 @@ var august9 = angular.module('august9', ['MockServer',
 august9.config( function( $provide, $stateProvider, $urlRouterProvider ) {
 	//$urlRouterProvider.otherwise("/");
 
-	
-		
+
 //This works
 	$stateProvider
 		 // HOME STATES AND NESTED VIEWS ========================================

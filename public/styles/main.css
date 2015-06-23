@@ -1,0 +1,1509 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+/* line 17, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/****************************************************************
+****************************** BEGIN LAYOUT VARIABLES *******************
+******************************************************************/
+
+.front {
+  z-index: 1000;
+  color: red;
+}
+
+#player {
+  background-color: red;
+}
+/****************************************************************
+****************************** END LAYOUT VARIABLES *********************
+******************************************************************/
+/* line 14, ../sass/partials/_layout.scss */
+#august9, #august9-projects, .august9-shell-head, .august9-shell-head-logo,
+.august9-shell-head-acct, .august9-shell-head-search,
+.august9-shell-main, .august9-shell-main-nav,
+.august9-shell-main-content, .august9-shell-foot,
+.august9-shell-modal {
+  position: absolute;
+}
+
+/* line 17, ../sass/partials/_layout.scss */
+.august9-projects-singer, .august9-projects-electro {
+  position: absolute;
+  float: left;
+}
+
+/* Begin Media queries */
+@media (max-width: 700px) {
+  /* line 22, ../sass/partials/_layout.scss */
+  .august9-projects-singer {
+    width: 100%;
+    height: 50%;
+    top: 0;
+  }
+}
+@media (min-width: 700px) and (orientation: landscape) {
+  /* line 22, ../sass/partials/_layout.scss */
+  .august9-projects-singer {
+    width: 50%;
+    height: 100%;
+    left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  /* line 36, ../sass/partials/_layout.scss */
+  .august9-projects-electro {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+  }
+}
+@media (min-width: 700px) and (orientation: landscape) {
+  /* line 36, ../sass/partials/_layout.scss */
+  .august9-projects-electro {
+    width: 50%;
+    height: 100%;
+    right: 0;
+  }
+}
+
+/* End Media queries */
+/* line 53, ../sass/partials/_layout.scss */
+.august9-about {
+  position: absolute;
+  margin-top: 0em;
+  margin-left: 0em;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 40;
+}
+
+/* line 71, ../sass/partials/_layout.scss */
+.august9-about-head {
+  width: 0 auto;
+  height: 20%;
+}
+
+/* line 75, ../sass/partials/_layout.scss */
+.august9-about-head-title {
+  padding: .5em;
+}
+
+/* line 78, ../sass/partials/_layout.scss */
+.august9-about-body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 83, ../sass/partials/_layout.scss */
+.frontDropElectro {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding: 50px;
+}
+
+/* line 92, ../sass/partials/_layout.scss */
+.frontDropSinger {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+/****************************************************************
+****************************** BEGIN VARIABLES *******************
+******************************************************************/
+/****************************************************************
+****************************** END VARIABLES *********************
+******************************************************************/
+/* line 10, ../sass/partials/_typography.scss */
+.august9-shell-head-logo h1 {
+  font: 800 22px/22px Arial, Helvetica, sans-serif;
+}
+
+/* line 13, ../sass/partials/_typography.scss */
+.august9-shell-head-logo p {
+  font: 800 10px/10px Arial, Helvetica, sans-serif;
+}
+
+/* line 19, ../sass/partials/_typography.scss */
+.august9-about {
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+/* line 26, ../sass/partials/_typography.scss */
+.august9-about-head-title {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* line 30, ../sass/partials/_typography.scss */
+.august9-about-body {
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 700px) {
+  @-webkit-keyframes project-in {
+    /* line 65, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 68, ../sass/partials/_animations.scss */
+    100% {
+      height: 100%;
+    }
+}
+
+  @-moz-keyframes project-in {
+    /* line 65, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 68, ../sass/partials/_animations.scss */
+    100% {
+      height: 100%;
+    }
+}
+
+  @-o-keyframes project-in {
+    /* line 65, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 68, ../sass/partials/_animations.scss */
+    100% {
+      height: 100%;
+    }
+}
+
+  @keyframes project-in {
+    /* line 65, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 68, ../sass/partials/_animations.scss */
+    100% {
+      height: 100%;
+    }
+}
+
+  @-webkit-keyframes project-out {
+    /* line 74, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 77, ../sass/partials/_animations.scss */
+    100% {
+      height: 0%;
+    }
+}
+
+  @-moz-keyframes project-out {
+    /* line 74, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 77, ../sass/partials/_animations.scss */
+    100% {
+      height: 0%;
+    }
+}
+
+  @-o-keyframes project-out {
+    /* line 74, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 77, ../sass/partials/_animations.scss */
+    100% {
+      height: 0%;
+    }
+}
+
+  @keyframes project-out {
+    /* line 74, ../sass/partials/_animations.scss */
+    0% {
+      height: 50%;
+    }
+
+    /* line 77, ../sass/partials/_animations.scss */
+    100% {
+      height: 0%;
+    }
+}
+
+  @-webkit-keyframes about-in {
+    /* line 83, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 91, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -4em;
+      margin-left: -3.3em;
+      width: 21em;
+      height: 21em;
+      background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+  @-moz-keyframes about-in {
+    /* line 83, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 91, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -4em;
+      margin-left: -3.3em;
+      width: 21em;
+      height: 21em;
+      background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+  @-o-keyframes about-in {
+    /* line 83, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 91, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -4em;
+      margin-left: -3.3em;
+      width: 21em;
+      height: 21em;
+      background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+  @keyframes about-in {
+    /* line 83, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 91, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -4em;
+      margin-left: -3.3em;
+      width: 21em;
+      height: 21em;
+      background-color: rgba(255, 255, 255, 0);
+    }
+}
+}
+@media (min-width: 700px) {
+  @-webkit-keyframes project-in {
+    /* line 108, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 111, ../sass/partials/_animations.scss */
+    100% {
+      width: 100%;
+    }
+}
+
+  @-moz-keyframes project-in {
+    /* line 108, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 111, ../sass/partials/_animations.scss */
+    100% {
+      width: 100%;
+    }
+}
+
+  @-o-keyframes project-in {
+    /* line 108, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 111, ../sass/partials/_animations.scss */
+    100% {
+      width: 100%;
+    }
+}
+
+  @keyframes project-in {
+    /* line 108, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 111, ../sass/partials/_animations.scss */
+    100% {
+      width: 100%;
+    }
+}
+
+  @-webkit-keyframes project-out {
+    /* line 117, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 120, ../sass/partials/_animations.scss */
+    100% {
+      width: 0%;
+    }
+}
+
+  @-moz-keyframes project-out {
+    /* line 117, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 120, ../sass/partials/_animations.scss */
+    100% {
+      width: 0%;
+    }
+}
+
+  @-o-keyframes project-out {
+    /* line 117, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 120, ../sass/partials/_animations.scss */
+    100% {
+      width: 0%;
+    }
+}
+
+  @keyframes project-out {
+    /* line 117, ../sass/partials/_animations.scss */
+    0% {
+      width: 50%;
+    }
+
+    /* line 120, ../sass/partials/_animations.scss */
+    100% {
+      width: 0%;
+    }
+}
+
+  @-webkit-keyframes about-in {
+    /* line 126, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 134, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -12em;
+      margin-left: -10.6em;
+      width: 36em;
+      height: 36em;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+  @-moz-keyframes about-in {
+    /* line 126, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 134, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -12em;
+      margin-left: -10.6em;
+      width: 36em;
+      height: 36em;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+  @-o-keyframes about-in {
+    /* line 126, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 134, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -12em;
+      margin-left: -10.6em;
+      width: 36em;
+      height: 36em;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+  @keyframes about-in {
+    /* line 126, ../sass/partials/_animations.scss */
+    0% {
+      margin-top: 0em;
+      margin-left: 0em;
+      width: 14em;
+      height: 14em;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* line 134, ../sass/partials/_animations.scss */
+    100% {
+      margin-top: -12em;
+      margin-left: -10.6em;
+      width: 36em;
+      height: 36em;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+}
+@-webkit-keyframes fadeOut {
+  /* line 147, ../sass/partials/_animations.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 150, ../sass/partials/_animations.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  /* line 147, ../sass/partials/_animations.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 150, ../sass/partials/_animations.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  /* line 147, ../sass/partials/_animations.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 150, ../sass/partials/_animations.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  /* line 147, ../sass/partials/_animations.scss */
+  0% {
+    opacity: 1;
+  }
+
+  /* line 150, ../sass/partials/_animations.scss */
+  100% {
+    opacity: 0;
+  }
+}
+
+/* line 158, ../sass/partials/_animations.scss */
+.projectIn {
+  -webkit-animation: project-in .9s ease 0s forwards;
+  -moz-animation: project-in .9s ease 0s forwards;
+  -o-animation: project-in .9s ease 0s forwards;
+  animation: project-in .9s ease 0s forwards;
+}
+
+/* line 161, ../sass/partials/_animations.scss */
+.projectOut {
+  -webkit-animation: project-out .9s ease 0s forwards;
+  -moz-animation: project-out .9s ease 0s forwards;
+  -o-animation: project-out .9s ease 0s forwards;
+  animation: project-out .9s ease 0s forwards;
+}
+
+/* line 164, ../sass/partials/_animations.scss */
+.aboutIn {
+  -webkit-animation: about-in .9s ease 0s forwards;
+  -moz-animation: about-in .9s ease 0s forwards;
+  -o-animation: about-in .9s ease 0s forwards;
+  animation: about-in .9s ease 0s forwards;
+}
+
+/* line 167, ../sass/partials/_animations.scss */
+.frontDropFadeOut {
+  -webkit-animation: fadeOut 1.7s linear 0s forwards;
+  -moz-animation: fadeOut 1.7s linear 0s forwards;
+  -o-animation: fadeOut 1.7s linear 0s forwards;
+  animation: fadeOut 1.7s linear 0s forwards;
+}
+
+/* line 170, ../sass/partials/_animations.scss */
+.aboutFadeOut {
+  -webkit-animation: fadeOut .7s linear 0s forwards;
+  -moz-animation: fadeOut .7s linear 0s forwards;
+  -o-animation: fadeOut .7s linear 0s forwards;
+  animation: fadeOut .7s linear 0s forwards;
+}
+
+/*
+* august9 css
+* Root namespace styles
+*/
+/** Begin reset */
+/* line 8, ../sass/siteModules/_august9.scss */
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* line 30, ../sass/siteModules/_august9.scss */
+input, textarea, .spa-x-user-select {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -o-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* line 39, ../sass/siteModules/_august9.scss */
+h1, h2, h3, h4, h5, h6, p {
+  margin-bottom: 6pt;
+}
+
+/* line 41, ../sass/siteModules/_august9.scss */
+ol, ul, dl {
+  list-style-position: inside;
+}
+
+/** End reset */
+/** Begin standard selectors */
+/* line 46, ../sass/siteModules/_august9.scss */
+body {
+  font: 13pt 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+  color: #444;
+  background-color: #888;
+}
+
+/* line 53, ../sass/siteModules/_august9.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 56, ../sass/siteModules/_august9.scss */
+a:link, a:visited {
+  color: inherit;
+}
+
+/* line 59, ../sass/siteModules/_august9.scss */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 63, ../sass/siteModules/_august9.scss */
+strong {
+  font-weight: 800;
+  color: #000;
+}
+
+/** End standard selectors */
+/** Begine august9 namespace selectors */
+/* line 70, ../sass/siteModules/_august9.scss */
+#august9 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  min-height: 15em;
+  min-width: 35;
+  overflow: hidden;
+}
+
+/** End august9 namespace selectors */
+/** Begin utility selectors */
+/* line 86, ../sass/siteModules/_august9.scss */
+.august9-x-clearfloat {
+  height: 0 !important;
+  float: none !important;
+  visibility: hidden !important;
+  clear: both !important;
+}
+
+/** End utility selectors */
+/*august9.shell.css*/
+/* line 6, ../sass/siteModules/_august9.shell.scss */
+#august9, #august9-projects, .august9-shell-head, .august9-shell-head-logo,
+.august9-shell-head-acct, .august9-shell-head-search,
+.august9-shell-main, .august9-shell-main-nav,
+.august9-shell-main-content, .august9-shell-foot,
+.august9-shell-modal {
+  position: absolute;
+}
+
+/* line 10, ../sass/siteModules/_august9.shell.scss */
+#august9 {
+  /*top :0; 
+  left : 0; 
+  right : 0; 
+  min-height: 21.4em;
+  */
+}
+
+/* line 20, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+}
+
+/* line 27, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head-logo {
+  top: 4px;
+  left: 8px;
+  height: 32px;
+  width: 128px;
+}
+
+/* line 33, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head-logo h1 {
+  font: 800 22px/22px Arial, Helvetica, sans-serif;
+}
+
+/* line 37, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head-logo p {
+  font: 800 10px/10px Arial, Helvetica, sans-serif;
+}
+
+/* line 42, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head-acct {
+  top: 4px;
+  right: 0;
+  width: 210px;
+  height: 32px;
+  line-height: 32px;
+  background: #888;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+}
+
+/* line 57, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-head-search {
+  top: 4px;
+  right: 64px;
+  width: 248px;
+  height: 32px;
+  background: blue;
+}
+
+/* line 65, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-main {
+  top: 40px;
+  left: 0;
+  bottom: 100px;
+  right: 0;
+  min-height: 17em;
+}
+
+/*
+.august9-shell-main-content, 
+.august9-shell-main-nav {
+	top :0; 
+	bottom : 0;
+} 
+.august9-shell-main-nav {
+	width	: 400px; 
+	background : #eee;
+	z-index: 1;
+} 
+	.august9-x-closed .august9-shell-main-nav {
+		width : 0;
+	}
+.august9-shell-main-content { 
+	left	: 400px; 
+	right	: 0; 
+	background : #ddd;
+} 
+	.august9-x-closed .august9-shell-main-content {
+		left : 0;
+	} 
+	*/
+/* line 95, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-foot {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background-color: #000;
+}
+
+/*
+.august9-shell-chat {
+	bottom :0; 
+	right :0; 
+	width : 300px;
+	height  : 15px;
+	cursor: pointer;
+	background  : red; 
+	border-radius: 5px 0 0 0; 
+	z-index :1;
+} 
+  .august9-shell-chat:hover {
+  	background: #a00;
+  }
+ */
+/* line 119, ../sass/siteModules/_august9.shell.scss */
+.august9-shell-modal {
+  margin-top: -200px;
+  margin-left: -200px;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  border-radius: 3px;
+  z-index: 2;
+  display: none;
+}
+
+/** 
+* august9.chat.css * Chat feature styles
+*/
+/* line 5, ../sass/siteModules/_august9.chat.scss */
+.august9-chat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32em;
+  height: 2em;
+  background: #fff;
+  border-radius: 0.5em 0 0 0;
+  border-style: solid;
+  border-width: thin 0 0 thin;
+  border-color: #888;
+  box-shadow: 0 0 0.75em 0 #888;
+  z-index: 1;
+}
+
+/* line 20, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-head, .august9-chat-closer {
+  position: absolute;
+  top: 0;
+  height: 2em;
+  line-height: 1.8em;
+  border-bottom: thin solid #888;
+  cursor: pointer;
+  background: #888;
+  color: white;
+  font-family: arial, helvetica, sans-serif;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* line 34, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-head {
+  left: 0;
+  right: 2em;
+  border-radius: 0.3em 0 0 0;
+}
+
+/* line 40, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-closer {
+  right: 0;
+  width: 2em;
+}
+
+/* line 44, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-closer:hover {
+  background: #800;
+}
+
+/* line 48, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-head-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2em;
+  bottom: 0;
+  border-radius: 0.3 0 0 0;
+}
+
+/* line 58, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-head-title {
+  position: absolute;
+  left: 50%;
+  width: 16em;
+  margin-left: -8em;
+}
+
+/* line 65, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-sizer {
+  position: absolute;
+  top: 2em;
+  left: 0;
+  right: 0;
+}
+
+/* line 72, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list {
+  position: absolute;
+  top: 0em;
+  left: 0;
+  bottom: 0;
+  width: 10em;
+}
+
+/* line 81, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg {
+  position: absolute;
+  top: 0em;
+  left: 10em;
+  bottom: 0em;
+  right: 0em;
+  /*
+  padding: 0.5em;
+  border : thin solid #888;
+  overflow-x : hidden;
+  overflow-y : scroll;
+  */
+}
+
+/* line 96, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-log,
+.august9-chat-list-box {
+  position: absolute;
+  top: 1em;
+  overflow-x: hidden;
+}
+
+/* line 102, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-log {
+  left: 0em;
+  right: 1em;
+  bottom: 4em;
+  padding: 0.5em;
+  border: thin solid #888;
+  overflow-y: scroll;
+}
+
+/* line 111, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-log-msg {
+  background-color: #eee;
+}
+
+/* line 114, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-log-me {
+  font-weight: 800;
+  color: #484;
+}
+
+/* line 119, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-log-alert {
+  font-size: italic;
+  background: #a88;
+  color: #fff;
+}
+
+/* line 125, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list-box {
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  overflow-y: auto;
+  border-width: thin 0 thin thin;
+  border-style: solid;
+  border-color: #888;
+  background-color: #888;
+  color: #ddd;
+  border-radius: 0.5em 0 0 0;
+}
+
+/* line 138, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list-name, .august9-chat-list-note {
+  width: 100%;
+  padding: 0.1em 0.5em;
+}
+
+/* line 143, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list-name {
+  cursor: pointer;
+}
+
+/* line 146, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list-name:hover {
+  background-color: #aaa;
+  color: #888;
+}
+
+/* line 150, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-list-name.august9-x-select {
+  background-color: #fff;
+  color: #444;
+}
+
+/* line 155, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-in {
+  position: absolute;
+  height: 2em;
+  left: 0em;
+  right: 1em;
+  bottom: 1em;
+  border: thin solid #888;
+  background: #888;
+}
+
+/* line 165, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-in input[type=text] {
+  position: absolute;
+  width: 75%;
+  height: 100%;
+  line-height: 100%;
+  padding: 0 0.5em;
+  border: 0;
+  background: #ddd;
+  color: #666;
+}
+
+/* line 175, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-in input[type=text]:focus {
+  background: #ff8;
+  color: #222;
+}
+
+/* line 180, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-send {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  height: 100%;
+  line-height: 1.9em;
+  text-align: center;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* line 193, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-msg-send:hover
+.august9-chat-msg-send.august9-x-select {
+  background: #444;
+  color: #ff0;
+}
+
+/* line 198, ../sass/siteModules/_august9.chat.scss */
+.august9-chat-head:hover .august9-chat-head-toggle {
+  background: #aaa;
+}
+
+/* line 25, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+html,
+body {
+  height: 100%;
+}
+
+/* line 29, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+body {
+  overflow: hidden;
+}
+
+/* line 33, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+.rotatingCircle {
+  color: #dcdce2;
+  position: absolute;
+  margin-top: -120px;
+  margin-left: -125px;
+  top: 50%;
+  left: 50%;
+  bottom: 50%;
+  width: 250px;
+  height: 250px;
+  opacity: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 51, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+.rotatingCircle:after,
+.rotatingCircle:before {
+  content: "";
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+}
+
+/* line 61, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+.rotatingCircle:after {
+  box-shadow: 0 7.5px 0 rgba(172, 189, 189, 0.1), 7.5px 0 0 rgba(73, 93, 93, 0.1), -7.5px 0 rgba(35, 41, 44, 0.1), -7.5px 0 0 rgba(7, 9, 9, 0.1);
+  -webkit-animation: rotar linear 3s 0s forwards;
+  animation: rotar 3s linear 0s forwards;
+}
+
+/* line 71, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+.rotatingCircle:before {
+  box-shadow: 0px 7.5px 0px rgba(36, 36, 31, 0.1) inset, 7.5px 0px 0px rgba(111, 109, 101, 0.1) inset, -7.5px 0px rgba(219, 216, 212, 0.1) inset, -7.5px 0px 0px rgba(203, 179, 163, 0.1) inset;
+  /*
+    box-shadow: inset 0 $B 0 rgba(0, 250, 250, $O),
+                inset $B 0 0 rgba(0, 200, 200, $O),
+                inset 0 -$B 0 rgba(0, 150, 200, $O),
+                inset -$B 0 0 rgba(0, 200, 250, $O);
+                */
+  -webkit-animation: rotarIZ 3s linear 0s forwards;
+  animation: rotarIz 3s linear 0s forwards;
+}
+
+@-webkit-keyframes rotar {
+  /* line 88, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  0% {
+    -webkit-transform: rotateZ(0deg) scaleX(1) scaleY(1);
+    transform: rotateZ(0deg) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+
+  /* line 93, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  50% {
+    -webkit-transform: rotateZ(180deg) scaleX(0.92) scaleY(0.95);
+    transform: rotateZ(180deg) scaleX(0.92) scaleY(0.95);
+  }
+
+  /* line 97, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  100% {
+    -webkit-transform: rotateZ(360deg) scaleX(1) scaleY(1);
+    transform: rotateZ(360deg) scaleX(1) scaleY(1);
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes rotar {
+  /* line 105, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  0% {
+    transform: rotateZ(0deg) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+
+  /* line 110, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  50% {
+    transform: rotateZ(180deg) scaleX(0.92) scaleY(0.95);
+  }
+
+  /* line 114, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  100% {
+    transform: rotateZ(360deg) scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes rotarIz {
+  /* line 121, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  0% {
+    opacity: 1;
+    transform: rotateZ(0deg) scaleX(1) scaleY(1);
+  }
+
+  /* line 125, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  50% {
+    transform: rotateZ(-180deg) scaleX(0.95) scaleY(0.85);
+  }
+
+  /* line 129, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  100% {
+    opacity: 0;
+    transform: rotateZ(-360deg) scaleX(1) scaleY(1);
+    display: none;
+  }
+}
+
+@keyframes rotarIz {
+  /* line 136, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  0% {
+    -webkit-transform: rotateZ(0deg) scaleX(1) scaleY(1);
+    transform: rotateZ(0deg) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+
+  /* line 141, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  50% {
+    -webkit-transform: rotateZ(-180deg) scaleX(0.95) scaleY(0.85);
+    transform: rotateZ(-180deg) scaleX(0.95) scaleY(0.85);
+  }
+
+  /* line 145, ../sass/siteModules/_august9_logo_rotatingCircles.scss */
+  100% {
+    -webkit-transform: rotateZ(-360deg) scaleX(1) scaleY(1);
+    transform: rotateZ(-360deg) scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+}
+
+/****************************************************************
+****************************** BEGIN VARIABLES *******************
+******************************************************************/
+/****************************************************************
+****************************** END VARIABLES *********************
+******************************************************************/
+/* line 10, ../sass/partials/_typography.scss */
+.august9-shell-head-logo h1 {
+  font: 800 22px/22px Arial, Helvetica, sans-serif;
+}
+
+/* line 13, ../sass/partials/_typography.scss */
+.august9-shell-head-logo p {
+  font: 800 10px/10px Arial, Helvetica, sans-serif;
+}
+
+/* line 19, ../sass/partials/_typography.scss */
+.august9-about {
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+/* line 26, ../sass/partials/_typography.scss */
+.august9-about-head-title {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* line 30, ../sass/partials/_typography.scss */
+.august9-about-body {
+  text-overflow: ellipsis;
+}
+
+/****************************************************************
+****************************** BEGIN LAYOUT VARIABLES *******************
+******************************************************************/
+/****************************************************************
+****************************** END LAYOUT VARIABLES *********************
+******************************************************************/
+/* line 14, ../sass/partials/_layout.scss */
+#august9, #august9-projects, .august9-shell-head, .august9-shell-head-logo,
+.august9-shell-head-acct, .august9-shell-head-search,
+.august9-shell-main, .august9-shell-main-nav,
+.august9-shell-main-content, .august9-shell-foot,
+.august9-shell-modal {
+  position: absolute;
+}
+
+/* line 17, ../sass/partials/_layout.scss */
+.august9-projects-singer, .august9-projects-electro {
+  position: absolute;
+  float: left;
+}
+
+/* Begin Media queries */
+@media (max-width: 700px) {
+  /* line 22, ../sass/partials/_layout.scss */
+  .august9-projects-singer {
+    width: 100%;
+    height: 50%;
+    top: 0;
+  }
+}
+@media (min-width: 700px) and (orientation: landscape) {
+  /* line 22, ../sass/partials/_layout.scss */
+  .august9-projects-singer {
+    width: 50%;
+    height: 100%;
+    left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  /* line 36, ../sass/partials/_layout.scss */
+  .august9-projects-electro {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+  }
+}
+@media (min-width: 700px) and (orientation: landscape) {
+  /* line 36, ../sass/partials/_layout.scss */
+  .august9-projects-electro {
+    width: 50%;
+    height: 100%;
+    right: 0;
+  }
+}
+
+/* End Media queries */
+/* line 53, ../sass/partials/_layout.scss */
+.august9-about {
+  position: absolute;
+  margin-top: 0em;
+  margin-left: 0em;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 40;
+}
+
+/* line 71, ../sass/partials/_layout.scss */
+.august9-about-head {
+  width: 0 auto;
+  height: 20%;
+}
+
+/* line 75, ../sass/partials/_layout.scss */
+.august9-about-head-title {
+  padding: .5em;
+}
+
+/* line 78, ../sass/partials/_layout.scss */
+.august9-about-body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 83, ../sass/partials/_layout.scss */
+.frontDropElectro {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  padding: 50px;
+}
+
+/* line 92, ../sass/partials/_layout.scss */
+.frontDropSinger {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+/****************************************************************
+****************************** BEGIN VARIABLES *******************
+******************************************************************/
+/****************************************************************
+****************************** END VARIABLES *********************
+******************************************************************/
+/* line 15, ../sass/partials/_colors.scss */
+.august9-projects-singer {
+  /*background: rgba(203,203,203,0.4);*/
+  background: url("../images/tre.jpg") 100% 100%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+/* line 33, ../sass/partials/_colors.scss */
+.august9-projects-electro {
+  background: url("../images/chimney.jpg");
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  /*background: rgba(133,133,133,0.4);*/
+}
+
+/* line 48, ../sass/partials/_colors.scss */
+.august9-about {
+  background: url("../images/august9_projects_temp.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  color: #fff;
+}
+
+/* line 59, ../sass/partials/_colors.scss */
+.august9-about-head {
+  background-color: rgba(189, 189, 189, 0.8);
+}
+
+/* line 63, ../sass/partials/_colors.scss */
+.august9-about-head-title a {
+  color: yellow;
+}
+/* line 65, ../sass/partials/_colors.scss */
+.august9-about-head-title a:hover {
+  color: #cccc00;
+}
+
+/* line 70, ../sass/partials/_colors.scss */
+.august9-about-body {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+/* line 72, ../sass/partials/_colors.scss */
+.august9-about-body:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* line 75, ../sass/partials/_colors.scss */
+.august9-about-body a {
+  color: red;
+}
+/* line 77, ../sass/partials/_colors.scss */
+.august9-about-body a:hover {
+  color: #cccc00;
+}
+
+/* line 83, ../sass/partials/_colors.scss */
+.frontDropElectro {
+  background-image: url("../images/frontDropElectro.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  margin: 0px;
+  padding: 0;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+/* line 98, ../sass/partials/_colors.scss */
+.frontDropSinger {
+  background-image: url("../images/frontDropSinger.png");
+  background-position: top center;
+  background-repeat: no-repeat;
+  margin: 0px;
+  padding: 0;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}

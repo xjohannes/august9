@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- exchange 'fakeBackend' with the real app 'Wizard' when in production (fakeBackend-->
+<html lang="en" ng-app="august9">
+<head>
+  <meta charset="utf-8">
+  <title>August9</title>
+  <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">-->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/mainTest.css">
+  
+  <!-- Third party scripts-->
+  <script src="./bower_components/jquery/jquery.js"></script>
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-resource/angular-resource.js"></script>
+  <script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="./bower_components/angular-mocks/angular-mocks.js"></script>
+  <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-mocks.js"></script>-->
+
+  <!-- wizard scripts-->
+  <script src="./scripts/august9.js"></script>
+  <script src="./scripts/controllers.js"></script>
+  <script src="./scripts/services.js"></script>
+  <script src="./scripts/directives.js"></script>
+  <script src="./scripts/filters.js"></script>
+  <script src="./scripts/config.js"></script>
+  <!-- Remove when in production -->
+  <script src="./mocks/serverMock.js"></script>
+</head>
+<body class="container">
+
+  <button ui-sref="home">Home</button>
+
+  <div ui-view>
+      <i>Some content will load here!</i>     
+  </div>
+  <div >
+    <div ui-view='playerView'>
+      <i>Some content will load here!</i>     
+    </div> 
+    <div ui-view='trackStats'>
+      <i>Some content will load here!</i>     
+    </div> 
+    <div ui-view='trackComments'>
+      <i>Some content will load here!</i>     
+    </div> 
+  </div>
+</body>
+</html>

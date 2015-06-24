@@ -1420,7 +1420,7 @@ body {
 /* line 15, ../sass/partials/_colors.scss */
 .august9-projects-singer {
   /*background: rgba(203,203,203,0.4);*/
-  background: url("../images/tre.jpg") 100% 100%;
+  background: url("../media/images/tre.jpg") 100% 100%;
   background-position: top center;
   background-repeat: no-repeat;
   margin: 0;
@@ -1432,7 +1432,7 @@ body {
 
 /* line 33, ../sass/partials/_colors.scss */
 .august9-projects-electro {
-  background: url("../images/chimney.jpg");
+  background: url("../media/images/chimney.jpg");
   background-repeat: no-repeat;
   margin: 0;
   padding: 0;
@@ -1444,7 +1444,7 @@ body {
 
 /* line 48, ../sass/partials/_colors.scss */
 .august9-about {
-  background: url("../images/august9_projects_temp.jpg");
+  background: url("../media/images/august9_projects_temp.jpg");
   background-position: top center;
   background-repeat: no-repeat;
   -moz-background-size: cover;
@@ -1486,7 +1486,7 @@ body {
 
 /* line 83, ../sass/partials/_colors.scss */
 .frontDropElectro {
-  background-image: url("../images/frontDropElectro.png");
+  background-image: url("../media/images/frontDropElectro.png");
   background-position: top center;
   background-repeat: no-repeat;
   margin: 0px;
@@ -1498,7 +1498,7 @@ body {
 
 /* line 98, ../sass/partials/_colors.scss */
 .frontDropSinger {
-  background-image: url("../images/frontDropSinger.png");
+  background-image: url("../media/images/frontDropSinger.png");
   background-position: top center;
   background-repeat: no-repeat;
   margin: 0px;

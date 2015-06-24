@@ -1,4 +1,4 @@
 #! /bin/bash
-git a .
+git add .
 git commit -m "comup"
 git push heroku master

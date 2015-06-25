@@ -2,7 +2,7 @@
   "name": "August9",
   "description": "Vidar Akse -  Electronic music and Singer Songwriter",
   "version": "0.0.1",
-  "homepage": "http://www.august9.no",
+  "homepage": "https://august9.herokuapp.com/#/",
   "license": "MIT",
   "private": true,
   "dependencies": {

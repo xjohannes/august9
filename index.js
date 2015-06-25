@@ -18,6 +18,7 @@ app.configure(function(){
 // routes
 app.get('/', function(request, response) {
 	var result = '';
+	console.log("TIMES: " + process.env.TIMES);
 	var times = process.env.TIMES || 5;
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();

@@ -23,7 +23,6 @@ app.get('/', function(request, response) {
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();
 	}
-	response.send("Hi there baby I'm Bobby Brown");
   response.send(result);
 });
 

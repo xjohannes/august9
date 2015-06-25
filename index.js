@@ -23,11 +23,12 @@ app.get('/', function(request, response) {
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();
 	}
-  response.send(process.env.DATABASE_URL);
+
+  response.send(result);
 });
 
 app.get('/db', function(request, response) {
-	response.send("Hi there baby I'm Bobby Brown 7777");
+	
 	pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 		response.send("Hi there baby I'm Bobby Brown");
 		client.query('SELECT * FROM test_table', function(err, result) {

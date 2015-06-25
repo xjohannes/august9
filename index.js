@@ -22,7 +22,7 @@ app.get('/', function(request, response) {
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();
 	}
-  response.send(process.env.DATABASE_URL;);
+  response.send(process.env.DATABASE_URL);
 
 });
 

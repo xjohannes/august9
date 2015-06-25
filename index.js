@@ -23,7 +23,7 @@ app.get('/', function(request, response) {
 	for( var i = 0; i < times; i++) {
 		result += coolFaces();
 	}
-  response.send(result);
+  response.send(process.env.DATABASE_URL);
 });
 
 app.get('/db', function(request, response) {

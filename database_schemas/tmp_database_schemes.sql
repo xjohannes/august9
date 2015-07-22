@@ -1,0 +1,1 @@
+alter table song add column serverKey varchar(60) not null;

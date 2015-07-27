@@ -1,11 +1,10 @@
+'use strict';
 var express = require('express'),
 		path = require('path'),
 		routes = require('./app/routes'),
 		app = express(),
-		router = express.Router(),
 		exphbs = require('express-handlebars');
-
-
+		var json = require('express-json');
 
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
@@ -15,13 +14,11 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-
-
-//app.use(express.json());
+//middleware:
+app.use(json());
 //app.use(express.urlencoded());
 //app.use(express.methodOverride());
 //app.use(express.cookieParser('some-secret-value-here'));
-//app.use(app.router);
 
 // static files:
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -29,6 +26,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 //app.use('/media', express.static(__dirname + '/media'));
 
 // development only
+
 if ('development' == app.get('env')) {
     app.use(function(err, req, res, next) {
   		console.error(err.stack);
@@ -40,6 +38,7 @@ if ('development' == app.get('env')) {
 routes.initialize(app);
 
 
+//create server:
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });

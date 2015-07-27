@@ -11,7 +11,7 @@ var multer = require('multer'),
 module.exports = {
 		getProject : function(req, res) {
 				//console.log("Entering route /projectName");
-				//console.log(req.params.projectName);
+				console.log(req.params.projectName);
 				query("SELECT projectId FROM project where projectName='" 
 						+ (req.params.projectName).toLowerCase() 
 			    	+"';",

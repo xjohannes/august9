@@ -7,13 +7,97 @@ var multer = require('multer'),
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
+		
 
 module.exports = {
-		getProject : function(req, res) {
-				//console.log("Entering route /projectName");
-				console.log(req.params.projectName);
+		saveProject : function (req, res) {
+			console.log("DEBUG: SAVING PROJECT");
+			
+			//Inserting in project
+			var escapedQuery = escape("INSERT INTO project(projectName, email)"
+								+ "VALUES('" + (req.body.projectName).toLowerCase() + "', '"+ req.body.email +"')" );
+			
+			query(escapedQuery,
+			    	function(err, rows, result) {	
+			    		if(err) {
+			    			console.error(err);
+								res.send("Error 1 " + err);
+			    		} else {
+			    			query("SELECT * FROM Project WHERE projectName='" + escape(req.body.projectName).toLowerCase() 
+			    						+ "'", function(err1, rows1, result1) {
+			  							if(err1) {
+			  								console.error("err1 message:");
+			  								console.error(err1);
+			  								console.log("\n");
+												res.send("Error " + err1);
+			  							}else{
+			  								console.log(rows1[0]);
+			  								console.log("The project: " + rows1[0].projectname + " was inserted successfully.");	
+			  								//Inserting influences
+												if(req.body.influence !== "") {
+													var escapedQuery = escape("INSERT INTO projectinfluence"
+																	+ " VALUES(" + rows1[0].projectid + ", '" + (req.body.influence).toLowerCase() + "')" );
+												
+													console.log("Escaped query: " + escapedQuery);
+													query(escapedQuery,
+													    	function(err2, rows2, result2) {	
+													    		if(err2) {
+													    			console.error(err2);
+																		res.send("Error 1 " + err2);
+													    		} else {
+													    			console.log(rows2);
+													    			console.log("Influences added to the database for " + req.body.influence);
+													    			//Inserting participation
+																		// Insert by showing list of user
+																		// req.body.participation == userid
+																		if(req.body.participation !== "") {
+																			var escapedQuery = escape("INSERT INTO projectparticipation"
+																							+ " VALUES(" + rows1[0].projectid +", " + (req.body.participator).toLowerCase() + ", '"
+																							+ req.body.participantRole + "')" );
+																		
+																			console.log("Escaped query1: '" + escapedQuery + "'");
+																			query(escapedQuery,
+																			    	function(err3, rows3, result3) {	
+																			    		if(err3) {
+																			    			console.error(err3);
+																								res.send("Error 1 " + err3);
+																			    		} else {
+																			    			console.log(rows3);
+																			    			console.log("Participation added to the database for " + rows1[0].projectname);
+																			    	}
+																			});
+																		}
+													    	}
+													});
+													
+												}
+			  								res.send(rows1[0]);
+			  								res.status(204).end();
+			  							}
+										});
+			    			
+			    			}
+			    	});
+			
+		},
+		getProjects: function(req, res) {
+			console.log("DEBUG: GETTING PROJECTS");
+			var sql = escape("SELECT * FROM project;");
+			query(sql, function(err, rows, result) {
+				if(err) {
+					console.error(err);
+					res.send("Error " + err);
+				} else {
+					res.send(rows);
+					console.log(rows);
+				}
+			});
+		},
+		getProjectSongs : function(req, res) {
+				console.log("DEBUG: GETTING PROJECT Songs");
+				
 				query("SELECT projectId FROM project where projectName='" 
-						+ (req.params.projectName).toLowerCase() 
+						+ escape((req.params.projectName).toLowerCase()) 
 			    	+"';",
 			    	function(err, rows, result) {	
 			    		if(err) {
@@ -22,7 +106,7 @@ module.exports = {
 			    		} else {
 			    			//console.log("projectid:");
 			    			//console.log(rows[0].projectid);
-			    			query("SELECT title from Song where projectid =" 
+			    			query("SELECT * from Song where projectid =" 
 			    				+ rows[0].projectid +"", function(err2, rows2, result2) {
 			    					if(err2) {
 						    			console.error(err);
@@ -35,7 +119,22 @@ module.exports = {
 			    			}
 			    	});
 		},
-		upploadSong : [ multer({ 
+		getSong: function(req, res) {
+			console.log("DEBUG: GETTING Song: " + req.params.songTitle);
+
+			var sql = escape("SELECT * FROM Song where songid='" + req.params.songTitle + "'");//req.body.songid change to when prod
+
+			query(sql, function(err, rows, result) {
+				if(err) {
+					console.error(err);
+					res.send("Error " + err);
+				} else {
+					console.log(rows);
+					res.json(rows);
+				}
+			});
+		},
+		uploadSong : [ multer({ 
 			//multer configuration:
 				dest: '../media/music/', 
 				changeDest: function(dest, req, response) {
@@ -59,6 +158,8 @@ module.exports = {
 				}
 			}), 
 			function(req, res){
+					console.log("DEBUG: SAVING SONG");
+					console.log("saving: " + req.params.projectName);
 			    query("SELECT projectId FROM project where projectName='" 
 			    	+ (req.params.projectName).toLowerCase() 
 			    	+"';", 
@@ -111,5 +212,9 @@ module.exports = {
 								});
 			    		}	
 			    });
-				}]
+				}],
+				updateProject: function (req, res) {
+					console.log("DEBUG: PUT **** UPDATE");
+					res.send({title:"DEBUG: PUT *** UPDATE"});
+				}
 };

@@ -1,15 +1,22 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>August9</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="author" href="humans.txt">
-    </head>
-    <body>
-        <h1>Hei Dette er INDEX.HTML Handlebars index</h1>
-        <script src="js/main.js"></script>
-    </body>
-</html>
+
+
+<div id="content">
+<h2>Welcome to August9</h2>
+<p>
+This is the projects list view
+</p>
+</div>
+
+<!-- Templates -->
+	<a href='#project/{{ id }}'>{{ projectname }}</a>
+	<p>Email: {{email}}</p>
+
+
+
+    
+    <div class="form-right-col">
+       <!-- <img height="300" src="../pics/{{ picture }}"/>-->
+        <label>Notes:</label>
+        <textarea id="description" name="description">{{ description }}</textarea>
+    </div>
+

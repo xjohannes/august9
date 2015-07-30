@@ -3,8 +3,9 @@ var express = require('express'),
 		path = require('path'),
 		routes = require('./app/routes'),
 		app = express(),
-		exphbs = require('express-handlebars');
-		var json = require('express-json');
+		exphbs = require('express-handlebars'),
+		json = require('express-json'),
+		bodyParser = require('body-parser');
 
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
@@ -16,6 +17,7 @@ app.set('view engine', 'handlebars');
 
 //middleware:
 app.use(json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.urlencoded());
 //app.use(express.methodOverride());
 //app.use(express.cookieParser('some-secret-value-here'));

@@ -9,27 +9,15 @@ module.exports = function(grunt) {
     clean: {
       build: ['build'],
       dev: {
-        src: ['build/app.js', 'build/<%= pkg.name %>.css', 'build/<%= pkg.name %>.js']
+        src: ['build/app.js', 'build/css/<%= pkg.name %>.css', 'build/<%= pkg.name %>.js']
       },
       prod: ['dist']
     },
 
     browserify: {
-      vendor: {
-        src: ['node_modules/backbone/backbone.js'],
-        dest: 'build/vendor.js',
-        options: {
-          external: ["jquery", "underscore"]
-        }
-      },
       app: {
-        files: {
-          'build/app.js': ['client/src/main.js']
-        },
-        options: {
-          transform: ['hbsfy'],
-          external: ['jquery', 'underscore', 'backbone']
-        }
+        src: ['client/src/main.js'],
+        dest: 'public/js/<%= pkg.name %>.js'
       },
       test: {
         files: {
@@ -59,15 +47,15 @@ module.exports = function(grunt) {
         }
       }
     },
-
     concat: {
-      'build/<%= pkg.name %>.js': ['build/vendor.js', 'build/app.js']
-    },
+            'build/<%= pkg.name %>.js': ['build/vendor.js', 'build/app.js']
+        },
 
     copy: {
       dev: {
-        files: [{
-          src: 'build/<%= pkg.name %>.js',
+        files: [
+        {
+          src: 'build/app.js',
           dest: 'public/js/<%= pkg.name %>.js'
         }, {
           src: 'build/css/<%= pkg.name %>.css',
@@ -132,7 +120,7 @@ module.exports = function(grunt) {
           dev: {
             options: {
               file: 'index.js',
-              nodeArgs: ['--debug'],
+              //nodeArgs: ['--debug'],
               watchedFolders: ['controllers', 'app'],
               env: {
                 PORT: '5000'
@@ -209,8 +197,8 @@ grunt.loadNpmTasks('grunt-env');
 // Register tasks
 grunt.registerTask('init:dev', ['clean', 'browserify:vendor']);
 
-grunt.registerTask('build:dev', ['clean:dev', 'browserify:app', 'browserify:test', 
-  'jshint:dev',  'compass:dev','concat', 'copy:dev', 'env:dev']);
+grunt.registerTask('build:dev', ['browserify:app', 
+  'jshint:dev',  'compass:dev',   'env:dev']); //'clean:dev','browserify:test', 
 
 grunt.registerTask('build:prod', ['clean:prod', 'browserify:vendor', 
   'browserify:app', 'jshint:all',  'compass:prod', 'concat', 'cssmin', 'uglify', 

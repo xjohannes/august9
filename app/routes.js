@@ -1,5 +1,5 @@
 var home = require('../controllers/home'),
-		upload = require('../controllers/upload'),
+		forms = require('../controllers/forms'),
 		persistenceLayer = require('../controllers/persistenceLayer'),
 		logger = require('morgan');
     //contacts = require('../controllers/contacts');
@@ -7,11 +7,22 @@ var home = require('../controllers/home'),
 module.exports.initialize = function(app, query) {
     app.use(logger('dev'));
     app.get('/', home.index);
-    app.get('/upload', upload);
-    app.get('/:projectName', persistenceLayer.getProject);
+    app.get('/upload', forms.uploadForm);
+    app.get('/newProject', forms.createProjectForm);
+    app.get('/project/', persistenceLayer.getProjects);
+    app.get('/project/:projectName', persistenceLayer.getProjectSongs);
+    app.get('/project/:projectName/:songTitle', persistenceLayer.getSong);
+    app.get('/test', home.testGet);
 
 
-    app.post('/upload/:projectName', persistenceLayer.upploadSong);
+    app.post('/upload/:projectName', persistenceLayer.uploadSong);
+    app.post('/project/', persistenceLayer.saveProject );
+    app.post('/test', home.testPost);
+
+    app.put('/project/:projectName', persistenceLayer.updateProject);
+    app.put('/test', home.testPut);
+
+    app.delete('/test', home.testDelete);
     
     //app.get('/api/contacts', contacts.index);
    

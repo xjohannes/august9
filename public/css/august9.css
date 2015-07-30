@@ -1,0 +1,96 @@
+/* line 18, ../../client/styles/sass/august9.scss */
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+}
+
+/* line 23, ../../client/styles/sass/august9.scss */
+#header {
+  padding-top: 5px;
+}
+
+/* line 27, ../../client/styles/sass/august9.scss */
+#sidebar {
+  position: absolute;
+  left: 10px;
+  top: 70px;
+  bottom: 20px;
+  width: 260px;
+  border: solid 1px #CCCCCC;
+  overflow-y: scroll;
+}
+
+/* line 37, ../../client/styles/sass/august9.scss */
+#content {
+  position: absolute;
+  top: 70px;
+  bottom: 20px;
+  left: 300px;
+  right: 20px;
+}
+
+/* line 45, ../../client/styles/sass/august9.scss */
+.form-left-col {
+  width: 310px;
+  float: left;
+}
+
+/* line 53, ../../client/styles/sass/august9.scss */
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* line 58, ../../client/styles/sass/august9.scss */
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-top: 0px;
+}
+
+/* line 64, ../../client/styles/sass/august9.scss */
+li a {
+  text-decoration: none;
+  display: block;
+  color: #000000;
+  border-bottom: solid 1px #CCCCCC;
+  padding: 8px;
+}
+
+/* line 72, ../../client/styles/sass/august9.scss */
+li a:hover {
+  background-color: #4B0A1E;
+  color: #BA8A92;
+}
+
+/* line 77, ../../client/styles/sass/august9.scss */
+input, textarea {
+  border: 1px solid #ccc;
+  min-height: 30px;
+  outline: none;
+}
+
+/* line 83, ../../client/styles/sass/august9.scss */
+.form-left-col input {
+  margin-bottom: 15px;
+  margin-top: 5px;
+  width: 280px;
+}
+
+/* line 89, ../../client/styles/sass/august9.scss */
+textarea {
+  margin-bottom: 15px;
+  margin-top: 5px;
+  height: 200px;
+  width: 250px;
+}
+
+/* line 96, ../../client/styles/sass/august9.scss */
+label {
+  display: block;
+}
+
+/* line 100, ../../client/styles/sass/august9.scss */
+button {
+  padding: 6px;
+}

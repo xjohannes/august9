@@ -93,36 +93,54 @@ module.exports = {
 				}
 			});
 		},
-		getProjectSongs : function(req, res) {
+		getProject : function(req, res) {
 				console.log("DEBUG: GETTING PROJECT Songs");
+				var param = req.params.id;
 				
-				query("SELECT projectId FROM project where projectName='" 
-						+ escape((req.params.projectName).toLowerCase()) 
-			    	+"';",
-			    	function(err, rows, result) {	
-			    		if(err) {
-			    			console.error(err);
-								res.send("Error " + err);
-			    		} else {
-			    			//console.log("projectid:");
-			    			//console.log(rows[0].projectid);
-			    			query("SELECT * from Song where projectid =" 
-			    				+ rows[0].projectid +"", function(err2, rows2, result2) {
-			    					if(err2) {
-						    			console.error(err);
-											res.send("Error " + err2);
-						    		} else {
-						    			console.log(rows2);
-						    			res.send(rows2);
-						    		}
-			    				});
-			    			}
-			    	});
+				// is param a number or a string?
+				if(+param === +param) {
+					var sql = escape("SELECT * from Song where projectid =" 
+				    + req.params.id + "");
+
+					query(sql, function(err2, rows2, result2) {
+				    if(err2) {
+							console.error(err);
+							res.send("Error " + err2);
+						} else {
+							var sql2 = escape("SELECT * from Project where id =" 
+				    + req.params.id + "");
+					
+							query(sql2, function(err3, rows3, result3) {
+						    if(err3) {
+									console.error(err);
+									res.send("Error " + err3);
+								} else {
+									var resObject = {
+										id: req.params.id,
+										projectName : rows3[0].projectname,
+										email: rows3[0].email
+									};
+									console.log(rows3);
+									console.log("get project :::");
+									console.log(resObject);
+									res.send(resObject);
+								}
+						  });
+						}
+				   });
+
+
+				} else {
+					console.log("Could not find a project with id: " + param);
+					res.send("Could not find a project with id: " + param);
+				}
+				
+				
 		},
 		getSong: function(req, res) {
 			console.log("DEBUG: GETTING Song: " + req.params.songTitle);
 
-			var sql = escape("SELECT * FROM Song where songid='" + req.params.songTitle + "'");//req.body.songid change to when prod
+			var sql = escape("SELECT * FROM Song where id='" + req.params.songTitle + "'");//req.body.songid change to when prod
 
 			query(sql, function(err, rows, result) {
 				if(err) {
@@ -160,7 +178,7 @@ module.exports = {
 			function(req, res){
 					console.log("DEBUG: SAVING SONG");
 					console.log("saving: " + req.params.projectName);
-			    query("SELECT projectId FROM project where projectName='" 
+			    query("SELECT id FROM project where projectName='" 
 			    	+ (req.params.projectName).toLowerCase() 
 			    	+"';", 
 			    	function(err, rows, result) {	

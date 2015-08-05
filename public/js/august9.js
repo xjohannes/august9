@@ -13,29 +13,41 @@ App.prototype.start = function(){
 };
 
 
-},{"./routesFrontEnd":4,"Backbone":7}],2:[function(require,module,exports){
+},{"./routesFrontEnd":5,"Backbone":8}],2:[function(require,module,exports){
+var Backbone = require('Backbone');
+var ProjectModel = require('../models/projectModel');
+
+module.exports = Backbone.Collection.extend({
+	model: ProjectModel,
+	url: "/project/"
+});
+},{"../models/projectModel":4,"Backbone":8}],3:[function(require,module,exports){
 var App = require('./app');
 var august9 = new App();
 
 august9.start();
 
-},{"./app":1}],3:[function(require,module,exports){
+},{"./app":1}],4:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
-	urlRoot: 'http://localhost:5000/project/',
+	urlRoot: '/project/',
 	defaults: {
-		title: "default title"
+		projectname: "default projectname",
+		email: "no email",
+		songs: [],
+		influences: [],
+		participation: []
 	}
 });
 
-},{"Backbone":7}],4:[function(require,module,exports){
+},{"Backbone":8}],5:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		$ = require('jQuery'),
 		ProjectModel = require('./models/projectModel'),
-		//ProjectCollection = require('./collections/projectCollection'),
-		ProjectView = require('./views/projectView'),
-		//ProjectListView = require('./views/projectListView'),
+		ProjectCollection = require('./collections/projectCollection'),
+		ProjectView = require('./views/projectListItemView'),
+		ProjectCollectionView = require('./views/projectCollectionView'),
 		ProjectListItemView = require('./views/projectListItemView');
 
 module.exports = Backbone.Router.extend({
@@ -47,58 +59,95 @@ module.exports = Backbone.Router.extend({
 	url: "/",
 	// Fetch data from project table
 	index: function () {
-		this.project.fetch({
+		this.projectList.fetch({
 			success: function (project) {
-				console.log("successs");
+				console.log("project length");
+				console.log(project.length);
 				
-				console.log(project.toJSON());
+				//self.projectCollectionView.render();
+				//console.log("routes initialize success:")
+				//console.log(self.projectCollectionView.el);
 			}
-		});
+		}, this);
+		//$('#sidebar').html(this.projectCollectionView.render());
 		//console.log(this.project);
 	},
 	getProjectData: function(id) {
+		console.log("DEBUG. getProjectData. Id : " + id);
+		$('#sidebar').html("hei: " + id);
 		//get the rest of project related data such as participators, inspiration, about and so on
 		//get project songs
 	},
 	initialize: function(options) {
-		this.project = new ProjectModel();
-		this.projectView = new ProjectView({model: this.project});
+		this.projectList = new ProjectCollection();
 		var self = this;
+		this.projectList.on("reset", function() {
+			console.log("the modelList changed.");
+			console.log(this.projectList.length);
+		}, this);
+		
+		
+		this.projectCollectionView = new ProjectCollectionView({collection:this.projectList});
+		this.projectCollectionView.render();
+		console.log("routes initialize");
+		console.log(this.projectCollectionView.el);
+		//var testAtt = 
+
+		var testModel1 = new ProjectModel({id: 1});
+		testModel1.fetch({
+			success: function (project) {
+				console.log("DEBUG: project id 1");
+				console.log(project.toJSON());
+				
+				//self.projectCollectionView.render();
+				//console.log("routes initialize success:")
+				//console.log(self.projectCollectionView.el);
+			}
+		});
+		console.log("test model1: " );
+		console.log(testModel1.toJSON());
+
 	},
 	start: function() {
 		Backbone.history.start({pushState: true});
 	}
 });
-},{"./models/projectModel":3,"./views/projectListItemView":5,"./views/projectView":6,"Backbone":7,"jQuery":11}],5:[function(require,module,exports){
+},{"./collections/projectCollection":2,"./models/projectModel":4,"./views/projectCollectionView":6,"./views/projectListItemView":7,"Backbone":8,"jQuery":12}],6:[function(require,module,exports){
 var Backbone = require('Backbone'),
+		_ = require('underscore'),
 		$ = require('jQuery'),
-		_ = require('underscore');
+		ProjectListItemView = require('./projectListItemView');
 
 module.exports = Backbone.View.extend({
+	tagName: 'ul',
 
-	tagName: "li",
-
-	template: _.template('<p><%= email %></p>'),
-	//template: require('../../templates/projectItem.hbs'),
-
-	render: function(event) {
-		var attributes = this.model.toJSON();
-		this.$el.html(this.template(attributes));
-		//var html = '<p>' + this.model.get('email') + '</p>';
-		//this.$el.html(html);
-		//$(this.el).html(html);//this.template(this.model.toJSON())
-		return this;
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+	},
+	addAll: function() {
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		this.addAll();
+		$('#sidebar').html(this.el);
+	},
+	addOne: function(projectItem) {
+		console.log("project Item : " );
+		console.log(projectItem.toJSON());
+		var projectView = new ProjectListItemView({model: projectItem});
+		this.$el.append(projectView.render().el);
 	}
 });
-},{"Backbone":7,"jQuery":11,"underscore":13}],6:[function(require,module,exports){
+},{"./projectListItemView":7,"Backbone":8,"jQuery":12,"underscore":14}],7:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
-module.exports = ProjectView = Backbone.View.extend({
+module.exports = Backbone.View.extend({
 	
-	template: _.template('Project name<p><%= projectname %></p>'),//require('../../templates/projects.hbs'),
-
+	template: _.template('<p>Project name: <%= projectname %></p>'),//require('../../templates/projects.hbs'),
+	tagName: 'li',
 	events: {
 		'change' : 'testEvents'
 	},
@@ -109,13 +158,14 @@ module.exports = ProjectView = Backbone.View.extend({
 		console.log("test event triggerd");
 	},
 	render: function() {
-		console.log("ProjectView attributesss: " );
+		console.log("ProjectListItemView render: " );
 		var attributes = this.model.toJSON();
-		this.$el.html(this.template(attributes[0]));
-		$('#sidebar').html(this.el);
+		this.$el.html(this.template(attributes));
+		
+		return this;
 	}
 });
-},{"backbone":9,"jQuery":11,"underscore":13}],7:[function(require,module,exports){
+},{"backbone":10,"jQuery":12,"underscore":14}],8:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -1992,7 +2042,7 @@ module.exports = ProjectView = Backbone.View.extend({
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":12,"underscore":8}],8:[function(require,module,exports){
+},{"jquery":13,"underscore":9}],9:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3542,11 +3592,11 @@ module.exports = ProjectView = Backbone.View.extend({
   }
 }.call(this));
 
-},{}],9:[function(require,module,exports){
-arguments[4][7][0].apply(exports,arguments)
-},{"dup":7,"jquery":12,"underscore":10}],10:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 arguments[4][8][0].apply(exports,arguments)
-},{"dup":8}],11:[function(require,module,exports){
+},{"dup":8,"jquery":13,"underscore":11}],11:[function(require,module,exports){
+arguments[4][9][0].apply(exports,arguments)
+},{"dup":9}],12:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -12758,8 +12808,8 @@ return jQuery;
 
 }));
 
-},{}],12:[function(require,module,exports){
-arguments[4][11][0].apply(exports,arguments)
-},{"dup":11}],13:[function(require,module,exports){
-arguments[4][8][0].apply(exports,arguments)
-},{"dup":8}]},{},[2]);
+},{}],13:[function(require,module,exports){
+arguments[4][12][0].apply(exports,arguments)
+},{"dup":12}],14:[function(require,module,exports){
+arguments[4][9][0].apply(exports,arguments)
+},{"dup":9}]},{},[3]);

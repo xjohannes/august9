@@ -13,106 +13,298 @@ App.prototype.start = function(){
 };
 
 
-},{"./routesFrontEnd":5,"Backbone":8}],2:[function(require,module,exports){
+},{"./routesFrontEnd":7,"Backbone":16}],2:[function(require,module,exports){
 var Backbone = require('Backbone');
 var ProjectModel = require('../models/projectModel');
 
 module.exports = Backbone.Collection.extend({
 	model: ProjectModel,
-	url: "/project/"
+	url: "/project"
 });
-},{"../models/projectModel":4,"Backbone":8}],3:[function(require,module,exports){
+},{"../models/projectModel":5,"Backbone":16}],3:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		SongModel = require('../models/songModel');
+
+module.exports = Backbone.Collection.extend({
+	model: SongModel,
+	url: '/project'
+});
+},{"../models/songModel":6,"Backbone":16}],4:[function(require,module,exports){
 var App = require('./app');
 var august9 = new App();
 
 august9.start();
 
-},{"./app":1}],4:[function(require,module,exports){
+},{"./app":1}],5:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
 	urlRoot: '/project/',
 	defaults: {
-		projectname: "default projectname",
-		email: "no email",
+		id: null,
+		projectname: "default projectnameeeee",
+		email: "no emaillll",
 		songs: [],
-		influences: [],
-		participation: []
+		influence: ['HM Kongen', 'Dronning Sonia'],
+		participator: [1],
+		participatorRole: ['Role'],
+		about: ""
+
 	}
 });
 
-},{"Backbone":8}],5:[function(require,module,exports){
+},{"Backbone":16}],6:[function(require,module,exports){
+var Backbone = require('Backbone');
+
+module.exports = Backbone.Model.extend({
+	//urlRoot: '/project/' + this.projectid + '/song',
+	url: function() {
+		console.log(this.toJSON().projectid);
+		console.log(this.toJSON().id);
+
+		return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+	},
+	defaults: {
+		id: null,
+		title: 'default title',
+		projectid: null,
+		projectname: 'Hip hop',
+		productionstatus: 'raw',
+		added: '',
+		created: '',
+		likes: 0,
+		listens: 0,
+		notes: '',
+		participator: null,
+		participatorRole: '',
+		serverkey: '',
+		influence: 'none',
+		participation: 'none'
+	}
+});
+
+
+ 
+
+},{"Backbone":16}],7:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		$ = require('jQuery'),
 		ProjectModel = require('./models/projectModel'),
 		ProjectCollection = require('./collections/projectCollection'),
 		ProjectView = require('./views/projectListItemView'),
 		ProjectCollectionView = require('./views/projectCollectionView'),
-		ProjectListItemView = require('./views/projectListItemView');
+		ProjectListItemView = require('./views/projectListItemView'),
+		ProjectForm = require('./views/projectForm'),
+		SongModel = require('./models/songModel'),
+		SongCollection = require('./collections/songCollection'),
+		SongView = require('./views/songListItemView'),
+		SongCollectionView = require('./views/songCollectionView'),
+		SongListItemView = require('./views/songListItemView'),
+		SongForm = require('./views/songForm'),
+		EditSongForm = require('./views/editSongForm'),
+		SongDetailsView = require('./views/songDetailsView');
 
-module.exports = Backbone.Router.extend({
+module.exports = Router = Backbone.Router.extend({
 	routes: {
+		"project/newProject" : "createProject",
+		"project/:projectid": "readProject",
+		"project/:id/edit": "updateProject",
+		"project/:id/delete": "deleteProject",
+		"project/:projectid/newSong": "createSong",
+		"project/:projectid/song/:id": "readSong",
+		"project/:projectid/song/:songid/edit": "updateSong",
+		"project/:projectid/song/:songid/delete": "deleteSong",
+		
+		"project/:projectid/song/:songid/play" : "play",
 		"": "index",
-		"project/:id": "getProjectData",
 		"*actions": "defaultRoute"
 	},
 	url: "/",
 	// Fetch data from project table
 	index: function () {
-		this.projectList.fetch({
-			success: function (project) {
-				console.log("project length");
-				console.log(project.length);
-				
-				//self.projectCollectionView.render();
-				//console.log("routes initialize success:")
-				//console.log(self.projectCollectionView.el);
+		$('#mainContent').html('<p>no content</p>');
+		this.projectList.fetch();
+		$('#sidebar').html(this.projectCollectionView.render().el);
+	},
+	createProject: function() {
+		var projectItem = new ProjectModel();
+		var projectForm = new ProjectForm({model: projectItem });
+		this.projectList.add(projectItem);
+		$('#mainContent').html(projectForm.render().el);
+		$('#sidebar').html(this.projectCollectionView.render().el);
+	},
+	readProject: function(projectid) {
+		$('#sidebar').html(this.projectCollectionView.render().el);
+		var self = this;
+		var projectItem = new ProjectModel({id: projectid});//this.projectList.get(projectid);
+	
+		projectItem.fetch({
+			success: function(project) {
+				var projectSongs = project.attributes.songs;
+				self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
+				self.songList.url = "/project/" + projectid + "/song";
+				self.songCollectionView = new SongCollectionView({collection:self.songList});
+				$('#mainContent').html(self.songCollectionView.render().el);
+			},
+			error: function(err) {
+				console.log(err);
 			}
 		}, this);
-		//$('#sidebar').html(this.projectCollectionView.render());
-		//console.log(this.project);
 	},
-	getProjectData: function(id) {
-		console.log("DEBUG. getProjectData. Id : " + id);
-		$('#sidebar').html("hei: " + id);
-		//get the rest of project related data such as participators, inspiration, about and so on
-		//get project songs
+	updateProject: function(projectid) {
+		var projectItem = this.projectList.get(projectid);
+		var projectForm = new ProjectForm({model: projectItem});
+		$('#mainContent').html(projectForm.render().el);
+	},
+	deleteProject: function(projectid) {
+		var projectItem = this.projectList.remove(projectid);
+		projectItem.destroy({success: function(model, response) {
+			model.off('change');
+		}});
+	},
+	createSong: function(projectid) {
+		var songItem = new SongModel();
+		songItem.set({'projectid':  projectid });
+		var songForm = new SongForm({model: songItem });
+		$('#mainContent').html(songForm.render().el);
+	},
+	readSong: function(projectid, songid) {
+		var self = this;
+		$('#sidebar').html(this.projectCollectionView.render().el);
+		
+		this.projectList.fetch({
+			success: function(song) {
+				var projectItem = self.projectList.get(projectid);
+				console.log("projectItem");
+				console.log(projectItem);
+				projectItem.fetch({
+					success: function(project) {
+						var projectSongs = project.attributes.songs;
+						self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
+						self.songList.url = "/project/" + projectid + "/song";
+						self.songCollectionView = new SongCollectionView({collection:self.songList});
+						$('#mainContent').html(self.songCollectionView.render().el);
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				}, this);
+				
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		}, this);
+		
+		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
+		
+		songItem.fetch({
+			success: function(song) {
+				var songView = new SongDetailsView({model: song});
+				$('#description').html(songView.render().el);	
+				
+				var songs = self.projectList.get(projectid).attributes.songs,
+						songCollection = new SongCollection(songs);
+				console.log(self.projectList.get(projectid).attributes );
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		}, this);
+		
+	},
+	updateSong: function(projectid, songid) {
+		console.log("update song:");
+		var songItem = this.songList.get(songid);
+		console.log(songItem.attributes);
+		var songForm = new EditSongForm({model: songItem});
+		$('#mainContent').html(songForm.render().el);
+	},
+	deleteSong: function(projectid, songid) {
+		console.log("Song ID: " + songid);
+		var songItem = this.songList.remove(songid);
+		console.log(songItem.attributes);
+		
+		songItem.destroy({success: function(model, response) {
+			model.off('change');
+		}});
+	},
+	play: function(projectid, songid) {
+		console.log("PLAY");
+		var url = './media/music/' + this.songList.get(songid).attributes.serverkey;
+		console.log(url);
+		console.log($('#musicPlayer audio').attr('src'));
+		var player = $('#musicPlayer audio').attr('src', url );
+		$('#musicPlayer audio').get(0).play();
+
+		
+	},
+	defaultRoute: function() {
+		console.log("default Route");
 	},
 	initialize: function(options) {
+		console.log("Instanziation of router");
+		this.self = this;
 		this.projectList = new ProjectCollection();
-		var self = this;
-		this.projectList.on("reset", function() {
-			console.log("the modelList changed.");
-			console.log(this.projectList.length);
-		}, this);
-		
-		
+		this.projectList.fetch();
 		this.projectCollectionView = new ProjectCollectionView({collection:this.projectList});
 		this.projectCollectionView.render();
-		console.log("routes initialize");
-		console.log(this.projectCollectionView.el);
-		//var testAtt = 
-
-		var testModel1 = new ProjectModel({id: 1});
-		testModel1.fetch({
-			success: function (project) {
-				console.log("DEBUG: project id 1");
-				console.log(project.toJSON());
-				
-				//self.projectCollectionView.render();
-				//console.log("routes initialize success:")
-				//console.log(self.projectCollectionView.el);
-			}
-		});
-		console.log("test model1: " );
-		console.log(testModel1.toJSON());
-
 	},
 	start: function() {
-		Backbone.history.start({pushState: true});
+		//console.log("Starting history");
+		Backbone.history.start();
 	}
 });
-},{"./collections/projectCollection":2,"./models/projectModel":4,"./views/projectCollectionView":6,"./views/projectListItemView":7,"Backbone":8,"jQuery":12}],6:[function(require,module,exports){
+},{"./collections/projectCollection":2,"./collections/songCollection":3,"./models/projectModel":5,"./models/songModel":6,"./views/editSongForm":8,"./views/projectCollectionView":9,"./views/projectForm":10,"./views/projectListItemView":11,"./views/songCollectionView":12,"./views/songDetailsView":13,"./views/songForm":14,"./views/songListItemView":15,"Backbone":16,"jQuery":20}],8:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports = Backbone.View.extend({
+	template: _.template(
+		'<form >' +
+   		'Title:<input type="text" name="title" value="<%= title %>" /><br>' +
+			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
+			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
+			//'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
+			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
+			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
+			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +                
+			'<input type="submit" value="Edit" name="submit">' +
+		'</form>'),
+	events: {
+		'submit': 'save'
+	},
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(this.model.attributes));
+		return this;
+	},
+	save: function(e) {
+		
+		e.preventDefault();
+		var productionstatus = this.$('input[name=productionstatus]').val();
+		var title = this.$('input[name=title]').val();
+		var notes = this.$('input[name=notes]').val();
+		//var created = this.$('input[name=created]').val();
+		var influence = this.$('input[name=influence]').val();
+		var participator = this.$('input[name=participator]').val();
+		var participatorRole = this.$('input[name=participatorRole]').val();
+		var datafile = this.$('input[name=file]').val();
+		this.model.save({
+			projectid: this.model.get('projectid'),
+			title: title,
+			productionstatus: productionstatus,
+			notes: notes,
+			//created: created,
+			influence: influence,
+			participator: participator,
+			participatorRole: participatorRole
+		});
+	
+	}
+});
+},{"backbone":18,"jQuery":20,"underscore":22}],9:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
@@ -124,38 +316,88 @@ module.exports = Backbone.View.extend({
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);
 		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+	},
+	addOne: function(projectItem) {
+		//console.log("project Item : " );
+		//console.log(projectItem.toJSON());
+		var projectView = new ProjectListItemView({model: projectItem});
+		this.$el.append(projectView.render().el);
 	},
 	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	remove: function(project) {
+		console.log("remove item from project collection view");
+		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
 	render: function() {
 		this.addAll();
-		$('#sidebar').html(this.el);
+		//$('#sidebar').html(this.el);
+		return this;
+	}
+	
+});
+},{"./projectListItemView":11,"Backbone":16,"jQuery":20,"underscore":22}],10:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports = Backbone.View.extend({
+	template: _.template(
+		'<form >' +
+			'Project name:   <input type="text" name="projectname" value="<%= projectname %>" /><br>' +
+			 'Email:       <input type="text" name="email" value="<%= email %>" /><br>' +
+			 'About:  <input type="text" name="about" value="<%= about %>" /><br>' +
+			 'Influences:  <input type="text" name="influence" value="<%= influence %>" /><br>' +
+			 'Participator:<input type="text" name="participator" value="<%= participator %>" /><br>' +
+			 'Participants role:<input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
+			 '<button type="submit" value="Save" name="">Save</button>' +
+		'</form>'),
+	events: {
+		'submit': 'save'
 	},
-	addOne: function(projectItem) {
-		console.log("project Item : " );
-		console.log(projectItem.toJSON());
-		var projectView = new ProjectListItemView({model: projectItem});
-		this.$el.append(projectView.render().el);
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(this.model.attributes));
+		return this;
+	},
+	save: function(e) {
+		
+		e.preventDefault();
+		var projectname = this.$('input[name=projectname]').val();
+		var email = this.$('input[name=email]').val();
+		var about = this.$('input[name=about]').val();
+		var influence = this.$('input[name=influence]').val();
+		var participator = this.$('input[name=participator]').val();
+		var participatorRole = this.$('input[name=participatorRole]').val();
+		this.model.save({
+			projectname: projectname,
+			about: about,
+			email: email,
+			influence: influence,
+			participator: participator,
+			participatorRole: participatorRole
+		});
 	}
 });
-},{"./projectListItemView":7,"Backbone":8,"jQuery":12,"underscore":14}],7:[function(require,module,exports){
+},{"backbone":18,"jQuery":20,"underscore":22}],11:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
 	
-	template: _.template('<p>Project name: <%= projectname %></p>'),//require('../../templates/projects.hbs'),
+	template: _.template('<a href="#project/<%= id %>"><%= projectname %></a>' +
+											'<a href="#project/<%= id %>/edit"><button>Edit</button></a>' +
+											'<a href="#project/<%= id %>/delete"><button>Delete</button></a>' +
+											'<a href="#project/<%= id %>/newSong"><button>New song</button></a>'),//require('../../templates/projects.hbs'),
 	tagName: 'li',
-	events: {
-		'change' : 'testEvents'
-	},
+	
 	initialize: function() {
 		this.model.on('change', this.render, this);
-	},
- 	testEvents : function() {
-		console.log("test event triggerd");
 	},
 	render: function() {
 		console.log("ProjectListItemView render: " );
@@ -165,7 +407,150 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"backbone":10,"jQuery":12,"underscore":14}],8:[function(require,module,exports){
+},{"backbone":18,"jQuery":20,"underscore":22}],12:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		_ = require('underscore'),
+		$ = require('jQuery'),
+		SongListItemView = require('./songListItemView');
+
+module.exports = Backbone.View.extend({
+	tagName: 'ul',
+
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+	},
+	addOne: function(songItem) {
+		//console.log("Add one : " );
+		//console.log(songItem.toJSON());
+		var songView = new SongListItemView({model: songItem});
+		this.$el.append(songView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		console.log("SongCollectionView render");
+		this.addAll();
+		//$('#mainContent').html(this.el);
+		return this;
+	},
+	remove: function(project) {
+		console.log("remove item from song collection view");
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	}
+	
+});
+},{"./songListItemView":15,"Backbone":16,"jQuery":20,"underscore":22}],13:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports  = Backbone.View.extend({
+	
+	template: _.template('<h2><%= title %></h2>' +
+												'<p>projectname: <%= projectname %></p>' +
+												'<p>productionstatus: <%= productionstatus %></p>' +
+												'<p>influence: <%= influence %></p>' +
+												'<p>participators userid: <%= participation.userid %></p>' +
+												'<p>participators role: <%= participation.role %></p>' +
+												'<p>serverkey: <%= serverkey %></p>'),//require('../../templates/projects.hbs'),
+	tagName: 'aside',
+
+	initialize: function() {
+		this.model.on('change', this.render, this);
+	},
+	render: function() {
+		console.log("SongDetailsView render: " );
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		
+		return this;
+	}
+});
+},{"backbone":18,"jQuery":20,"underscore":22}],14:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports = Backbone.View.extend({
+	template: _.template(
+		'<form id =  "uploadForm"' +
+     'enctype   =  "multipart/form-data"' +
+     'action    =  "/project/<%= projectid %>"' +
+     'method    =  "post">' +
+
+   		'<input type="hidden" name="projectname" value="<%= projectname %>" /><br>' +
+			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
+			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
+			'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
+			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
+			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
+			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
+			'<input type="file" name="file" /><br>' +                 
+			'<input type="submit" value="Save" name="submit">' +
+		'</form>'),
+	events: {
+		'submit': 'save'
+	},
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(this.model.attributes));
+		return this;
+	},
+	save: function(e) {
+		/*
+		e.preventDefault();
+		var productionstatus = this.$('input[name=productionstatus]').val();
+		var notes = this.$('input[name=notes]').val();
+		var created = this.$('input[name=created]').val();
+		var influence = this.$('input[name=influence]').val();
+		var participator = this.$('input[name=participator]').val();
+		var participatorRole = this.$('input[name=participatorRole]').val();
+		var datafile = this.$('input[name=file]').val();
+		this.model.save({
+			projectid: this.model.get('projectid'),
+			projectname: this.model.get('projectname'),
+			productionstatus: productionstatus,
+			notes: notes,
+			created: created,
+			influence: influence,
+			participator: participator,
+			participatorRole: participatorRole,
+			datafile: datafile
+		});
+	*/
+	}
+});
+},{"backbone":18,"jQuery":20,"underscore":22}],15:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports  = Backbone.View.extend({
+	
+	template: _.template('<a href="#project/<%= projectid %>/song/<%= id %>/play"><button>Play</button></a>' +
+											 '<p><a href="#/project/<%= projectid %>/song/<%= id %>">' +
+											 '<%= title %></a></p>' +
+											 '<a href="#project/<%= projectid %>/song/<%= id %>/edit"><button>Edit</button></a>' +
+											 '<a href="#project/<%= projectid %>/song/<%= id %>/delete"><button>Delete</button></a>'),//require('../../templates/projects.hbs'),
+	tagName: 'li',
+
+	initialize: function() {
+		this.model.on('change', this.render, this);
+	},
+	render: function() {
+	
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		
+		return this;
+	}
+});
+},{"backbone":18,"jQuery":20,"underscore":22}],16:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -2042,7 +2427,7 @@ module.exports = Backbone.View.extend({
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":13,"underscore":9}],9:[function(require,module,exports){
+},{"jquery":21,"underscore":17}],17:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3592,11 +3977,11 @@ module.exports = Backbone.View.extend({
   }
 }.call(this));
 
-},{}],10:[function(require,module,exports){
-arguments[4][8][0].apply(exports,arguments)
-},{"dup":8,"jquery":13,"underscore":11}],11:[function(require,module,exports){
-arguments[4][9][0].apply(exports,arguments)
-},{"dup":9}],12:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"dup":16,"jquery":21,"underscore":19}],19:[function(require,module,exports){
+arguments[4][17][0].apply(exports,arguments)
+},{"dup":17}],20:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -12808,8 +13193,8 @@ return jQuery;
 
 }));
 
-},{}],13:[function(require,module,exports){
-arguments[4][12][0].apply(exports,arguments)
-},{"dup":12}],14:[function(require,module,exports){
-arguments[4][9][0].apply(exports,arguments)
-},{"dup":9}]},{},[3]);
+},{}],21:[function(require,module,exports){
+arguments[4][20][0].apply(exports,arguments)
+},{"dup":20}],22:[function(require,module,exports){
+arguments[4][17][0].apply(exports,arguments)
+},{"dup":17}]},{},[4]);

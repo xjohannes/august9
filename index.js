@@ -17,8 +17,9 @@ app.set('view engine', 'handlebars');
 
 //middleware:
 app.use(json());
-app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(express.urlencoded());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 //app.use(express.methodOverride());
 //app.use(express.cookieParser('some-secret-value-here'));
 
@@ -46,3 +47,4 @@ app.listen(app.get('port'), function() {
 });
 
 
+//app.use(requiresAuth.unless({ path: ['/index.html', '/'] })) // example of unless

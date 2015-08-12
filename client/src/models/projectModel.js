@@ -3,10 +3,14 @@ var Backbone = require('Backbone');
 module.exports = Backbone.Model.extend({
 	urlRoot: '/project/',
 	defaults: {
-		projectname: "default projectname",
-		email: "no email",
+		id: null,
+		projectname: "default projectnameeeee",
+		email: "no emaillll",
 		songs: [],
-		influences: [],
-		participation: []
+		influence: ['HM Kongen', 'Dronning Sonia'],
+		participator: [1],
+		participatorRole: ['Role'],
+		about: ""
+
 	}
 });

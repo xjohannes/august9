@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
   require('time-grunt')(grunt);
-  require('load-grunt-tasks')(grunt);
+  //require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       }
     },
     concat: {
-            'build/<%= pkg.name %>.js': ['build/vendor.js', 'build/app.js']
+            'public/css/<%= pkg.name %>.css': ['client/styles/reset.css', 'build/css/<%= pkg.name %>.css']
         },
 
     copy: {
@@ -57,10 +57,14 @@ module.exports = function(grunt) {
         {
           src: 'build/app.js',
           dest: 'public/js/<%= pkg.name %>.js'
-        }, {
+        }, 
+        
+        {
           src: 'build/css/<%= pkg.name %>.css',
           dest: 'public/css/<%= pkg.name %>.css'
-        }, {
+        }, 
+        
+        {
           src: 'client/img/*',
           dest: 'public/img/'
         }]
@@ -99,11 +103,11 @@ module.exports = function(grunt) {
         watch: {
           scripts: {
             files: ['client/templates/*.hbs', 'client/src/**/*.js'],
-            tasks: ['clean:dev', 'browserify:app', 'concat', 'copy:dev']
+            tasks: ['clean:dev', 'browserify:app',  'copy:dev']
           },
           compass: {
             files: ['client/styles/**/*.scss'],
-            tasks: ['compass:dev', 'copy:dev']
+            tasks: ['compass:dev', 'concat']
           },
           test: {
             files: ['build/app.js', 'client/spec/**/*.test.js'],
@@ -192,6 +196,16 @@ module.exports = function(grunt) {
 
 // Loding tasks. Why isn't this loaded with the load-grunt-tasks module?
 grunt.loadNpmTasks('grunt-env');
+grunt.loadNpmTasks('grunt-browserify');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-contrib-compass');
+grunt.loadNpmTasks('grunt-concurrent');
+grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-nodemon');
+grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-contrib-copy');
+grunt.loadNpmTasks('grunt-contrib-concat');
+
 
 
 // Register tasks

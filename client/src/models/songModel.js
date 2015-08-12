@@ -1,17 +1,29 @@
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
-	urlRoot: '/project/:projectid/song/',
+	//urlRoot: '/project/' + this.projectid + '/song',
+	url: function() {
+		console.log(this.toJSON().projectid);
+		console.log(this.toJSON().id);
+
+		return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+	},
 	defaults: {
-		title: '',
-		projectid: '',
-		hasProductionStatus: '',
+		id: null,
+		title: 'default title',
+		projectid: null,
+		projectname: 'Hip hop',
+		productionstatus: 'raw',
 		added: '',
 		created: '',
 		likes: 0,
 		listens: 0,
-		notes: 'no notes',
-		serverKey: ''
+		notes: '',
+		participator: null,
+		participatorRole: '',
+		serverkey: '',
+		influence: 'none',
+		participation: 'none'
 	}
 });
 

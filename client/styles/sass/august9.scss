@@ -15,39 +15,47 @@
 
 
 
-* {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 18px;
-}
+
 
 #header {
-    padding-top: 5px;
+    padding: 15px;
 }
 
 #sidebar {
-    position: absolute;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    position: relative;
+    float: left;
     left: 10px;
-    top: 70px;
+    top: 5px;
     bottom: 20px;
-    width: 260px;
+    width: 200px;
     border: solid 1px #CCCCCC;
     overflow-y: scroll;
+    margin-right: 46px;
+
+}
+#mainContent {
+    background-image: url('../media/images/chimney_small.jpg');
 }
 
-#content {
-    position: absolute;
-    top: 70px;
-    bottom: 20px;
-    left: 300px;
-    right: 20px;
+#mainContent {
+    overflow: hidden;
+    min-width: 26em;
+    float: left;
+}
+#description {
+    
+
 }
 
 .form-left-col {
-    width: 310px;
-    float: left;
+    //width: 310px;
+    //float: left;
 }
 
 .form-right-col {
+    
 }
 
 .title {
@@ -67,6 +75,7 @@ li a {
     color: #000000;
     border-bottom: solid 1px #CCCCCC;
     padding: 8px;
+    float:left;
 }
 
 li a:hover {
@@ -98,7 +107,9 @@ label {
 }
 
 button {
-    padding: 6px;
+    padding: 0;
+    //margin-right: 10px;
+
 }
 
 

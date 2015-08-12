@@ -1,21 +1,36 @@
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
-		ProjectListItemView = require('./projectListItemView');
+		SongListItemView = require('./songListItemView');
 
 module.exports = Backbone.View.extend({
 	tagName: 'ul',
 
 	initialize: function() {
-		//this.model.on("reset", this.render, this);
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
 	},
-
-	render: function() {
+	addOne: function(songItem) {
+		//console.log("Add one : " );
+		//console.log(songItem.toJSON());
+		var songView = new SongListItemView({model: songItem});
+		this.$el.append(songView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
-		$('#sidebar').html(this.el);
 	},
-	addOne: function(projectItem) {
-		var projectView = new ProjectListItemView({model: projectItem});
-		this.$el.append(projectView.render().el);
+	render: function() {
+		console.log("SongCollectionView render");
+		this.addAll();
+		//$('#mainContent').html(this.el);
+		return this;
+	},
+	remove: function(project) {
+		console.log("remove item from song collection view");
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
 	}
+	
 });

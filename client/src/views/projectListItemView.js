@@ -4,16 +4,14 @@ var Backbone = require('backbone'),
 
 module.exports = Backbone.View.extend({
 	
-	template: _.template('<p>Project name: <%= projectname %></p>'),//require('../../templates/projects.hbs'),
+	template: _.template('<a href="#project/<%= id %>"><%= projectname %></a>' +
+											'<a href="#project/<%= id %>/edit"><button>Edit</button></a>' +
+											'<a href="#project/<%= id %>/delete"><button>Delete</button></a>' +
+											'<a href="#project/<%= id %>/newSong"><button>New song</button></a>'),//require('../../templates/projects.hbs'),
 	tagName: 'li',
-	events: {
-		'change' : 'testEvents'
-	},
+	
 	initialize: function() {
 		this.model.on('change', this.render, this);
-	},
- 	testEvents : function() {
-		console.log("test event triggerd");
 	},
 	render: function() {
 		console.log("ProjectListItemView render: " );

@@ -16,9 +16,9 @@ Backbone.sync = function(method, model, options) {
     options.headers = options.headers || {};
     _.extend(options.headers, { 'x-access-token': window.localStorage.getItem('token') });
     originalSync.call(model, method, model, options);
-}
- var router = new Router();
- router.start();
+};
+ this.router = new Router();
+ this.router.start();
  
 };
 

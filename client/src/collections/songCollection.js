@@ -3,5 +3,5 @@ var Backbone = require('Backbone'),
 
 module.exports = Backbone.Collection.extend({
 	model: SongModel,
-	url: '/project'
+	url: '/project/'
 });

@@ -4,10 +4,10 @@ var Backbone = require('backbone'),
 
 module.exports = Backbone.View.extend({
 	
-	template: _.template('<a href="#project/<%= id %>"><%= projectname %></a>' +
-											'<button class="admin hidden"><a href="#project/<%= id %>/edit">Edit</a></button>' +
-											'<button class="admin hidden"><a href="#project/<%= id %>/delete">Delete</a></button>' +
-											'<button class="admin hidden"><a href="#project/<%= id %>/newSong">New song</a></button>'),//require('../../templates/projects.hbs'),
+	template: _.template('<a href="#/project/<%= id %>"><%= projectname %></a>' +
+											'<a class="admin hidden" href="#/project/<%= id %>/edit"><button >Edit</button></a>' +
+											'<a class="admin hidden" href="#/project/<%= id %>/delete"><button >Delete</button></a>' +
+											'<a class="admin hidden" href="#/project/<%= id %>/newSong"><button >New song</button></a>'),//require('../../templates/projects.hbs'),
 	tagName: 'li',
 	
 	initialize: function() {

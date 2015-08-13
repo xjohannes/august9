@@ -186,12 +186,12 @@ module.exports = Router = Backbone.Router.extend({
 	initialize: function(options) {
 		this.self = this;
 		this.projectList = new ProjectCollection();
-		this.projectList.fetch();
+		this.projectList.fetch({success: function(){Backbone.history.start();}});
 		this.projectCollectionView = new ProjectCollectionView({collection:this.projectList});
 		this.projectCollectionView.render();
 	},
 	start: function() {
 		//console.log("Starting history");
-		Backbone.history.start();
+		//Backbone.history.start();
 	}
 });

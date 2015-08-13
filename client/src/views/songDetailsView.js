@@ -17,7 +17,7 @@ module.exports  = Backbone.View.extend({
 		this.model.on('change', this.render, this);
 	},
 	render: function() {
-		console.log("SongDetailsView render: " );
+		//console.log("SongDetailsView render: " );
 		var attributes = this.model.toJSON();
 		this.$el.html(this.template(attributes));
 		

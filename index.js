@@ -1,11 +1,16 @@
 'use strict';
-var express = require('express'),
-		path = require('path'),
-		routes = require('./app/routes'),
-		app = express(),
-		exphbs = require('express-handlebars'),
-		json = require('express-json'),
-		bodyParser = require('body-parser');
+var express    = require('express'),
+		path       = require('path'),
+		routes     = require('./app/routes'),
+		app        = express(),
+		exphbs     = require('express-handlebars'),
+		json       = require('express-json'),
+		bodyParser = require('body-parser'),
+		jwt        = require('jsonwebtoken'),
+		unless     = require('express-unless'),
+		config     = require('./app/config'),
+		bcrypt     = require('bcryptjs');
+
 
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
@@ -14,6 +19,7 @@ app.engine('handlebars', exphbs({
     layoutsDir: app.get('views') + '/layouts'
 }));
 app.set('view engine', 'handlebars');
+app.set('superSecret', config.secret);
 
 //middleware:
 app.use(json());
@@ -22,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //app.use(express.methodOverride());
 //app.use(express.cookieParser('some-secret-value-here'));
+
 
 // static files:
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -38,6 +45,7 @@ if ('development' == app.get('env')) {
 }
 
 //routes list:
+
 routes.initialize(app);
 
 
@@ -48,3 +56,8 @@ app.listen(app.get('port'), function() {
 
 
 //app.use(requiresAuth.unless({ path: ['/index.html', '/'] })) // example of unless
+//var jwtCheck = jwt({
+ //   secret: config.secret
+//});
+//jwtCheck.unless = unless;
+//app.use(jwtCheck.unless({path: '/api/login' }));

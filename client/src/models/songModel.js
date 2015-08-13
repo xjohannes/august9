@@ -24,6 +24,12 @@ module.exports = Backbone.Model.extend({
 		serverkey: '',
 		influence: 'none',
 		participation: 'none'
+	},
+	initialize: function() {
+		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+	},
+	triggerLoginSuccess: function() {
+		this.trigger('login:success');
 	}
 });
 

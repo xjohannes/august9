@@ -5,5 +5,8 @@ module.exports = {
   },
   createProjectForm: function(req, res) {
   	res.render('layouts/createProject');
+  },
+  login: function(req, res) {
+  	res.render('layouts/login');
   }
 };

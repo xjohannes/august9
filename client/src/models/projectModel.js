@@ -4,13 +4,18 @@ module.exports = Backbone.Model.extend({
 	urlRoot: '/project/',
 	defaults: {
 		id: null,
-		projectname: "default projectnameeeee",
-		email: "no emaillll",
+		projectname: "default projectname",
+		email: "no email",
 		songs: [],
-		influence: ['HM Kongen', 'Dronning Sonia'],
+		influence: ['none'],
 		participator: [1],
-		participatorRole: ['Role'],
+		participatorRole: [],
 		about: ""
-
+	},
+	initialize: function() {
+		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+	},
+	triggerLoginSuccess: function() {
+		this.trigger('login:success');
 	}
 });

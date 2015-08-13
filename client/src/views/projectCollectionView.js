@@ -22,7 +22,7 @@ module.exports = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	},
 	remove: function(project) {
-		console.log("remove item from project collection view");
+		//console.log("remove item from project collection view");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},

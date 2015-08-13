@@ -78,20 +78,40 @@ table {
   float: left;
 }
 
-/* line 61, ../../client/styles/sass/august9.scss */
+/* line 51, ../../client/styles/sass/august9.scss */
+.hidden {
+  display: none;
+}
+
+/* line 54, ../../client/styles/sass/august9.scss */
+.show {
+  display: block;
+}
+
+/* line 57, ../../client/styles/sass/august9.scss */
+.container {
+  width: 400 !important;
+}
+
+/* line 60, ../../client/styles/sass/august9.scss */
+.col-sm-offset-3 {
+  margin-left: 1%;
+}
+
+/* line 72, ../../client/styles/sass/august9.scss */
 .title {
   font-size: 20px;
   font-weight: bold;
 }
 
-/* line 66, ../../client/styles/sass/august9.scss */
+/* line 77, ../../client/styles/sass/august9.scss */
 ul {
   list-style-type: none;
   padding-left: 0px;
   margin-top: 0px;
 }
 
-/* line 72, ../../client/styles/sass/august9.scss */
+/* line 83, ../../client/styles/sass/august9.scss */
 li a {
   text-decoration: none;
   display: block;
@@ -101,27 +121,27 @@ li a {
   float: left;
 }
 
-/* line 81, ../../client/styles/sass/august9.scss */
+/* line 92, ../../client/styles/sass/august9.scss */
 li a:hover {
   background-color: #4B0A1E;
   color: #BA8A92;
 }
 
-/* line 86, ../../client/styles/sass/august9.scss */
+/* line 97, ../../client/styles/sass/august9.scss */
 input, textarea {
   border: 1px solid #ccc;
   min-height: 30px;
   outline: none;
 }
 
-/* line 92, ../../client/styles/sass/august9.scss */
+/* line 103, ../../client/styles/sass/august9.scss */
 .form-left-col input {
   margin-bottom: 15px;
   margin-top: 5px;
   width: 280px;
 }
 
-/* line 98, ../../client/styles/sass/august9.scss */
+/* line 109, ../../client/styles/sass/august9.scss */
 textarea {
   margin-bottom: 15px;
   margin-top: 5px;
@@ -129,12 +149,12 @@ textarea {
   width: 250px;
 }
 
-/* line 105, ../../client/styles/sass/august9.scss */
+/* line 116, ../../client/styles/sass/august9.scss */
 label {
   display: block;
 }
 
-/* line 109, ../../client/styles/sass/august9.scss */
+/* line 120, ../../client/styles/sass/august9.scss */
 button {
   padding: 0;
 }

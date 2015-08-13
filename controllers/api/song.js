@@ -1,10 +1,12 @@
 var multer = require('multer'),
-pg = require('pg'),
-mkdirp = require('mkdirp'),
-fs = require('fs'),
-query = require('pg-query'),
-escape = require('pg-escape'),
-config = require('../../app/config');
+pg         = require('pg'),
+mkdirp     = require('mkdirp'),
+fs         = require('fs'),
+query      = require('pg-query'),
+escape     = require('pg-escape'),
+config     = require('../../app/config'),
+jwt        = require('jsonwebtoken'),
+bcrypt     = require('bcryptjs');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -387,5 +389,60 @@ config = require('../../app/config');
 		play: function (req, res) {
 			console.log("PLAY");
 			res.status(204).end();
+		},
+		//id, table, columnsArray, newValuesArray, callback
+		setPass: function(req, res) {
+			/*
+			var salt = bcrypt.genSaltSync(10);
+			var hash = bcrypt.hashSync("Vidar38", salt);
+
+			Song.updateDB(1, 'usertable', ['password'], ["'" + hash + "'"], function(err, rows) {
+				if(err) {
+					console.log(err);
+				} else {
+					if(bcrypt.compareSync("123qweASD", hash)) {
+						console.log("The password was set ok");
+					} else {
+						console.log("The password Did not match");
+					}
+				}
+			});
+			*/
+		},
+		authenticate: function(req, res) {
+			console.log("Authenticate: " + req.body.username);
+			if(req.body.username && req.body.password) {
+				var sql = escape("SELECT password FROM usertable where username='" + req.body.username +"'");
+				query(sql, function(err, rows, results) {
+					if(err) {
+						console.log(err)
+					} else {
+						console.log(rows[0]);
+						bcrypt.compare(req.body.password, rows[0].password, function(err, result) {
+							if(err) {
+								console.log(err);
+							} else {
+								if(result){
+									console.log("Authenticate success. Create token");
+									var token = jwt.sign({username: req.body.username}, config.secret, {
+										expiresInMinutes: 1440 // expires in 24 hours
+									});
+									res.status(200).json({
+										success: true,
+										token: token
+									});
+									//res.status(200).json();
+								} else {
+									console.log("Authenticate Failed. Redirect to index");
+								}
+							}
+						});
+					}
+				});
+			} else {
+				res.status(400).json('no username or password');
+			}
+			
 		}
+
 };

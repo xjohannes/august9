@@ -10,6 +10,7 @@ module.exports = Backbone.View.extend({
 		this.collection.on('add', this.addOne, this);
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
+		this.listenTo(Backbone.dispacher, 'login:success', this.remove);
 	},
 	addOne: function(songItem) {
 		//console.log("Add one : " );
@@ -22,7 +23,7 @@ module.exports = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	},
 	render: function() {
-		console.log("SongCollectionView render");
+		//console.log("SongCollectionView render");
 		this.addAll();
 		//$('#mainContent').html(this.el);
 		return this;

@@ -1,40 +1,60 @@
-var Backbone = require('Backbone'),
-		$ = require('jQuery'),
-		ProjectModel = require('./models/projectModel'),
-		ProjectCollection = require('./collections/projectCollection'),
-		ProjectView = require('./views/projectListItemView'),
+var Backbone     					= require('Backbone'),
+		$            					= require('jQuery'),
+		ProjectModel 					= require('./models/projectModel'),
+		ProjectCollection 		= require('./collections/projectCollection'),
+		ProjectView       		= require('./views/projectListItemView'),
 		ProjectCollectionView = require('./views/projectCollectionView'),
-		ProjectListItemView = require('./views/projectListItemView'),
-		ProjectForm = require('./views/projectForm'),
-		SongModel = require('./models/songModel'),
-		SongCollection = require('./collections/songCollection'),
-		SongView = require('./views/songListItemView'),
-		SongCollectionView = require('./views/songCollectionView'),
-		SongListItemView = require('./views/songListItemView'),
-		SongForm = require('./views/songForm'),
-		EditSongForm = require('./views/editSongForm'),
-		SongDetailsView = require('./views/songDetailsView');
+		ProjectListItemView   = require('./views/projectListItemView'),
+		ProjectForm           = require('./views/projectForm'),
+		SongModel      				= require('./models/songModel'),
+		SongCollection 				= require('./collections/songCollection'),
+		SongView       				= require('./views/songListItemView'),
+		SongCollectionView    = require('./views/songCollectionView'),
+		SongListItemView 			= require('./views/songListItemView'),
+		SongForm 			  			= require('./views/songForm'),
+		EditSongForm    			= require('./views/editSongForm'),
+		SongDetailsView 			= require('./views/songDetailsView'),
+		LoginModel 						= require('./models/loginModel'),
+		LoginForm  						= require('./views/loginForm');
 
 module.exports = Router = Backbone.Router.extend({
 	routes: {
-		"project/newProject" : "createProject",
-		"project/:projectid": "readProject",
-		"project/:id/edit": "updateProject",
-		"project/:id/delete": "deleteProject",
-		"project/:projectid/newSong": "createSong",
-		"project/:projectid/song/:id": "readSong",
-		"project/:projectid/song/:songid/edit": "updateSong",
+		""			  															: "index",
+		"login"   															: "login",
+		"logout"   															: "logout",
+		"project/newProject" 				 						: "createProject",
+		"project/:projectid" 				 						: "readProject",
+		"project/:id/edit"   				 						: "updateProject",
+		"project/:id/delete" 				 						: "deleteProject",
+		"project/:projectid/newSong" 						: "createSong",
+		"project/:projectid/song/:id"						: "readSong",
+		"project/:projectid/song/:songid/edit"	: "updateSong",
 		"project/:projectid/song/:songid/delete": "deleteSong",
-		
-		"project/:projectid/song/:songid/play" : "play",
-		"": "index",
-		"*actions": "defaultRoute"
+		"project/:projectid/song/:songid/play" 	: "play", 
+		"*actions"															: "defaultRoute"
 	},
 	url: "/",
 	// Fetch data from project table
 	index: function () {
 		$('#mainContent').html('<p>no content</p>');
 		this.projectList.fetch();
+		$('#sidebar').html(this.projectCollectionView.render().el);
+	},
+	login: function() {
+		this.loginItem = new LoginModel();
+		this.loginForm = new LoginForm({model: this.loginItem });
+		//console.log("Login 1. Token: " + this.loginItem.get('token'));
+		$('#mainContent').html(this.loginForm.render().el);
+		$('#sidebar').html(this.projectCollectionView.render().el);
+	},
+	logout: function() {
+		//this.loginItem = new LoginModel({id:1});
+		console.log("logout 1. Token: " + window.localStorage.getItem('token'));
+		window.localStorage.setItem('token', '');
+		//this.loginItem.set('token', '');
+		
+		console.log('logout 2. Token: ' + window.localStorage.getItem('token'));
+		$('#mainContent').html(this.songCollectionView.render().el);
 		$('#sidebar').html(this.projectCollectionView.render().el);
 	},
 	createProject: function() {
@@ -56,6 +76,15 @@ module.exports = Router = Backbone.Router.extend({
 				self.songList.url = "/project/" + projectid + "/song";
 				self.songCollectionView = new SongCollectionView({collection:self.songList});
 				$('#mainContent').html(self.songCollectionView.render().el);
+				console.log("getting songs " + window.localStorage.getItem('token') );
+
+				if(window.localStorage.getItem('token')) {
+					$('.admin').removeClass('hidden'); 
+					console.log("Token true");
+				} else {
+					$('.admin').addClass('hidden');
+					console.log("Token false");
+				}
 			},
 			error: function(err) {
 				console.log(err);
@@ -141,6 +170,7 @@ module.exports = Router = Backbone.Router.extend({
 		}});
 	},
 	play: function(projectid, songid) {
+
 		console.log("PLAY");
 		var url = './media/music/' + this.songList.get(songid).attributes.serverkey;
 		console.log(url);
@@ -154,7 +184,6 @@ module.exports = Router = Backbone.Router.extend({
 		console.log("default Route");
 	},
 	initialize: function(options) {
-		console.log("Instanziation of router");
 		this.self = this;
 		this.projectList = new ProjectCollection();
 		this.projectList.fetch();

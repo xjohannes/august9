@@ -43,6 +43,9 @@ module.exports = Backbone.View.extend({
 			participator: participator,
 			participatorRole: participatorRole
 		});
-	
+	},
+	clean: function() {
+		console.log("cleaning editSongFormView");
+		this.$el.empty();
 	}
 });

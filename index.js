@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 var express    = require('express'),
 		path       = require('path'),
 		routes     = require('./app/routes'),
@@ -24,7 +24,7 @@ app.set('superSecret', config.secret);
 //middleware:
 app.use(json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 //app.use(express.methodOverride());
 //app.use(express.cookieParser('some-secret-value-here'));
@@ -54,10 +54,3 @@ app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
 
-
-//app.use(requiresAuth.unless({ path: ['/index.html', '/'] })) // example of unless
-//var jwtCheck = jwt({
- //   secret: config.secret
-//});
-//jwtCheck.unless = unless;
-//app.use(jwtCheck.unless({path: '/api/login' }));

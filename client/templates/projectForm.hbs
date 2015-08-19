@@ -1,0 +1,14 @@
+{{#if id}}
+<h2>Edit {{projectname}}</h2>
+{{else}}
+<h2>Create new Project</h2>
+{{/if}}
+		<form >
+			 Project name:   <input type="text" name="projectname" value="{{projectname}}" /><br>
+			 Email:       <input type="text" name="email" value="{{email}}" /><br>
+			 About:  <input type="text" name="about" value="about" /><br>
+			 Influences:  <input type="text" name="influence" value="{{influence}}" /><br>
+			 Participator:<input type="text" name="participator" value="{{participator}}" /><br>
+			 Participants role:<input type="text" name="participatorRole" value="{{participatorRole}}" /><br>
+			 <button type="submit" value="Save" name="">Save</button>
+		</form>

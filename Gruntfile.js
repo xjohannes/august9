@@ -102,7 +102,7 @@ module.exports = function(grunt) {
         // for changes to the front-end code
         watch: {
           scripts: {
-            files: ['client/templates/*.hbs', 'client/src/**/*.js'],
+            files: ['client/templates/*.hbs', 'views/**/*.handlebars', 'client/src/**/*.js'],
             tasks: ['clean:dev', 'browserify:app',  'copy:dev']
           },
           compass: {

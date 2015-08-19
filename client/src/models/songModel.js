@@ -3,33 +3,38 @@ var Backbone = require('Backbone');
 module.exports = Backbone.Model.extend({
 	//urlRoot: '/project/' + this.projectid + '/song',
 	url: function() {
-		console.log(this.toJSON().projectid);
-		console.log(this.toJSON().id);
-
-		return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+		
+		if(this.toJSON().id === null ) {
+			return '/project/' + encodeURIComponent(this.toJSON().projectid);
+		} else {
+			return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+		}
 	},
 	defaults: {
 		id: null,
 		title: 'default title',
 		projectid: null,
-		projectname: 'Hip hop',
+		projectname: '',
 		productionstatus: 'raw',
 		added: '',
 		created: '',
 		likes: 0,
 		listens: 0,
 		notes: '',
-		participator: null,
-		participatorRole: '',
+		participator: 1,
+		participatorRole: 'none',
 		serverkey: '',
-		influence: 'none',
-		participation: 'none'
+		influence: 'none'
 	},
 	initialize: function() {
 		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(Backbone.dispacher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
+	},
+	index: function() {
+		this.trigger('index');
 	}
 });
 

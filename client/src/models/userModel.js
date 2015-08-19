@@ -1,25 +1,21 @@
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
-	urlRoot: '/project/',
+	urlRoot: '/user/',
 	defaults: {
-		id: null,
-		projectname: "default projectname",
+		userid: null,
+		username: "default user",
 		email: "no email",
-		songs: [],
-		influence: ['none'],
-		participator: [1],
-		participatorRole: [],
-		about: ""
+		firstname: 'John',
+		lastname: 'Dough',
+		regdate: 'some date',
+		avatarurl: './media/avatars/default-avatar.jpg',
+		token: ""
 	},
 	initialize: function() {
 		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
-		this.listenTo(Backbone.dispacher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
-	},
-	index: function() {
-		this.trigger('index');
 	}
 });

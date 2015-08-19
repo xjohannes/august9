@@ -1,0 +1,13 @@
+{{#if avatar}}
+	<a href="#/user/{{userid}}"><img src="{{avatar}}" /></a>
+{{else}}
+	<img src="./media/avatars/default-avatar.jpg" alt="Et flott eiketre på toppen av en åskam"/>
+{{/if}}
+
+<a href="#/user/{{userid}}"><p>{{username}}</p></a>
+<p>Id: {{userid}}</p>
+<p>Name: {{firstname}} {{lastname}}</p>
+<a class="admin hidden" href="#/user/{{userid}}/edit">   <button type="button" class="btn" >Edit</button></a>
+<a class="admin hidden" href="#/user/{{userid}}/delete"> <button type="button" class="btn" >Delete</button></a>
+<a class="admin hidden" href="#/user/{{userid}}/newUser"><button type="button" class="btn" >New User</button></a>
+

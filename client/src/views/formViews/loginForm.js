@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
 		Handlebars = require('handlebars');
 
 module.exports = Backbone.View.extend({
-	template: require('../../templates/login.hbs'),
+	template: require('../../../templates/login.hbs'),
 	events: {
 		'submit': 'save'
 
@@ -33,13 +33,14 @@ module.exports = Backbone.View.extend({
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change:token', this.clean);
+		//this.model.on('change:token', this.clean, this);
 		this.model.on('home:clean', this.clean, this);
 		this.model.on('index', this.clean, this);
 	},
 	clean: function() {
 		console.log("cleaning loginFormView");
 		this.$el.remove();
-		 //window.history.back();
+		
 	}
 
 });

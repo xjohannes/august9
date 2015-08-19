@@ -3,16 +3,7 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form >' +
-			'Project name:   <input type="text" name="projectname" value="<%= projectname %>" /><br>' +
-			 'Email:       <input type="text" name="email" value="<%= email %>" /><br>' +
-			 'About:  <input type="text" name="about" value="<%= about %>" /><br>' +
-			 'Influences:  <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			 'Participator:<input type="text" name="participator" value="<%= participator %>" /><br>' +
-			 'Participants role:<input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			 '<button type="submit" value="Save" name="">Save</button>' +
-		'</form>'),
+	template: require('../../../templates/projectForm.hbs'),
 	events: {
 		'submit': 'save'
 	},
@@ -38,5 +29,10 @@ module.exports = Backbone.View.extend({
 			participator: participator,
 			participatorRole: participatorRole
 		});
+	},
+	clean: function() {
+		console.log("cleaning projectFormView");
+		this.$el.empty();
+		//window.history.back();
 	}
 });

@@ -4,12 +4,15 @@ var home = require('../controllers/home'),
 		logger = require('morgan'),
         project = require('../controllers/api/project'),
         song = require('../controllers/api/song'),
+        user = require('../controllers/api/user'),
         config = require('./config'),
-        jwt        = require('jsonwebtoken');
+        jwt        = require('jsonwebtoken'),
+        favicon = require('serve-favicon');
     //contacts = require('../controllers/contacts');
 
 module.exports.initialize = function(app) {
     app.use(logger('dev'));
+    app.use(favicon(__dirname + '/../public/favicon.ico'));
 
     // Public routes:
     app.get('/', home.index);
@@ -19,7 +22,8 @@ module.exports.initialize = function(app) {
     app.get('/project/:projectid/song/:id', song.get);
 
     app.get('/login', forms.login);
-    app.post('/login', song.authenticate);
+    app.post('/login', user.authenticate);
+    
 
     // Autentication middleware
     app.use(function(req, res, next) {
@@ -35,11 +39,11 @@ module.exports.initialize = function(app) {
                 }
             });
         } else {
-            return res.status(403).json({success: false, message: "No token provided"});
+           return res.status(403).json({success: false, message: "No token provided"});
         }
     });
     
-    // Admin/autenticated routes
+    // Admin/autenticated routes:
     app.get('/upload', forms.uploadForm);
     //app.get('/play', home.play);
     
@@ -48,38 +52,21 @@ module.exports.initialize = function(app) {
     app.put('/project/:id', project.put);
     app.delete('/project/:id', project.delete);
 
-    //song
+    // song:
     app.get('/project/:projectid/song/:id', song.get);
     app.post('/project/:projectid' , song.post);
     app.put('/project/:projectid/song/:id', song.put);
     app.delete('/project/:projectid/song/:id', song.delete);
 
+    //user:
+    app.get('/user/', user.getAll);
+    app.get('/user/:id', user.get);
+    app.post('/user/' , user.post);
+    app.put('/user/:id', user.put);
+    app.delete('/user/:id', user.delete);
+
+
     //play 
-    app.get('/project/:projectid/song/:id/play', song.play);
-    app.get('/login', forms.login);
-    app.post('/login', song.authenticate);
-   // app.get('/setPass', song.setPass);
-
-
-
-
-
-    //app.get('/project/:id/:songId', persistenceLayer.getSong);
-    //app.get('/test', home.testGet);
-
-
-    //app.post('/upload/:projectName', persistenceLayer.uploadSong);
-    //app.post('/project/', persistenceLayer.saveProject );
-    //app.post('/test', home.testPost);
-
-    //app.put('/project/:projectName', persistenceLayer.updateProject);
-   // app.put('/test', home.testPut);
-
-   // app.delete('/test', home.testDelete);
+    //app.get('/project/:projectid/song/:id/play', song.play);
     
-    //app.get('/api/contacts', contacts.index);
-   
-    //app.post('/api/contacts', contacts.add);
-    //app.put('/api/contacts', contacts.update);
-    //app.delete('/api/contacts/:id', contacts.delete);
 };

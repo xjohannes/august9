@@ -5,12 +5,14 @@ var Backbone = require('Backbone'),
 
 module.exports = Backbone.View.extend({
 	tagName: 'ul',
+	
 
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
-		this.listenTo(Backbone.dispacher, 'login:success', this.remove);
+		this.collection.on('index', this.clean, this);
+		//this.listenTo(Backbone.dispacher, 'login:success', this.remove);
 	},
 	addOne: function(songItem) {
 		//console.log("Add one : " );
@@ -32,6 +34,10 @@ module.exports = Backbone.View.extend({
 		console.log("remove item from song collection view");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
+	},
+	clean: function() {
+		console.log("cleaning songCollectionView");
+		this.$el.empty();
 	}
 	
 });

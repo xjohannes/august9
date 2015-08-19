@@ -1,30 +1,45 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Router = require('./routesFrontEnd'),
-		Backbone = require('Backbone'),
-		_ = require('underscore');
+var Router     			 = require('./routesFrontEnd'),
+		Backbone   			 = require('Backbone'),
+		_          			 = require('underscore'),
+		RoutesController = require('./routesController'),
+		test = require('./testThis');
 
 
 module.exports = App = function App() {};
     
 App.prototype.start = function(){
 
-//Backbone.dispacher = _.clone(Backbone.Events);
+Backbone.dispacher   = _.extend({}, Backbone.Events);
+var originalSync     = Backbone.sync;
+		routesController = new RoutesController(),
+Backbone.dispacher.listenTo(this.router, 'route', test.defaultRoute);
 
-Backbone.dispacher = _({}).extend(Backbone.Events);
- 
-var originalSync = Backbone.sync;
+routesController.initialize();
 Backbone.sync = function(method, model, options) {
+		if( method === 'delete' ) {
+			if( options.data ) {
+				options.data = JSON.stringify(options.data);
+			}
+			options.contentType = 'application/json';
+		}
+
     options.headers = options.headers || {};
     _.extend(options.headers, { 'x-access-token': window.localStorage.getItem('token') });
-    originalSync.call(model, method, model, options);
+
+    return originalSync.apply(this, [method, model, options]);
+    //originalSync.call(model, method, model, options);
 };
- this.router = new Router();
+
+ this.router = new Router({controller: routesController, dispacher : Backbone.dispacher});
  this.router.start();
+
+ Backbone.dispacher.listenTo(this.router, 'route', routesController.allRoutes);
  
 };
 
 
-},{"./routesFrontEnd":8,"Backbone":19,"underscore":43}],2:[function(require,module,exports){
+},{"./routesController":10,"./routesFrontEnd":11,"./testThis":12,"Backbone":34,"underscore":58}],2:[function(require,module,exports){
 var Backbone = require('Backbone');
 var ProjectModel = require('../models/projectModel');
 
@@ -32,7 +47,7 @@ module.exports = Backbone.Collection.extend({
 	model: ProjectModel,
 	url: "/project/"
 });
-},{"../models/projectModel":6,"Backbone":19}],3:[function(require,module,exports){
+},{"../models/projectModel":7,"Backbone":34}],3:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		SongModel = require('../models/songModel');
 
@@ -40,13 +55,21 @@ module.exports = Backbone.Collection.extend({
 	model: SongModel,
 	url: '/project/'
 });
-},{"../models/songModel":7,"Backbone":19}],4:[function(require,module,exports){
+},{"../models/songModel":8,"Backbone":34}],4:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		UserModel = require('../models/userModel');
+
+module.exports = Backbone.Collection.extend({
+	model: UserModel,
+	url: '/user/'
+});
+},{"../models/userModel":9,"Backbone":34}],5:[function(require,module,exports){
 var App = require('./app');
 var august9 = new App();
 
 august9.start();
 
-},{"./app":1}],5:[function(require,module,exports){
+},{"./app":1}],6:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
@@ -58,13 +81,20 @@ module.exports = Backbone.Model.extend({
 		token   : ""
 	},
 	initialize: function() {
+		this.listenTo(Backbone.dispacher, 'index', this.index);
 		this.on('change:token', function() {
 			Backbone.dispacher.trigger('login:success', this);
 		});
+		this.on('clean:loginForm', function() {
+			//Backbone.dispacher.trigger('clean:loginForm', this);
+		});
+	},
+	index: function() {
+		this.trigger('index');
 	}
 });
 
-},{"Backbone":19}],6:[function(require,module,exports){
+},{"Backbone":34}],7:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
@@ -81,39 +111,74 @@ module.exports = Backbone.Model.extend({
 	},
 	initialize: function() {
 		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(Backbone.dispacher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
+	},
+	index: function() {
+		this.trigger('index');
 	}
 });
 
-},{"Backbone":19}],7:[function(require,module,exports){
+},{"Backbone":34}],8:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
 	//urlRoot: '/project/' + this.projectid + '/song',
 	url: function() {
-		console.log(this.toJSON().projectid);
-		console.log(this.toJSON().id);
-
-		return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+		
+		if(this.toJSON().id === null ) {
+			return '/project/' + encodeURIComponent(this.toJSON().projectid);
+		} else {
+			return '/project/' + encodeURIComponent(this.toJSON().projectid) + "/song/" + encodeURIComponent(this.toJSON().id);
+		}
 	},
 	defaults: {
 		id: null,
 		title: 'default title',
 		projectid: null,
-		projectname: 'Hip hop',
+		projectname: '',
 		productionstatus: 'raw',
 		added: '',
 		created: '',
 		likes: 0,
 		listens: 0,
 		notes: '',
-		participator: null,
-		participatorRole: '',
+		participator: 1,
+		participatorRole: 'none',
 		serverkey: '',
-		influence: 'none',
-		participation: 'none'
+		influence: 'none'
+	},
+	initialize: function() {
+		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(Backbone.dispacher, 'index', this.index);
+	},
+	triggerLoginSuccess: function() {
+		this.trigger('login:success');
+	},
+	index: function() {
+		this.trigger('index');
+	}
+});
+
+
+ 
+
+},{"Backbone":34}],9:[function(require,module,exports){
+var Backbone = require('Backbone');
+
+module.exports = Backbone.Model.extend({
+	urlRoot: '/user/',
+	defaults: {
+		userid: null,
+		username: "default user",
+		email: "no email",
+		firstname: 'John',
+		lastname: 'Dough',
+		regdate: 'some date',
+		avatarurl: './media/avatars/default-avatar.jpg',
+		token: ""
 	},
 	initialize: function() {
 		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
@@ -123,28 +188,217 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-
- 
-
-},{"Backbone":19}],8:[function(require,module,exports){
+},{"Backbone":34}],10:[function(require,module,exports){
 var Backbone     					= require('Backbone'),
 		$            					= require('jQuery'),
+		UserModel 						= require('./models/userModel'),
+		UserCollection 				= require('./collections/userCollection'),
+		UserCollectionView    = require('./views/collectionViews/userCollectionView'),
+		UserListItemView   		= require('./views/collectionViews/userListItemView'),
 		ProjectModel 					= require('./models/projectModel'),
 		ProjectCollection 		= require('./collections/projectCollection'),
-		ProjectView       		= require('./views/projectListItemView'),
-		ProjectCollectionView = require('./views/projectCollectionView'),
-		ProjectListItemView   = require('./views/projectListItemView'),
-		ProjectForm           = require('./views/projectForm'),
+		ProjectCollectionView = require('./views/collectionViews/projectCollectionView'),
+		ProjectListItemView   = require('./views/collectionViews/projectListItemView'),
+		HomeCollectionView    = require('./views/collectionViews/homeCollectionView'),
+		
+		ProjectForm           = require('./views/formViews/projectForm'),
 		SongModel      				= require('./models/songModel'),
 		SongCollection 				= require('./collections/songCollection'),
-		SongView       				= require('./views/songListItemView'),
-		SongCollectionView    = require('./views/songCollectionView'),
-		SongListItemView 			= require('./views/songListItemView'),
-		SongForm 			  			= require('./views/songForm'),
-		EditSongForm    			= require('./views/editSongForm'),
+		SongCollectionView    = require('./views/collectionViews/songCollectionView'),
+		SongListItemView 			= require('./views/collectionViews/songListItemView'),
+		SongForm 			  			= require('./views/formViews/songForm'),
+		EditSongForm    			= require('./views/formViews/editSongForm'),
 		SongDetailsView 			= require('./views/songDetailsView'),
+		HeaderView 						= require('./views/headerView'),
 		LoginModel 						= require('./models/loginModel'),
-		LoginForm  						= require('./views/loginForm');
+		LoginForm  						= require('./views/formViews/loginForm');
+
+module.exports = function() {
+	var that = this;
+	// Fetch data from project table
+	this.index =function () {
+		$('#homeList').html(that.homeCollectionView.render().el);
+		//this.clean();
+		Backbone.dispacher.trigger('index', that);
+		$("#mainContent").html("");
+	},
+	this.login =function() {
+		that.loginItem = new LoginModel();
+		that.loginForm = new LoginForm({model: that.loginItem });
+		$('#mainContent').html(that.loginForm.render().el);
+		$('#projectList').html(that.projectCollectionView.render().el);
+	},
+	this.logout = function() {
+		window.localStorage.setItem('token', '');
+		$('#homeList').html(this.homeCollectionView.render().el);
+		Backbone.history.navigate("",{trigger: true});
+	},
+	this.createProject = function() {
+		var self = this;
+		var projectItem = new ProjectModel();
+		var projectForm = new ProjectForm({model: projectItem });
+		this.projectList.add(projectItem);
+		this.userList = new UserCollection();
+		this.userList.fetch();
+		this.userCollectionView = new UserCollectionView({collection:this.userList});
+		$('#mainContent').html(projectForm.render().el);
+		$('.userList').html(this.userCollectionView.render().el);
+		$('#projectList').html(this.projectCollectionView.render().el);
+		$('#header').html(this.headerView.render().el);
+	},
+	this.readProject = function(projectid) {
+		$('#header').html(this.headerView.render().el);
+		$('#projectList').html(this.projectCollectionView.render().el);
+		
+		var self = this;
+		var projectItem = new ProjectModel({id: projectid});//this.projectList.get(projectid);
+		
+		projectItem.fetch({
+			success: function(project) {
+				var projectSongs = project.attributes.songs;
+				self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
+				self.songList.url = "/project/" + projectid + "/song";
+				self.songCollectionView = new SongCollectionView({collection:self.songList});
+				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
+				$('#mainContent').append(self.songCollectionView.render().el);
+				//console.log("getting songs " + window.localStorage.getItem('token') );
+
+				if(window.localStorage.getItem('token')) {
+					$('.admin').removeClass('hidden'); 
+					//console.log("Token true");
+				} else {
+					$('.admin').addClass('hidden');
+					//console.log("Token false");
+				}
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		}, this);
+	},
+	this.updateProject = function(projectid) {
+		var projectItem = this.projectList.get(projectid);
+		var projectForm = new ProjectForm({model: projectItem});
+		$('#mainContent').html(projectForm.render().el);
+	},
+	this.deleteProject = function(projectid) {
+		var projectItem = this.projectList.remove(projectid);
+		projectItem.destroy({success: function(model, response) {
+			model.off('change');
+		}});
+	},
+	this.createSong = function(projectid) {
+		var projectname = this.projectList.get(projectid).attributes.projectname;
+		var songItem = new SongModel();
+		songItem.set({'projectid':  projectid, 'projectname': projectname });
+		var songForm = new SongForm({model: songItem });
+		$('#mainContent').html(songForm.render().el);
+	},
+	this.readSong = function(projectid, songid) {
+		var self = this;
+		$('#header').html(this.headerView.render().el);
+		$('#projectList').html(this.projectCollectionView.render().el);
+		console.log("DEBUG: " + this.projectList.get(projectid).attributes.projectname);
+		
+		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
+		
+		songItem.fetch({
+			success: function(song) {
+				var songView = new SongDetailsView({model: song});
+				$('#description').html(songView.render().el);	
+				
+				var songs = self.projectList.get(projectid).attributes.songs,
+						songCollection = new SongCollection(songs);
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		}, this);
+		
+	},
+	this.updateSong = function(projectid, songid) {
+		
+		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
+		
+		songItem.fetch({
+			success: function(song) {
+				console.log("update song: " + songItem.attributes.influence);
+				var songForm = new EditSongForm({model: songItem});
+				$('#mainContent').html(songForm.render().el);
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				}, this);
+	},
+	this.deleteSong = function(projectid, songid) {
+		console.log("Song ID: " + songid);
+		var songItem = this.songList.remove(songid);
+		
+		songItem.destroy({ success: function(model, response) {
+			model.off('change');
+		}});
+	},
+	this.play = function(projectid, songid) {
+
+		console.log("PLAY");
+		var url = './media/music/' + projectid + '/' +
+		          this.songList.get(songid).attributes.serverkey;
+		
+		console.log($('#musicPlayer audio').attr('src'));
+		var player = $('#musicPlayer audio').attr('src', url );
+		$('#musicPlayer audio').get(0).play();
+
+		
+	},
+	this.allRoutes = function(e) {
+		if(e !== "index") {
+			that.homeCollectionView.clean();
+		}
+		$('#header').html(that.headerView.render().el);
+
+		if(that.projectList.length <= 0) {
+			that.projectList.fetch();
+		}
+	},
+	this.defaultRoute = function() {
+		console.log("default Route");
+	};
+	this.initialize = function(options) {
+		that.projectList = new ProjectCollection();
+		that.projectList.fetch();
+		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
+		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
+		that.projectCollectionView.render();
+		that.homeCollectionView.render();
+		that.headerView = new HeaderView({model: new UserModel()});
+		$('#header').html(that.headerView.render().el);
+	}
+};
+},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":13,"./views/collectionViews/projectCollectionView":15,"./views/collectionViews/projectListItemView":16,"./views/collectionViews/songCollectionView":17,"./views/collectionViews/songListItemView":18,"./views/collectionViews/userCollectionView":19,"./views/collectionViews/userListItemView":20,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":34,"jQuery":56}],11:[function(require,module,exports){
+var Backbone     					= require('Backbone'),
+		$            					= require('jQuery'),
+		UserModel 						= require('./models/userModel'),
+		UserCollection 				= require('./collections/userCollection'),
+		UserCollectionView    = require('./views/collectionViews/userCollectionView'),
+		UserListItemView   		= require('./views/collectionViews/userListItemView'),
+		ProjectModel 					= require('./models/projectModel'),
+		ProjectCollection 		= require('./collections/projectCollection'),
+		ProjectCollectionView = require('./views/collectionViews/projectCollectionView'),
+		ProjectListItemView   = require('./views/collectionViews/projectListItemView'),
+		HomeCollectionView    = require('./views/collectionViews/homeCollectionView'),
+		
+		ProjectForm           = require('./views/formViews/projectForm'),
+		SongModel      				= require('./models/songModel'),
+		SongCollection 				= require('./collections/songCollection'),
+		SongCollectionView    = require('./views/collectionViews/songCollectionView'),
+		SongListItemView 			= require('./views/collectionViews/songListItemView'),
+		SongForm 			  			= require('./views/formViews/songForm'),
+		EditSongForm    			= require('./views/formViews/editSongForm'),
+		SongDetailsView 			= require('./views/songDetailsView'),
+		HeaderView 						= require('./views/headerView'),
+		LoginModel 						= require('./models/loginModel'),
+		LoginForm  						= require('./views/formViews/loginForm');
 
 module.exports = Router = Backbone.Router.extend({
 	routes: {
@@ -165,166 +419,334 @@ module.exports = Router = Backbone.Router.extend({
 	url: "/",
 	// Fetch data from project table
 	index: function () {
-		$('#mainContent').html('<p>no content</p>');
-		this.projectList.fetch();
-		$('#sidebar').html(this.projectCollectionView.render().el);
+		this.controller.index();
+		
 	},
 	login: function() {
-		this.loginItem = new LoginModel();
-		this.loginForm = new LoginForm({model: this.loginItem });
-		//console.log("Login 1. Token: " + this.loginItem.get('token'));
-		$('#mainContent').html(this.loginForm.render().el);
-		$('#sidebar').html(this.projectCollectionView.render().el);
+		this.controller.login();
 	},
 	logout: function() {
-		//this.loginItem = new LoginModel({id:1});
-		console.log("logout 1. Token: " + window.localStorage.getItem('token'));
-		window.localStorage.setItem('token', '');
-		//this.loginItem.set('token', '');
-		
-		console.log('logout 2. Token: ' + window.localStorage.getItem('token'));
-		$('#mainContent').html(this.songCollectionView.render().el);
-		$('#sidebar').html(this.projectCollectionView.render().el);
+		this.controller.logout();
 	},
 	createProject: function() {
-		var projectItem = new ProjectModel();
-		var projectForm = new ProjectForm({model: projectItem });
-		this.projectList.add(projectItem);
-		$('#mainContent').html(projectForm.render().el);
-		$('#sidebar').html(this.projectCollectionView.render().el);
+		this.controller.createProject();
 	},
 	readProject: function(projectid) {
-		$('#sidebar').html(this.projectCollectionView.render().el);
-		var self = this;
-		var projectItem = new ProjectModel({id: projectid});//this.projectList.get(projectid);
-	
-		projectItem.fetch({
-			success: function(project) {
-				var projectSongs = project.attributes.songs;
-				self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
-				self.songList.url = "/project/" + projectid + "/song";
-				self.songCollectionView = new SongCollectionView({collection:self.songList});
-				$('#mainContent').html(self.songCollectionView.render().el);
-				console.log("getting songs " + window.localStorage.getItem('token') );
-
-				if(window.localStorage.getItem('token')) {
-					$('.admin').removeClass('hidden'); 
-					console.log("Token true");
-				} else {
-					$('.admin').addClass('hidden');
-					console.log("Token false");
-				}
-			},
-			error: function(err) {
-				console.log(err);
-			}
-		}, this);
+		this.controller.readProject(projectid);
 	},
 	updateProject: function(projectid) {
-		var projectItem = this.projectList.get(projectid);
-		var projectForm = new ProjectForm({model: projectItem});
-		$('#mainContent').html(projectForm.render().el);
+		this.controller.updateProject(projectid);
 	},
 	deleteProject: function(projectid) {
-		var projectItem = this.projectList.remove(projectid);
-		projectItem.destroy({success: function(model, response) {
-			model.off('change');
-		}});
+		this.controller.delete(projectid);
 	},
 	createSong: function(projectid) {
-		var songItem = new SongModel();
-		songItem.set({'projectid':  projectid });
-		var songForm = new SongForm({model: songItem });
-		$('#mainContent').html(songForm.render().el);
+		this.controller.createSong(projectid);
 	},
 	readSong: function(projectid, songid) {
-		var self = this;
-		$('#sidebar').html(this.projectCollectionView.render().el);
-		
-		this.projectList.fetch({
-			success: function(song) {
-				var projectItem = self.projectList.get(projectid);
-				console.log("projectItem");
-				console.log(projectItem);
-				projectItem.fetch({
-					success: function(project) {
-						var projectSongs = project.attributes.songs;
-						self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
-						self.songList.url = "/project/" + projectid + "/song";
-						self.songCollectionView = new SongCollectionView({collection:self.songList});
-						$('#mainContent').html(self.songCollectionView.render().el);
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				}, this);
-				
-			},
-			error: function(err) {
-				console.log(err);
-			}
-		}, this);
-		
-		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
-		
-		songItem.fetch({
-			success: function(song) {
-				var songView = new SongDetailsView({model: song});
-				$('#description').html(songView.render().el);	
-				
-				var songs = self.projectList.get(projectid).attributes.songs,
-						songCollection = new SongCollection(songs);
-				console.log(self.projectList.get(projectid).attributes );
-			},
-			error: function(err) {
-				console.log(err);
-			}
-		}, this);
-		
+		this.controller.readSong(projectid, songid);
 	},
 	updateSong: function(projectid, songid) {
-		console.log("update song:");
-		var songItem = this.songList.get(songid);
-		console.log(songItem.attributes);
-		var songForm = new EditSongForm({model: songItem});
-		$('#mainContent').html(songForm.render().el);
+		this.controller.updateSong(projectid, songid);
 	},
 	deleteSong: function(projectid, songid) {
-		console.log("Song ID: " + songid);
-		var songItem = this.songList.remove(songid);
-		console.log(songItem.attributes);
-		
-		songItem.destroy({success: function(model, response) {
-			model.off('change');
-		}});
+		this.controller.deleteSong(projectid);
 	},
 	play: function(projectid, songid) {
-
-		console.log("PLAY");
-		var url = './media/music/' + this.songList.get(songid).attributes.serverkey;
-		console.log(url);
-		console.log($('#musicPlayer audio').attr('src'));
-		var player = $('#musicPlayer audio').attr('src', url );
-		$('#musicPlayer audio').get(0).play();
-
-		
+		this.controller.play(projectid, songid);
+	},
+	allRoutes: function(e) {
+		this.controller.allRoutes(e);
 	},
 	defaultRoute: function() {
-		console.log("default Route");
+		this.controller.defaultRoute();
 	},
 	initialize: function(options) {
+		this.on('route', this.allRoutes, this);
+		this.controller = options.controller;
 		this.self = this;
 		this.projectList = new ProjectCollection();
-		this.projectList.fetch({success: function(){Backbone.history.start();}});
+		this.projectList.fetch();
+		this.homeCollectionView = new HomeCollectionView({collection:this.projectList});
 		this.projectCollectionView = new ProjectCollectionView({collection:this.projectList});
 		this.projectCollectionView.render();
+		this.homeCollectionView.render();
+		this.headerView = new HeaderView({model: new UserModel()});
+		$('#header').html(this.headerView.render().el);
+
+
 	},
 	start: function() {
 		//console.log("Starting history");
-		//Backbone.history.start();
+		Backbone.history.start();
 	}
 });
-},{"./collections/projectCollection":2,"./collections/songCollection":3,"./models/loginModel":5,"./models/projectModel":6,"./models/songModel":7,"./views/editSongForm":9,"./views/loginForm":10,"./views/projectCollectionView":11,"./views/projectForm":12,"./views/projectListItemView":13,"./views/songCollectionView":14,"./views/songDetailsView":15,"./views/songForm":16,"./views/songListItemView":17,"Backbone":19,"jQuery":41}],9:[function(require,module,exports){
+},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":13,"./views/collectionViews/projectCollectionView":15,"./views/collectionViews/projectListItemView":16,"./views/collectionViews/songCollectionView":17,"./views/collectionViews/songListItemView":18,"./views/collectionViews/userCollectionView":19,"./views/collectionViews/userListItemView":20,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":34,"jQuery":56}],12:[function(require,module,exports){
+
+},{}],13:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		_ = require('underscore'),
+		$ = require('jQuery'),
+		HomeListItemView = require('./homeListItemView');
+
+module.exports = Backbone.View.extend({
+	tagName: 'ul',
+
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+	},
+	addOne: function(projectItem) {
+		var homeView = new HomeListItemView({model: projectItem});
+		this.$el.append(homeView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	remove: function(project) {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		this.addAll();
+		return this;
+	},
+	clean: function() {
+		console.log("cleaning homeCollectionView");
+		this.$el.empty();
+	}
+	
+});
+},{"./homeListItemView":14,"Backbone":34,"jQuery":56,"underscore":58}],14:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports = Backbone.View.extend({
+	
+	template: require('../../../templates/homeListItem.hbs'),
+	tagName: 'li',
+	
+	initialize: function() {
+		this.model.on('change', this.render, this);
+	},
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		
+		return this;
+	}
+});
+},{"../../../templates/homeListItem.hbs":28,"backbone":36,"jQuery":56,"underscore":58}],15:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		_ = require('underscore'),
+		$ = require('jQuery'),
+		ProjectListItemView = require('./projectListItemView');
+
+module.exports = Backbone.View.extend({
+	tagName: 'ul',
+	className: 'well',
+
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+		this.collection.on('index', this.clean, this);
+	},
+	addOne: function(projectItem) {
+		var projectView = new ProjectListItemView({model: projectItem});
+		this.$el.append(projectView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	remove: function(project) {
+	
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		this.addAll();
+		//$('#sidebar').html(this.el);
+		return this;
+	},
+	clean: function(user) {
+		console.log("cleaning projectCollectionView");
+		this.$el.removeClass('well');
+		this.$el.empty();
+	}
+	
+});
+},{"./projectListItemView":16,"Backbone":34,"jQuery":56,"underscore":58}],16:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports = Backbone.View.extend({
+	
+	template: require('../../../templates/projectListItem.hbs'),
+	tagName: 'li',
+	className: '',
+	
+	initialize: function() {
+		this.model.on('change', this.render, this);
+		this.model.on('login:success', this.toggleAdminButtons);
+	},
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		
+		return this;
+	},
+	toggleAdminButtons: function() {
+		$('.admin').toggleClass('hidden');
+	}
+});
+},{"../../../templates/projectListItem.hbs":31,"backbone":36,"jQuery":56,"underscore":58}],17:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		_ = require('underscore'),
+		$ = require('jQuery'),
+		SongListItemView = require('./songListItemView');
+
+module.exports = Backbone.View.extend({
+	tagName: 'ul',
+	
+
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+		this.collection.on('index', this.clean, this);
+		//this.listenTo(Backbone.dispacher, 'login:success', this.remove);
+	},
+	addOne: function(songItem) {
+		//console.log("Add one : " );
+		//console.log(songItem.toJSON());
+		var songView = new SongListItemView({model: songItem});
+		this.$el.append(songView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		//console.log("SongCollectionView render");
+		this.addAll();
+		//$('#mainContent').html(this.el);
+		return this;
+	},
+	remove: function(project) {
+		console.log("remove item from song collection view");
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	clean: function() {
+		console.log("cleaning songCollectionView");
+		this.$el.empty();
+	}
+	
+});
+},{"./songListItemView":18,"Backbone":34,"jQuery":56,"underscore":58}],18:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports  = Backbone.View.extend({
+	
+	template: require('../../../templates/songListItem.hbs'),
+	tagName: 'li',
+	className: '',
+
+	initialize: function() {
+		this.model.on('change', this.render, this);
+		this.model.on('login:success', this.showAdminButtons);
+	},
+	render: function() {
+	
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		if(window.localStorage.getItem('token') !== null) {
+			$('.admin').removeClass('hidden');
+			console.log("token is set, songlistitemview");
+		}
+		
+		return this;
+	},
+	showAdminButtons: function() {
+		console.log("toggleAdminButtons song item view");
+		$('.admin').show();
+	}
+});
+},{"../../../templates/songListItem.hbs":32,"backbone":36,"jQuery":56,"underscore":58}],19:[function(require,module,exports){
+var Backbone = require('Backbone'),
+		_ = require('underscore'),
+		$ = require('jQuery'),
+		UserListItemView = require('./userListItemView');
+
+module.exports = Backbone.View.extend({
+	tagName: 'ul',
+
+	initialize: function() {
+		this.collection.on('add', this.addOne, this);
+		this.collection.on('reset', this.addAll, this);
+		this.collection.on('remove', this.remove, this);
+	},
+	addOne: function(userItem) {
+		//console.log("user Item : " );
+		//console.log(userItem.toJSON());
+		var userView = new UserListItemView({model: userItem});
+		this.$el.append(userView.render().el);
+	},
+	addAll: function() {
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	remove: function(user) {
+		//console.log("remove item from user collection view");
+		this.$el.empty();
+		this.collection.forEach(this.addOne, this);
+	},
+	render: function() {
+		this.addAll();
+		//$('#sidebar').html(this.el);
+		return this;
+	},
+	clean: function(user) {
+		console.log("cleaning userCollection view");
+		this.$el.empty();
+	}
+	
+});
+},{"./userListItemView":20,"Backbone":34,"jQuery":56,"underscore":58}],20:[function(require,module,exports){
+var Backbone = require('backbone'),
+		$ = require('jQuery'),
+		_ = require('underscore');
+
+module.exports  = Backbone.View.extend({
+	
+	template: require('../../../templates/userListItem.hbs'),
+	tagName: 'li',
+
+	initialize: function() {
+		this.model.on('change', this.render, this);
+		this.model.on('login:success', this.toggleAdminButtons);
+	},
+	render: function() {
+	
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(attributes));
+		
+		return this;
+	},
+	toggleAdminButtons: function() {
+		console.log("toggleAdminButtons user item view");
+		$('.admin').toggleClass('hidden');
+	}
+});
+},{"../../../templates/userListItem.hbs":33,"backbone":36,"jQuery":56,"underscore":58}],21:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -370,19 +792,23 @@ module.exports = Backbone.View.extend({
 			participator: participator,
 			participatorRole: participatorRole
 		});
-	
+	},
+	clean: function() {
+		console.log("cleaning editSongFormView");
+		this.$el.empty();
 	}
 });
-},{"backbone":21,"jQuery":41,"underscore":43}],10:[function(require,module,exports){
+},{"backbone":36,"jQuery":56,"underscore":58}],22:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore'),
 		Handlebars = require('handlebars');
 
 module.exports = Backbone.View.extend({
-	template: require('../../templates/login.hbs'),
+	template: require('../../../templates/login.hbs'),
 	events: {
 		'submit': 'save'
+
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
@@ -403,65 +829,29 @@ module.exports = Backbone.View.extend({
 		}, {success: function() {
 			//console.log("token: " + self.model.get('token'));
 			window.localStorage.setItem('token', self.model.get('token'));
-			// trigger authorized on the model
-
 		}});
 	
-	}
-
-});
-},{"../../templates/login.hbs":18,"backbone":21,"handlebars":38,"jQuery":41,"underscore":43}],11:[function(require,module,exports){
-var Backbone = require('Backbone'),
-		_ = require('underscore'),
-		$ = require('jQuery'),
-		ProjectListItemView = require('./projectListItemView');
-
-module.exports = Backbone.View.extend({
-	tagName: 'ul',
-
+	},
 	initialize: function() {
-		this.collection.on('add', this.addOne, this);
-		this.collection.on('reset', this.addAll, this);
-		this.collection.on('remove', this.remove, this);
+		this.listenTo(this.model, 'change:token', this.clean);
+		//this.model.on('change:token', this.clean, this);
+		this.model.on('home:clean', this.clean, this);
+		this.model.on('index', this.clean, this);
 	},
-	addOne: function(projectItem) {
-		//console.log("project Item : " );
-		//console.log(projectItem.toJSON());
-		var projectView = new ProjectListItemView({model: projectItem});
-		this.$el.append(projectView.render().el);
-	},
-	addAll: function() {
-		this.$el.empty();
-		this.collection.forEach(this.addOne, this);
-	},
-	remove: function(project) {
-		//console.log("remove item from project collection view");
-		this.$el.empty();
-		this.collection.forEach(this.addOne, this);
-	},
-	render: function() {
-		this.addAll();
-		//$('#sidebar').html(this.el);
-		return this;
+	clean: function() {
+		console.log("cleaning loginFormView");
+		this.$el.remove();
+		
 	}
-	
+
 });
-},{"./projectListItemView":13,"Backbone":19,"jQuery":41,"underscore":43}],12:[function(require,module,exports){
+},{"../../../templates/login.hbs":29,"backbone":36,"handlebars":53,"jQuery":56,"underscore":58}],23:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form >' +
-			'Project name:   <input type="text" name="projectname" value="<%= projectname %>" /><br>' +
-			 'Email:       <input type="text" name="email" value="<%= email %>" /><br>' +
-			 'About:  <input type="text" name="about" value="<%= about %>" /><br>' +
-			 'Influences:  <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			 'Participator:<input type="text" name="participator" value="<%= participator %>" /><br>' +
-			 'Participants role:<input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			 '<button type="submit" value="Save" name="">Save</button>' +
-		'</form>'),
+	template: require('../../../templates/projectForm.hbs'),
 	events: {
 		'submit': 'save'
 	},
@@ -487,74 +877,86 @@ module.exports = Backbone.View.extend({
 			participator: participator,
 			participatorRole: participatorRole
 		});
+	},
+	clean: function() {
+		console.log("cleaning projectFormView");
+		this.$el.empty();
+		//window.history.back();
 	}
 });
-},{"backbone":21,"jQuery":41,"underscore":43}],13:[function(require,module,exports){
+},{"../../../templates/projectForm.hbs":30,"backbone":36,"jQuery":56,"underscore":58}],24:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	
-	template: _.template('<a href="#/project/<%= id %>"><%= projectname %></a>' +
-											'<a class="admin hidden" href="#/project/<%= id %>/edit"><button >Edit</button></a>' +
-											'<a class="admin hidden" href="#/project/<%= id %>/delete"><button >Delete</button></a>' +
-											'<a class="admin hidden" href="#/project/<%= id %>/newSong"><button >New song</button></a>'),//require('../../templates/projects.hbs'),
-	tagName: 'li',
-	
-	initialize: function() {
-		this.model.on('change', this.render, this);
-		this.model.on('login:success', this.toggleAdminButtons);
+	template: _.template(
+		'<form id =  "uploadForm"' +
+     'enctype   =  "multipart/form-data"' +
+     'action    =  "/project/<%= projectid %>"' +
+     'method    =  "post">' +
+     	'<input type="hidden" name="projectid" value="<%= projectid %>">' +
+			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
+			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
+			'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
+			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
+			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
+			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
+			'<input type="file" name="file" /><br>' +                 
+			'<input type="submit" value="Save" name="submit">' +
+		'</form>'),
+	events: {
+		'submit': 'clean',
+		"change input[type=file]" : "encodeFile"
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
-		this.$el.html(this.template(attributes));
-		
+		this.$el.html(this.template(this.model.attributes));
 		return this;
 	},
-	toggleAdminButtons: function() {
-		$('.admin').toggleClass('hidden');
+	encodeFile: function() {
+		// Better to get it from the userobject?
+		var token = window.localStorage.getItem('token');
+		
+		// This is not secure. But havn't found out how to overcome the problems of encoding the header 
+		// when the form is send without the help of Backbone(jquery ajax).
+		// The server does not get the body in the middleware
+		var actionUrl = this.$('#uploadForm').attr('action');
+		actionUrl += "?token=" + token;
+		this.$('#uploadForm').attr('action', actionUrl);
+		Backbone.history.navigate("#/", {trigger: true});
+	},
+	save: function(e) {
+		this.model.fetch({
+			success: function(song) {
+				console.log("this.model.influence");
+				console.log(this.model.influence);
+			}
+		});
+	},
+	clean: function() {
+		console.log("cleaning songFormView");
+		this.$el.empty();
+		
 	}
 });
-},{"backbone":21,"jQuery":41,"underscore":43}],14:[function(require,module,exports){
-var Backbone = require('Backbone'),
-		_ = require('underscore'),
+},{"backbone":36,"jQuery":56,"underscore":58}],25:[function(require,module,exports){
+var Backbone = require('backbone'),
 		$ = require('jQuery'),
-		SongListItemView = require('./songListItemView');
+		_ = require('underscore'),
+		Handlebars = require('handlebars');
 
 module.exports = Backbone.View.extend({
-	tagName: 'ul',
-
-	initialize: function() {
-		this.collection.on('add', this.addOne, this);
-		this.collection.on('reset', this.addAll, this);
-		this.collection.on('remove', this.remove, this);
-		this.listenTo(Backbone.dispacher, 'login:success', this.remove);
-	},
-	addOne: function(songItem) {
-		//console.log("Add one : " );
-		//console.log(songItem.toJSON());
-		var songView = new SongListItemView({model: songItem});
-		this.$el.append(songView.render().el);
-	},
-	addAll: function() {
-		this.$el.empty();
-		this.collection.forEach(this.addOne, this);
-	},
-	render: function() {
-		//console.log("SongCollectionView render");
-		this.addAll();
-		//$('#mainContent').html(this.el);
-		return this;
-	},
-	remove: function(project) {
-		console.log("remove item from song collection view");
-		this.$el.empty();
-		this.collection.forEach(this.addOne, this);
-	}
+	template: require('../../templates/header.hbs'),
 	
+	render: function() {
+		var attributes = this.model.toJSON();
+		this.$el.html(this.template(this.model.attributes));
+		return this;
+	}
+
 });
-},{"./songListItemView":17,"Backbone":19,"jQuery":41,"underscore":43}],15:[function(require,module,exports){
+},{"../../templates/header.hbs":27,"backbone":36,"handlebars":53,"jQuery":56,"underscore":58}],26:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -566,12 +968,12 @@ module.exports  = Backbone.View.extend({
 												'<p>productionstatus: <%= productionstatus %></p>' +
 												'<p>influence: <%= influence %></p>' +
 												'<p>participators userid: <%= participation.userid %></p>' +
-												'<p>participators role: <%= participation.role %></p>' +
-												'<p>serverkey: <%= serverkey %></p>'),//require('../../templates/projects.hbs'),
+												'<p>participators role: <%= participation.role %></p>'),
 	tagName: 'aside',
 
 	initialize: function() {
 		this.model.on('change', this.render, this);
+		this.model.on('index', this.clean, this);
 	},
 	render: function() {
 		//console.log("SongDetailsView render: " );
@@ -579,93 +981,13 @@ module.exports  = Backbone.View.extend({
 		this.$el.html(this.template(attributes));
 		
 		return this;
+	},
+	clean: function() {
+		console.log("cleaning songDetailView");
+		this.$el.empty();
 	}
 });
-},{"backbone":21,"jQuery":41,"underscore":43}],16:[function(require,module,exports){
-var Backbone = require('backbone'),
-		$ = require('jQuery'),
-		_ = require('underscore');
-
-module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form id =  "uploadForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/<%= projectid %>"' +
-     'method    =  "post">' +
-
-   		'<input type="hidden" name="projectname" value="<%= projectname %>" /><br>' +
-			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
-			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
-			'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'<input type="file" name="file" /><br>' +                 
-			'<input type="submit" value="Save" name="submit">' +
-		'</form>'),
-	events: {
-		'submit': 'save'
-	},
-	render: function() {
-		var attributes = this.model.toJSON();
-		this.$el.html(this.template(this.model.attributes));
-		return this;
-	},
-	save: function(e) {
-		/*
-		e.preventDefault();
-		var productionstatus = this.$('input[name=productionstatus]').val();
-		var notes = this.$('input[name=notes]').val();
-		var created = this.$('input[name=created]').val();
-		var influence = this.$('input[name=influence]').val();
-		var participator = this.$('input[name=participator]').val();
-		var participatorRole = this.$('input[name=participatorRole]').val();
-		var datafile = this.$('input[name=file]').val();
-		this.model.save({
-			projectid: this.model.get('projectid'),
-			projectname: this.model.get('projectname'),
-			productionstatus: productionstatus,
-			notes: notes,
-			created: created,
-			influence: influence,
-			participator: participator,
-			participatorRole: participatorRole,
-			datafile: datafile
-		});
-	*/
-	}
-});
-},{"backbone":21,"jQuery":41,"underscore":43}],17:[function(require,module,exports){
-var Backbone = require('backbone'),
-		$ = require('jQuery'),
-		_ = require('underscore');
-
-module.exports  = Backbone.View.extend({
-	
-	template: _.template('<a href="#/project/<%= projectid %>/song/<%= id %>/play"><button>Play</button></a>' +
-											 '<p><a href="#/project/<%= projectid %>/song/<%= id %>">' +
-											 '<%= title %></a></p>' +
-											 '<a class="admin hidden" href="#/project/<%= projectid %>/song/<%= id %>/edit"><button >Edit</button></a>' +
-											 '<a class="admin hidden" href="#/project/<%= projectid %>/song/<%= id %>/delete"><button >Delete</button></a>'),//require('../../templates/projects.hbs'),
-	tagName: 'li',
-
-	initialize: function() {
-		this.model.on('change', this.render, this);
-		this.model.on('login:success', this.toggleAdminButtons);
-	},
-	render: function() {
-	
-		var attributes = this.model.toJSON();
-		this.$el.html(this.template(attributes));
-		
-		return this;
-	},
-	toggleAdminButtons: function() {
-		console.log("toggleAdminButtons song item view");
-		$('.admin').toggleClass('hidden');
-	}
-});
-},{"backbone":21,"jQuery":41,"underscore":43}],18:[function(require,module,exports){
+},{"backbone":36,"jQuery":56,"underscore":58}],27:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -674,10 +996,278 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"container\">\n\n<div class=\"col-sm-6 col-sm-offset-3\">\n\n    <h1><span class=\"fa fa-sign-in\"></span> Login hbs loginform</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n\n</div>";
+  return "<div class=\"navbar navbar-default navbar-fixed-top\">\n        <div class=\"container-fluid\">\n          <header class=\"navbar-header\">\n            <a href=\"#/\" class=\"navbar-brand\">August9</a>\n\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" \n            data-target=\".navbar-collapse\">\n              <span class='sr-only'>Toggle navigation</span> \n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n            <span id=\"slogan\">— music production for every mood</span>\n          </header>\n          \n          <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n            <li><a href=\"#/login\">login</a></li>\n            <li><a href=\"#/logout\">logout</a></li>\n            <li><a href=\"#/project/newProject\" class=\"admin hidden\">New project</a></li>\n          </ul>\n        </div>\n      </div>";
   });
 
-},{"hbsfy/runtime":40}],19:[function(require,module,exports){
+},{"hbsfy/runtime":55}],28:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n			<img src=\"";
+  if (helper = helpers.image) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.image); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" alt=\"";
+  if (helper = helpers.imgAlt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.imgAlt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"/>\n		";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n			<img src=\"./media/images/tre.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>\n		";
+  }
+
+  buffer += "<a href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4\">\n		";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.imgThumb), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n		<h3> ";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</h3>\n	</div>\n</a>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":55}],29:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"\">\n\n    <h1><span class=\"august9-login\"></span> Login </h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n";
+  });
+
+},{"hbsfy/runtime":55}],30:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n<h2>Edit ";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</h2>\n";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n<h2>Create new Project</h2>\n";
+  }
+
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.id), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n		<form >\n			 Project name:   <input type=\"text\" name=\"projectname\" value=\"";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n			 Email:       <input type=\"text\" name=\"email\" value=\"";
+  if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n			 About:  <input type=\"text\" name=\"about\" value=\"about\" /><br>\n			 Influences:  <input type=\"text\" name=\"influence\" value=\"";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n			 Participator:<input type=\"text\" name=\"participator\" value=\"";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n			 Participants role:<input type=\"text\" name=\"participatorRole\" value=\"";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n			 <button type=\"submit\" value=\"Save\" name=\"\">Save</button>\n		</form>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":55}],31:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"row\">\n	<div class=\"col-sm-12\"><a href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"><p>";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p></a></div>\n</div>\n<div class=\"row\">\n	<div class=\"col-sm-4\">\n		<a class=\"admin hidden\" href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/edit\">   <button type=\"button\" class=\"btn btn-xs\" >Edit</button></a>\n	</div>\n	<div class=\"col-sm-4\">\n		<a class=\"admin hidden\" href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/delete\"> <button type=\"button\" class=\"btn btn-xs\" >Delete</button></a>\n	</div>\n	<div class=\"col-sm-4\">\n		<a class=\"admin hidden\" href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/newSong\"><button type=\"button\" class=\"btn btn-xs\" >New song</button></a>\n	</div>\n</div>\n\n\n\n";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":55}],32:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"row\">\n	<div class=\"col-xs-1  \">\n		<a href=\"#/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/song/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/play\">\n 			<button type=\"button\" class=\"btn btn-xs\">Play</button>\n		</a>\n	</div>\n	<div class=\"col-xs-8 col-xs-offset-1\"><a href=\"#/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/song/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</a> \n	</div>\n\n\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " /song/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/edit\">  \n			<button type=\"button\" class=\"btn btn-xs\" >Edit</button>\n		</a>\n	</div>\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/song/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/delete\">\n			<button type=\"button\" class=\"btn btn-xs\" >Delete</button>\n		</a>\n	</div>\n</div>\n<p>";
+  if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.notes); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\n";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\n";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p>\n\n\n\n";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":55}],33:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, helper;
+  buffer += "\n	<a href=\"#/user/";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"><img src=\"";
+  if (helper = helpers.avatar) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.avatar); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /></a>\n";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n	<img src=\"./media/avatars/default-avatar.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>\n";
+  }
+
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.avatar), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n<a href=\"#/user/";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"><p>";
+  if (helper = helpers.username) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.username); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p></a>\n<p>Id: ";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p>\n<p>Name: ";
+  if (helper = helpers.firstname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.firstname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " ";
+  if (helper = helpers.lastname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.lastname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p>\n<a class=\"admin hidden\" href=\"#/user/";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/edit\">   <button type=\"button\" class=\"btn\" >Edit</button></a>\n<a class=\"admin hidden\" href=\"#/user/";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/delete\"> <button type=\"button\" class=\"btn\" >Delete</button></a>\n<a class=\"admin hidden\" href=\"#/user/";
+  if (helper = helpers.userid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.userid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/newUser\"><button type=\"button\" class=\"btn\" >New User</button></a>\n\n";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":55}],34:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -2554,7 +3144,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":42,"underscore":20}],20:[function(require,module,exports){
+},{"jquery":57,"underscore":35}],35:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -4104,13 +4694,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   }
 }.call(this));
 
-},{}],21:[function(require,module,exports){
-arguments[4][19][0].apply(exports,arguments)
-},{"dup":19,"jquery":42,"underscore":22}],22:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"dup":20}],23:[function(require,module,exports){
-
-},{}],24:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
+arguments[4][34][0].apply(exports,arguments)
+},{"dup":34,"jquery":57,"underscore":37}],37:[function(require,module,exports){
+arguments[4][35][0].apply(exports,arguments)
+},{"dup":35}],38:[function(require,module,exports){
+arguments[4][12][0].apply(exports,arguments)
+},{"dup":12}],39:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var Handlebars = require("./handlebars.runtime")["default"];
@@ -4148,7 +4738,7 @@ Handlebars = create();
 Handlebars.create = create;
 
 exports["default"] = Handlebars;
-},{"./handlebars.runtime":25,"./handlebars/compiler/ast":27,"./handlebars/compiler/base":28,"./handlebars/compiler/compiler":29,"./handlebars/compiler/javascript-compiler":30}],25:[function(require,module,exports){
+},{"./handlebars.runtime":40,"./handlebars/compiler/ast":42,"./handlebars/compiler/base":43,"./handlebars/compiler/compiler":44,"./handlebars/compiler/javascript-compiler":45}],40:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var base = require("./handlebars/base");
@@ -4181,7 +4771,7 @@ var Handlebars = create();
 Handlebars.create = create;
 
 exports["default"] = Handlebars;
-},{"./handlebars/base":26,"./handlebars/exception":34,"./handlebars/runtime":35,"./handlebars/safe-string":36,"./handlebars/utils":37}],26:[function(require,module,exports){
+},{"./handlebars/base":41,"./handlebars/exception":49,"./handlebars/runtime":50,"./handlebars/safe-string":51,"./handlebars/utils":52}],41:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -4362,7 +4952,7 @@ exports.log = log;var createFrame = function(object) {
   return obj;
 };
 exports.createFrame = createFrame;
-},{"./exception":34,"./utils":37}],27:[function(require,module,exports){
+},{"./exception":49,"./utils":52}],42:[function(require,module,exports){
 "use strict";
 var Exception = require("../exception")["default"];
 
@@ -4590,7 +5180,7 @@ var AST = {
 // Must be exported as an object rather than the root of the module as the jison lexer
 // most modify the object to operate properly.
 exports["default"] = AST;
-},{"../exception":34}],28:[function(require,module,exports){
+},{"../exception":49}],43:[function(require,module,exports){
 "use strict";
 var parser = require("./parser")["default"];
 var AST = require("./ast")["default"];
@@ -4606,7 +5196,7 @@ function parse(input) {
 }
 
 exports.parse = parse;
-},{"./ast":27,"./parser":31}],29:[function(require,module,exports){
+},{"./ast":42,"./parser":46}],44:[function(require,module,exports){
 "use strict";
 var Exception = require("../exception")["default"];
 
@@ -5076,7 +5666,7 @@ exports.precompile = precompile;function compile(input, options, env) {
 }
 
 exports.compile = compile;
-},{"../exception":34}],30:[function(require,module,exports){
+},{"../exception":49}],45:[function(require,module,exports){
 "use strict";
 var COMPILER_REVISION = require("../base").COMPILER_REVISION;
 var REVISION_CHANGES = require("../base").REVISION_CHANGES;
@@ -6019,7 +6609,7 @@ JavaScriptCompiler.isValidJavaScriptVariableName = function(name) {
 };
 
 exports["default"] = JavaScriptCompiler;
-},{"../base":26,"../exception":34}],31:[function(require,module,exports){
+},{"../base":41,"../exception":49}],46:[function(require,module,exports){
 "use strict";
 /* jshint ignore:start */
 /* Jison generated parser */
@@ -6510,7 +7100,7 @@ function Parser () { this.yy = {}; }Parser.prototype = parser;parser.Parser = Pa
 return new Parser;
 })();exports["default"] = handlebars;
 /* jshint ignore:end */
-},{}],32:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 var Visitor = require("./visitor")["default"];
 
@@ -6649,7 +7239,7 @@ PrintVisitor.prototype.content = function(content) {
 PrintVisitor.prototype.comment = function(comment) {
   return this.pad("{{! '" + comment.comment + "' }}");
 };
-},{"./visitor":33}],33:[function(require,module,exports){
+},{"./visitor":48}],48:[function(require,module,exports){
 "use strict";
 function Visitor() {}
 
@@ -6662,7 +7252,7 @@ Visitor.prototype = {
 };
 
 exports["default"] = Visitor;
-},{}],34:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 "use strict";
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -6691,7 +7281,7 @@ function Exception(message, node) {
 Exception.prototype = new Error();
 
 exports["default"] = Exception;
-},{}],35:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -6829,7 +7419,7 @@ exports.program = program;function invokePartial(partial, name, context, helpers
 exports.invokePartial = invokePartial;function noop() { return ""; }
 
 exports.noop = noop;
-},{"./base":26,"./exception":34,"./utils":37}],36:[function(require,module,exports){
+},{"./base":41,"./exception":49,"./utils":52}],51:[function(require,module,exports){
 "use strict";
 // Build out our basic SafeString type
 function SafeString(string) {
@@ -6841,7 +7431,7 @@ SafeString.prototype.toString = function() {
 };
 
 exports["default"] = SafeString;
-},{}],37:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 /*jshint -W004 */
 var SafeString = require("./safe-string")["default"];
@@ -6918,7 +7508,7 @@ exports.escapeExpression = escapeExpression;function isEmpty(value) {
 }
 
 exports.isEmpty = isEmpty;
-},{"./safe-string":36}],38:[function(require,module,exports){
+},{"./safe-string":51}],53:[function(require,module,exports){
 // USAGE:
 // var handlebars = require('handlebars');
 
@@ -6945,15 +7535,15 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions[".hbs"] = extension;
 }
 
-},{"../dist/cjs/handlebars":24,"../dist/cjs/handlebars/compiler/printer":32,"../dist/cjs/handlebars/compiler/visitor":33,"fs":23}],39:[function(require,module,exports){
+},{"../dist/cjs/handlebars":39,"../dist/cjs/handlebars/compiler/printer":47,"../dist/cjs/handlebars/compiler/visitor":48,"fs":38}],54:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime');
 
-},{"./dist/cjs/handlebars.runtime":25}],40:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":40}],55:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":39}],41:[function(require,module,exports){
+},{"handlebars/runtime":54}],56:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -16165,8 +16755,8 @@ return jQuery;
 
 }));
 
-},{}],42:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],43:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"dup":20}]},{},[4]);
+},{}],57:[function(require,module,exports){
+arguments[4][56][0].apply(exports,arguments)
+},{"dup":56}],58:[function(require,module,exports){
+arguments[4][35][0].apply(exports,arguments)
+},{"dup":35}]},{},[5]);

@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
+/*
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,6 +23,7 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+*/
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -46,105 +47,37 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-/* line 20, ../../client/styles/sass/august9.scss */
-#header {
-  padding: 15px;
+/* line 1, ../../client/styles/sass/partials/_test.scss */
+body {
+  padding-top: 180px;
 }
 
-/* line 24, ../../client/styles/sass/august9.scss */
-#sidebar {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+/* line 5, ../../client/styles/sass/partials/_test.scss */
+.navbar-brand {
+  font-size: 6em;
+  height: 150px;
+  padding: 45px 35px;
+}
+
+/* line 15, ../../client/styles/sass/partials/_test.scss */
+.homeItem {
+  border: 1px solid #000;
+  margin: 1em 0 1em 0;
+  border-radius: 5%;
+}
+
+/* line 20, ../../client/styles/sass/partials/_test.scss */
+.homeItem img {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 1em;
+}
+
+/* line 34, ../../client/styles/sass/partials/_test.scss */
+#slogan {
+  width: 100px;
+  font-size: 12px;
   position: relative;
-  float: left;
-  left: 10px;
-  top: 5px;
-  bottom: 20px;
-  width: 200px;
-  border: solid 1px #CCCCCC;
-  overflow-y: scroll;
-  margin-right: 46px;
-}
-
-/* line 38, ../../client/styles/sass/august9.scss */
-#mainContent {
-  background-image: url("../media/images/chimney_small.jpg");
-}
-
-/* line 42, ../../client/styles/sass/august9.scss */
-#mainContent {
-  overflow: hidden;
-  min-width: 26em;
-  float: left;
-}
-
-/* line 51, ../../client/styles/sass/august9.scss */
-.hidden {
-  display: none;
-}
-
-/* line 54, ../../client/styles/sass/august9.scss */
-.show {
-  display: block;
-}
-
-/* line 58, ../../client/styles/sass/august9.scss */
-.col-sm-offset-3 {
-  margin-left: 1%;
-}
-
-/* line 70, ../../client/styles/sass/august9.scss */
-.title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* line 75, ../../client/styles/sass/august9.scss */
-ul {
-  list-style-type: none;
-  padding-left: 0px;
-  margin-top: 0px;
-}
-
-/* line 81, ../../client/styles/sass/august9.scss */
-li a {
-  text-decoration: none;
-  display: block;
-  color: #000000;
-  border-bottom: solid 1px #CCCCCC;
-  padding: 8px;
-  float: left;
-}
-
-/* line 90, ../../client/styles/sass/august9.scss */
-li a:hover {
-  background-color: #4B0A1E;
-  color: #BA8A92;
-}
-
-/* line 95, ../../client/styles/sass/august9.scss */
-input, textarea {
-  border: 1px solid #ccc;
-  min-height: 30px;
-  outline: none;
-}
-
-/* line 101, ../../client/styles/sass/august9.scss */
-.form-left-col input {
-  margin-bottom: 15px;
-  margin-top: 5px;
-  width: 280px;
-}
-
-/* line 107, ../../client/styles/sass/august9.scss */
-textarea {
-  margin-bottom: 15px;
-  margin-top: 5px;
-  height: 200px;
-  width: 250px;
-}
-
-/* line 114, ../../client/styles/sass/august9.scss */
-label {
-  display: block;
+  top: 20px;
+  left: -302px;
 }

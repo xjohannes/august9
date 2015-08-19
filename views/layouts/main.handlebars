@@ -3,35 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>August9</title>
     <link rel="author" href="humans.txt">
-     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <!-- bootstrap only for development-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/august9.css">
   </head>
   <body>
-    <div id="august9">
-      <header>
-          
-          <a href="#/"><h1>August9</h1></a>
-          <a href="#/login"><h1 >login</h1></a>
-          <a href="#/logout"><h1 class="">logout</h1></a>
-          <a href="/project/newProject">New project</a>
-      </header>
-      <hr/>
-      <br/>
-      <div id="sidebar"><h2>Sidebar</h2></div>
-      <div id="content">
+    <div id="august9">  
+      <div id="content" class="container " >
         {{{body}}}
       </div>
-      <div id="musicPlayer">
-        <audio controls>
-          <source src="" type="audio/mpeg">
-        </audio>
-      </div>
+      
     </div>
-    <!--<script type="text/javascript" src="js/vendors.js"></script>-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/august9.js"></script>
   </body>
 </html>

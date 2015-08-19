@@ -9,12 +9,12 @@ module.exports  = Backbone.View.extend({
 												'<p>productionstatus: <%= productionstatus %></p>' +
 												'<p>influence: <%= influence %></p>' +
 												'<p>participators userid: <%= participation.userid %></p>' +
-												'<p>participators role: <%= participation.role %></p>' +
-												'<p>serverkey: <%= serverkey %></p>'),//require('../../templates/projects.hbs'),
+												'<p>participators role: <%= participation.role %></p>'),
 	tagName: 'aside',
 
 	initialize: function() {
 		this.model.on('change', this.render, this);
+		this.model.on('index', this.clean, this);
 	},
 	render: function() {
 		//console.log("SongDetailsView render: " );
@@ -22,5 +22,9 @@ module.exports  = Backbone.View.extend({
 		this.$el.html(this.template(attributes));
 		
 		return this;
+	},
+	clean: function() {
+		console.log("cleaning songDetailView");
+		this.$el.empty();
 	}
 });

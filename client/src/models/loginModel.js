@@ -9,8 +9,15 @@ module.exports = Backbone.Model.extend({
 		token   : ""
 	},
 	initialize: function() {
+		this.listenTo(Backbone.dispacher, 'index', this.index);
 		this.on('change:token', function() {
 			Backbone.dispacher.trigger('login:success', this);
 		});
+		this.on('clean:loginForm', function() {
+			//Backbone.dispacher.trigger('clean:loginForm', this);
+		});
+	},
+	index: function() {
+		this.trigger('index');
 	}
 });

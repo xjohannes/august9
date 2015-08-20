@@ -1022,7 +1022,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
-  return "\n			<img src=\"./media/images/tre.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>\n		";
+  return "\n			<img src=\"https://pjsf6h1tr94v.firesize.com/media/images/tre.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>\n		";
   }
 
   buffer += "<a href=\"#/project/";

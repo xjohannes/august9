@@ -1,8 +1,7 @@
 var Router     			 = require('./routesFrontEnd'),
 		Backbone   			 = require('Backbone'),
 		_          			 = require('underscore'),
-		RoutesController = require('./routesController'),
-		test = require('./testThis');
+		RoutesController = require('./routesController');
 
 
 module.exports = App = function App() {};
@@ -11,10 +10,10 @@ App.prototype.start = function(){
 
 Backbone.dispacher   = _.extend({}, Backbone.Events);
 var originalSync     = Backbone.sync;
-		routesController = new RoutesController(),
-Backbone.dispacher.listenTo(this.router, 'route', test.defaultRoute);
+		routesController = new RoutesController();
 
 routesController.initialize();
+
 Backbone.sync = function(method, model, options) {
 		if( method === 'delete' ) {
 			if( options.data ) {

@@ -28,7 +28,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	clean: function() {
-		console.log("cleaning homeCollectionView");
+		//console.log("cleaning homeCollectionView");
 		this.$el.empty();
 	}
 	

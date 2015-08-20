@@ -41,6 +41,7 @@ module.exports = Router = Backbone.Router.extend({
 	url: "/",
 	// Fetch data from project table
 	index: function () {
+		console.log("index");
 		this.controller.index();
 	},
 	login: function() {
@@ -85,20 +86,8 @@ module.exports = Router = Backbone.Router.extend({
 	initialize: function(options) {
 		this.on('route', this.allRoutes, this);
 		this.controller = options.controller;
-		this.self = this;
-		this.projectList = new ProjectCollection();
-		this.projectList.fetch();
-		this.homeCollectionView = new HomeCollectionView({collection:this.projectList});
-		this.projectCollectionView = new ProjectCollectionView({collection:this.projectList});
-		this.projectCollectionView.render();
-		this.homeCollectionView.render();
-		this.headerView = new HeaderView({model: new UserModel()});
-		$('#header').html(this.headerView.render().el);
-
-
 	},
 	start: function() {
-		//console.log("Starting history");
 		Backbone.history.start();
 	}
 });

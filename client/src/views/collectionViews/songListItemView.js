@@ -18,7 +18,6 @@ module.exports  = Backbone.View.extend({
 		this.$el.html(this.template(attributes));
 		if(window.localStorage.getItem('token') !== null) {
 			$('.admin').removeClass('hidden');
-			console.log("token is set, songlistitemview");
 		}
 		
 		return this;

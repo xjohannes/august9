@@ -5,7 +5,7 @@ var Backbone = require('backbone'),
 module.exports  = Backbone.View.extend({
 	
 	template: _.template('<h2><%= title %></h2>' +
-												'<p>projectname: <%= projectname %></p>' +
+												'<p>Added: <%= added %></p>' +
 												'<p>productionstatus: <%= productionstatus %></p>' +
 												'<p>influence: <%= influence %></p>' +
 												'<p>participators userid: <%= participation.userid %></p>' +

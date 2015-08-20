@@ -27,23 +27,21 @@ module.exports = function() {
 	// Fetch data from project table
 	this.index =function () {
 		$('#homeList').html(that.homeCollectionView.render().el);
-		//this.clean();
 		Backbone.dispacher.trigger('index', that);
 		$("#mainContent").html("");
-	},
+	};
 	this.login =function() {
 		that.loginItem = new LoginModel();
 		that.loginForm = new LoginForm({model: that.loginItem });
 		$('#mainContent').html(that.loginForm.render().el);
 		$('#projectList').html(that.projectCollectionView.render().el);
-	},
+	};
 	this.logout = function() {
 		window.localStorage.setItem('token', '');
 		$('#homeList').html(this.homeCollectionView.render().el);
-		Backbone.history.navigate("",{trigger: true});
-	},
+		//Backbone.history.navigate("/");
+	};
 	this.createProject = function() {
-		var self = this;
 		var projectItem = new ProjectModel();
 		var projectForm = new ProjectForm({model: projectItem });
 		this.projectList.add(projectItem);
@@ -54,20 +52,22 @@ module.exports = function() {
 		$('.userList').html(this.userCollectionView.render().el);
 		$('#projectList').html(this.projectCollectionView.render().el);
 		$('#header').html(this.headerView.render().el);
-	},
+	};
 	this.readProject = function(projectid) {
 		$('#header').html(this.headerView.render().el);
 		$('#projectList').html(this.projectCollectionView.render().el);
 		
 		var self = this;
+		//if(that.projectList)
 		var projectItem = new ProjectModel({id: projectid});//this.projectList.get(projectid);
 		
 		projectItem.fetch({
 			success: function(project) {
 				var projectSongs = project.attributes.songs;
-				self.songList = new SongCollection(projectSongs);//self.songList.set(projectSongs);//
-				self.songList.url = "/project/" + projectid + "/song";
-				self.songCollectionView = new SongCollectionView({collection:self.songList});
+				console.log(projectSongs);
+				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
+				self.songCollection.url = "/project/" + projectid + "/song";
+				self.songCollectionView = new SongCollectionView({collection:self.songCollection});
 				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
 				$('#mainContent').append(self.songCollectionView.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
@@ -84,47 +84,57 @@ module.exports = function() {
 				console.log(err);
 			}
 		}, this);
-	},
+	};
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);
-	},
+	};
 	this.deleteProject = function(projectid) {
 		var projectItem = this.projectList.remove(projectid);
 		projectItem.destroy({success: function(model, response) {
 			model.off('change');
 		}});
-	},
+	};
 	this.createSong = function(projectid) {
 		var projectname = this.projectList.get(projectid).attributes.projectname;
 		var songItem = new SongModel();
 		songItem.set({'projectid':  projectid, 'projectname': projectname });
 		var songForm = new SongForm({model: songItem });
 		$('#mainContent').html(songForm.render().el);
-	},
+	};
 	this.readSong = function(projectid, songid) {
 		var self = this;
-		$('#header').html(this.headerView.render().el);
-		$('#projectList').html(this.projectCollectionView.render().el);
-		console.log("DEBUG: " + this.projectList.get(projectid).attributes.projectname);
+		$('#header').html(that.headerView.render().el);
+		$('#projectList').html(that.projectCollectionView.render().el);
 		
 		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
-		
-		songItem.fetch({
-			success: function(song) {
-				var songView = new SongDetailsView({model: song});
-				$('#description').html(songView.render().el);	
-				
-				var songs = self.projectList.get(projectid).attributes.songs,
-						songCollection = new SongCollection(songs);
-			},
-			error: function(err) {
-				console.log(err);
+		var projectItem = new ProjectModel({id: projectid});
+		projectItem.fetch({
+			success: function(project) {
+				songItem.fetch({
+					success: function(song) {
+						var songView = new SongDetailsView({model: song});
+						$('#description').html(songView.render().el);	
+						if(!self.songCollection) {
+							var songs = project.attributes.songs;
+							self.songCollection = new SongCollection(songs);
+							$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
+							self.songCollectionView = new SongCollectionView({collection:self.songCollection});
+							$('#mainContent').append(self.songCollectionView.render().el);
+							console.log("self.projectList.get(projectid).attributes" );
+							console.log(self.projectList.get(projectid).attributes );
+						}
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				}, this);
 			}
-		}, this);
+		});
 		
-	},
+		
+	};
 	this.updateSong = function(projectid, songid) {
 		
 		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
@@ -139,27 +149,27 @@ module.exports = function() {
 						console.log(err);
 					}
 				}, this);
-	},
+	};
 	this.deleteSong = function(projectid, songid) {
 		console.log("Song ID: " + songid);
-		var songItem = this.songList.remove(songid);
+		var songItem = this.songCollection.remove(songid);
 		
 		songItem.destroy({ success: function(model, response) {
 			model.off('change');
 		}});
-	},
+	};
 	this.play = function(projectid, songid) {
 
 		console.log("PLAY");
 		var url = './media/music/' + projectid + '/' +
-		          this.songList.get(songid).attributes.serverkey;
+		          this.songCollection.get(songid).attributes.serverkey;
 		
 		console.log($('#musicPlayer audio').attr('src'));
 		var player = $('#musicPlayer audio').attr('src', url );
 		$('#musicPlayer audio').get(0).play();
 
 		
-	},
+	};
 	this.allRoutes = function(e) {
 		if(e !== "index") {
 			that.homeCollectionView.clean();
@@ -167,9 +177,16 @@ module.exports = function() {
 		$('#header').html(that.headerView.render().el);
 
 		if(that.projectList.length <= 0) {
-			that.projectList.fetch();
+			//console.log("fetching projects");
+			that.projectList.fetch({
+				success: function(projects) {
+					//console.log(projects);
+				}
+			});
+
 		}
-	},
+
+	};
 	this.defaultRoute = function() {
 		console.log("default Route");
 	};
@@ -181,6 +198,7 @@ module.exports = function() {
 		that.projectCollectionView.render();
 		that.homeCollectionView.render();
 		that.headerView = new HeaderView({model: new UserModel()});
+		that.songCollectionView = null;
 		$('#header').html(that.headerView.render().el);
-	}
+	};
 };

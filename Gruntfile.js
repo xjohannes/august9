@@ -11,17 +11,13 @@ module.exports = function(grunt) {
       dev: {
         src: ['build/app.js', 'build/css/<%= pkg.name %>.css', 'build/<%= pkg.name %>.js']
       },
-      prod: ['build']
+      prod: ['dist']
     },
 
     browserify: {
       app: {
         src: ['client/src/main.js'],
         dest: 'public/js/<%= pkg.name %>.js'
-      },
-      prod: {
-        src: ['client/src/main.js'],
-        dest: 'build/js/<%= pkg.name %>.js'
       },
       test: {
         files: {
@@ -84,8 +80,8 @@ module.exports = function(grunt) {
         // CSS minification.
         cssmin: {
           minify: {
-            src: ['build/css/<%= pkg.name %>.css'],
-            dest: 'public/css/<%= pkg.name %>.css'
+            src: ['build/<%= pkg.name %>.css'],
+            dest: 'dist/css/<%= pkg.name %>.css'
           }
         },
 
@@ -97,8 +93,8 @@ module.exports = function(grunt) {
               verbose: true
             },
             files: [{
-              src: 'build/js/<%= pkg.name %>.js',
-              dest: 'public/js/<%= pkg.name %>.js'
+              src: 'build/<%= pkg.name %>.js',
+              dest: 'dist/js/<%= pkg.name %>.js'
             }]
           }
         },
@@ -208,23 +204,21 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 grunt.loadNpmTasks('grunt-nodemon');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-contrib-copy');
-
-grunt.loadNpmTasks('grunt-contrib-cssmin');
-grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-concat');
 
 
 
 // Register tasks
-grunt.registerTask('init:dev', ['clean']);
+grunt.registerTask('init:dev', ['clean', 'browserify:vendor']);
 
 grunt.registerTask('build:dev', ['browserify:app', 
   'jshint:dev',  'compass:dev',   'env:dev']); //'clean:dev','browserify:test', 
 
-grunt.registerTask('build:prod', ['clean:prod', 
-  'browserify:prod', 'jshint:all',  'compass:dev', 'cssmin', 'uglify', 
+grunt.registerTask('build:prod', ['clean:prod', 'browserify:vendor', 
+  'browserify:app', 'jshint:all',  'compass:prod', 'concat', 'cssmin', 'uglify', 
   'copy:prod']);
 
-grunt.registerTask('heroku', ['build:prod']);
+grunt.registerTask('heroku', ['init:dev', 'build:dev']);
 
 grunt.registerTask('server', ['build:dev', 'concurrent:dev']);
 grunt.registerTask('test:server', ['simplemocha:server']);

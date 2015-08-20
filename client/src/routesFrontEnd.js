@@ -60,7 +60,7 @@ module.exports = Router = Backbone.Router.extend({
 		this.controller.updateProject(projectid);
 	},
 	deleteProject: function(projectid) {
-		this.controller.delete(projectid);
+		this.controller.deleteProject(projectid);
 	},
 	createSong: function(projectid) {
 		this.controller.createSong(projectid);

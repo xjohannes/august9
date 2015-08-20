@@ -11,6 +11,7 @@ var Backbone     					= require('Backbone'),
 		HomeCollectionView    = require('./views/collectionViews/homeCollectionView'),
 		
 		ProjectForm           = require('./views/formViews/projectForm'),
+		ProjectEditForm       = require('./views/formViews/editProjectForm'),
 		SongModel      				= require('./models/songModel'),
 		SongCollection 				= require('./collections/songCollection'),
 		SongCollectionView    = require('./views/collectionViews/songCollectionView'),
@@ -86,8 +87,9 @@ module.exports = function() {
 		}, this);
 	};
 	this.updateProject = function(projectid) {
+		console.log(projectid)
 		var projectItem = this.projectList.get(projectid);
-		var projectForm = new ProjectForm({model: projectItem});
+		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);
 	};
 	this.deleteProject = function(projectid) {

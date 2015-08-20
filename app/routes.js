@@ -49,6 +49,7 @@ module.exports.initialize = function(app) {
     
     // project:
     app.post('/project/' , project.post);
+    app.post('/project/edit/:id' , project.post);
     app.put('/project/:id', project.put);
     app.delete('/project/:id', project.delete);
 

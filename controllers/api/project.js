@@ -5,8 +5,7 @@ mkdirp = require('mkdirp'),
 fs = require('fs'),
 query = require('pg-query'),
 escape = require('pg-escape'),
-config = require('../../app/config'),
-cloudinary = require('cloudinary');
+config = require('../../app/config');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -87,26 +86,7 @@ cloudinary = require('cloudinary');
 					res.status(404).json("Could not find a project with id: " + param);
 				}
 		},
-		insertIntoDB: function(table, valuesArray, callback) {
-			var sql = escape("INSERT INTO " + table + " VALUES(");
-			
-			valuesArray.forEach(function(currentValue, index, array) {
-				if(index < (valuesArray.length -1)) {
-					sql += currentValue + ",";
-				} else {
-					sql += currentValue + ")";
-				}
-			});
-			console.log(table + " - ");
-			console.log(sql);
-			query(sql, function(err, rows, results) {
-				if(err) {
-					callback(err);
-				} else {
-					callback(false, rows);
-				}
-			});
-		},
+		
 		
 		post: [ multer({ 
 			//multer configuration:
@@ -114,84 +94,89 @@ cloudinary = require('cloudinary');
 				
 			}), 
 		function(req, res) {
-			console.log("DEBUG: POST PROJECT");		
-			//Inserting in project
-			if(req.files.file) {
-				var projectName = config.capitalize(req.body.projectname),
-					sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
-							+ "VALUES('" + projectName + "', '"
-							+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
-							+ req.body.imgalt +"')" ),
-					resultObj = {};
+			if(req.body.id) {
+				Project.put(req, res);
 			} else {
-				var projectName = config.capitalize(req.body.projectname),
-					sql = escape("INSERT INTO project(projectname, email, about)"
-							+ "VALUES('" + projectName + "', '"
-							+ req.body.email + "', '"+ req.body.about + "')" ),
-					resultObj = {};
+				console.log("DEBUG: POST PROJECT");		
+				//Inserting in project
+				if(req.files.file) {
+					var projectName = config.capitalize(req.body.projectname),
+						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
+								+ "VALUES('" + projectName + "', '"
+								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
+								+ req.body.imgalt +"')" ),
+						resultObj = {};
+				} else {
+					var projectName = config.capitalize(req.body.projectname),
+						sql = escape("INSERT INTO project(projectname, email, about)"
+								+ "VALUES('" + projectName + "', '"
+								+ req.body.email + "', '"+ req.body.about + "')" ),
+						resultObj = {};
+				}
+				
+				
+				query(sql,
+					function(err, rows, result) {	
+						if(err) {
+							console.error(err);
+							res.send("Error 1 " + err);
+						} else {
+							query("SELECT * FROM Project WHERE projectname='" + projectName
+								+ "'", function(err1, rows1, result1) {
+									if(err1) {
+										console.error("err1 message:");
+										console.error(err1);
+										console.log("\n");
+										res.send("Error " + err1);
+									}else{
+										resultObj = rows1[0];								
+										console.log("The project: " + rows1[0].projectname + " was inserted successfully.");	
+				  								//Insert influences
+				  								if(req.body.influence !== "") {
+				  									var sql = escape("INSERT INTO projectinfluence"
+				  										+ " VALUES(" + rows1[0].id + ", '" + (req.body.influence).toLowerCase() + "')" );
+
+				  									console.log("Escaped query: " + sql);
+				  									query(sql,
+				  										function(err2, rows2, result2) {	
+				  											if(err2) {
+				  												console.error(err2);
+				  												res.send("Error 1 " + err2);
+				  											} else {
+				  												resultObj.influence = req.body.influence;
+				  												
+				  												console.log("Influences added to the database for " + req.body.influence);
+														    			//Insert participation
+																			if(req.body.participation !== "") {
+																				var sql = escape("INSERT INTO projectparticipation"
+																					+ " VALUES(" + rows1[0].id +", " + req.body.participator + ", '"
+																						+ req.body.participatorRole + "')" );
+
+																				query(sql,
+																					function(err3, rows3, result3) {	
+																						if(err3) {
+																							console.error(err3);
+																							res.send("Error 1 " + err3);
+																						} else {
+																							resultObj.participator = req.body.participator;
+																							resultObj.participatorRole = req.body.participatorRole;
+																							res.status(201);
+																							console.log("Participation added to the database for " + rows1[0].projectname);
+																						}
+																					});
+																			} else {
+																					res.status(201);
+																			}
+																		}
+																	});
+									}
+								}
+							});
+
+						}
+				});
 			}
 			
-			
-			query(sql,
-				function(err, rows, result) {	
-					if(err) {
-						console.error(err);
-						res.send("Error 1 " + err);
-					} else {
-						query("SELECT * FROM Project WHERE projectname='" + projectName
-							+ "'", function(err1, rows1, result1) {
-								if(err1) {
-									console.error("err1 message:");
-									console.error(err1);
-									console.log("\n");
-									res.send("Error " + err1);
-								}else{
-									resultObj = rows1[0];								
-									console.log("The project: " + rows1[0].projectname + " was inserted successfully.");	
-			  								//Insert influences
-			  								if(req.body.influence !== "") {
-			  									var sql = escape("INSERT INTO projectinfluence"
-			  										+ " VALUES(" + rows1[0].id + ", '" + (req.body.influence).toLowerCase() + "')" );
-
-			  									console.log("Escaped query: " + sql);
-			  									query(sql,
-			  										function(err2, rows2, result2) {	
-			  											if(err2) {
-			  												console.error(err2);
-			  												res.send("Error 1 " + err2);
-			  											} else {
-			  												resultObj.influence = req.body.influence;
-			  												
-			  												console.log("Influences added to the database for " + req.body.influence);
-													    			//Insert participation
-																		if(req.body.participation !== "") {
-																			var sql = escape("INSERT INTO projectparticipation"
-																				+ " VALUES(" + rows1[0].id +", " + req.body.participator + ", '"
-																					+ req.body.participatorRole + "')" );
-
-																			query(sql,
-																				function(err3, rows3, result3) {	
-																					if(err3) {
-																						console.error(err3);
-																						res.send("Error 1 " + err3);
-																					} else {
-																						resultObj.participator = req.body.participator;
-																						resultObj.participatorRole = req.body.participatorRole;
-																						res.status(201);
-																						console.log("Participation added to the database for " + rows1[0].projectname);
-																					}
-																				});
-																		} else {
-																				res.status(201);
-																		}
-																	}
-																});
-								}
-							}
-						});
-
-					}
-			});
 		}],
 		put: function(req, res) {
 			console.log("PUT PROJECT with id: " + req.body.id);
@@ -200,9 +185,10 @@ cloudinary = require('cloudinary');
 				resultObj= {};
 
 			// Update project table
-			propertyNames = ['projectname', 'email', 'about'];
+			propertyNames = ['projectname', 'email', 'about', 'imglarge', 'imgalt'];
 			newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
-											, "'" + req.body.about + "'"];
+											, "'" + req.body.about + "'" , "'" + req.files.file + "'" 
+											, "'" + req.body.imgalt + "'"];
 			Project.updateDB(req.body.id, "project" , propertyNames, newValues, function(err, rows) {
 				if(err) {
 					console.log(err);
@@ -224,7 +210,7 @@ cloudinary = require('cloudinary');
 									console.log(err);
 									res.send(err);
 								} else {
-									res.status(200).json("The project was updeted successfully");
+									res.status(200);
 									console.log('update of projectname, email, about and influence OK');
 								}
 							});
@@ -271,6 +257,26 @@ cloudinary = require('cloudinary');
 			var sql = escape("SELECT * FROM " + table + " where projectid='" 
 				+ id +"'");
 
+			query(sql, function(err, rows, results) {
+				if(err) {
+					callback(err);
+				} else {
+					callback(false, rows);
+				}
+			});
+		},
+		insertIntoDB: function(table, valuesArray, callback) {
+			var sql = escape("INSERT INTO " + table + " VALUES(");
+			
+			valuesArray.forEach(function(currentValue, index, array) {
+				if(index < (valuesArray.length -1)) {
+					sql += currentValue + ",";
+				} else {
+					sql += currentValue + ")";
+				}
+			});
+			console.log(table + " - ");
+			console.log(sql);
 			query(sql, function(err, rows, results) {
 				if(err) {
 					callback(err);

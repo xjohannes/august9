@@ -5,7 +5,8 @@ mkdirp = require('mkdirp'),
 fs = require('fs'),
 query = require('pg-query'),
 escape = require('pg-escape'),
-config = require('../../app/config');
+config = require('../../app/config'),
+cloudinary = require('cloudinary');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -107,14 +108,29 @@ config = require('../../app/config');
 			});
 		},
 		
-		post: function(req, res) {
+		post: [ multer({ 
+			//multer configuration:
+				dest: './public/media/images/',
+				
+			}), 
+		function(req, res) {
 			console.log("DEBUG: POST PROJECT");		
 			//Inserting in project
-			var projectName = config.normalize(req.body.projectname),
+			if(req.files.file) {
+				var projectName = config.capitalize(req.body.projectname),
+					sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
+							+ "VALUES('" + projectName + "', '"
+							+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
+							+ req.body.imgalt +"')" ),
+					resultObj = {};
+			} else {
+				var projectName = config.capitalize(req.body.projectname),
 					sql = escape("INSERT INTO project(projectname, email, about)"
-				+ "VALUES('" + projectName + "', '"
-					+ req.body.email + "', '"+ req.body.about +"')" ),
-			resultObj = {};
+							+ "VALUES('" + projectName + "', '"
+							+ req.body.email + "', '"+ req.body.about + "')" ),
+					resultObj = {};
+			}
+			
 			
 			query(sql,
 				function(err, rows, result) {	
@@ -161,12 +177,12 @@ config = require('../../app/config');
 																					} else {
 																						resultObj.participator = req.body.participator;
 																						resultObj.participatorRole = req.body.participatorRole;
-																						res.status(201).json(resultObj);
+																						res.status(201);
 																						console.log("Participation added to the database for " + rows1[0].projectname);
 																					}
 																				});
 																		} else {
-																				res.status(201).json(resultObj);
+																				res.status(201);
 																		}
 																	}
 																});
@@ -176,7 +192,7 @@ config = require('../../app/config');
 
 					}
 			});
-		},
+		}],
 		put: function(req, res) {
 			console.log("PUT PROJECT with id: " + req.body.id);
 			var propertyNames,

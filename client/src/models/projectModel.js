@@ -10,7 +10,10 @@ module.exports = Backbone.Model.extend({
 		influence: ['none'],
 		participator: [1],
 		participatorRole: [],
-		about: ""
+		about: "",
+		imgthumb: '',
+		imglarge: '',
+		imgalt:  ''
 	},
 	initialize: function() {
 		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);

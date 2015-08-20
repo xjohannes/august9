@@ -3,9 +3,23 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: require('../../../templates/projectForm.hbs'),
+	template: _.template('<form id =  "projectForm"' +
+     'enctype   =  "multipart/form-data"' +
+     'action    =  "/project/"' +
+     'method    =  "post">' +
+			'Project name:<input type="text" name="projectname" value="<%= projectname %>" /><br>' +
+			'Email: <input type="text" name="email" value="<%= email %>" /><br>' +
+			'About: <input type="text" name="about" value="<%= about %>" /><br>' +
+			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
+			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
+			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
+			'Project image: <input type="file" name="file" /><br>' + 
+			'Image description: <input type="text" name="imgalt" value="<%= imgalt %>" /><br>' +                
+			'<input type="submit" value="Save" name="submit">' +
+		'</form>'),
 	events: {
-		'submit': 'save'
+		'submit': 'save',
+		"change input[type=file]" : "encodeFile"
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
@@ -13,7 +27,13 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	save: function(e) {
-		
+		this.model.fetch({
+			success: function(song) {
+				console.log("this.model.influence");
+				console.log(this.model.influence);
+			}
+		});
+		/*
 		e.preventDefault();
 		var projectname = this.$('input[name=projectname]').val();
 		var email = this.$('input[name=email]').val();
@@ -29,6 +49,20 @@ module.exports = Backbone.View.extend({
 			participator: participator,
 			participatorRole: participatorRole
 		});
+*/
+	},
+	encodeFile: function() {
+		// Better to get it from the userobject?
+		var token = window.localStorage.getItem('token');
+		console.log(token);
+		// This is not secure. But havn't found out how to overcome the problems of encoding the header 
+		// when the form is send without the help of Backbone(jquery ajax).
+		// The server does not get the body in the middleware
+		var actionUrl = this.$('#projectForm').attr('action');
+		console.log(actionUrl);
+		actionUrl += "?token=" + token;
+		this.$('#projectForm').attr('action', actionUrl);
+		Backbone.history.navigate("#/", {trigger: true});
 	},
 	clean: function() {
 		console.log("cleaning projectFormView");

@@ -1,14 +1,31 @@
+@font-face {
+	font-family: fanwood;
+	src: url('../fonts/theleagueof/fanwood_webfonts/fanwood-webfont.woff');
+}
+@font-face {
+	font-family: pt;
+	//src: url('../fonts/font_squirrel/PT-Sans/PTS75F.ttf');
+	src: url('../fonts/font_squirrel/PT-Sans/PTC55F.ttf');
+	
+}
+
+
 body {
 	padding-top: 180px;
+	font-family: 'pt';
+	//font-style: italic;
+	//font-weight: bold;
 }
 ol, ul {
     list-style: none;
 }
 
-.navbar-brand {
-  font-size: 6em;
-  height: 150px;
-  padding: 45px 35px;
+.headerContainer  {
+	//background-color: 
+}
+.navbar-toggle {
+	margin-top: -130px;
+  
 }
 
 .container {
@@ -16,12 +33,15 @@ ol, ul {
 
 }
 .homeItem {
-	border: 1px solid #000;
-	margin: 1em 0 1em 0;
-	border-radius: 5%;
+	border: 1px solid #e7e7e7;
+	background-color: #f8f8f8;
+	margin: 1em 1em 1em 0;
+	border-radius: 2%;
+	width: 20em;
+	height: 20em
 }
 .homeItem  img{
-	width: 100%;
+	max-width: 100%;
 	margin: 0 auto;
 	padding-top: 1em;
 }
@@ -33,11 +53,31 @@ ol, ul {
 #description {
 	
 }
+.logoContainer {
+	width: 30em;
+	height: 150px;
+  padding: 10px 35px;
+
+
+}
+#logo  {
+	color: #337A17;
+	position: relative;
+	font-family: fanwood;
+  font-size: 7em;
+  letter-spacing: .06em;
+}
+#logo:hover  {
+	color: #337ab7;
+	text-decoration: none;
+
+}
 
 #slogan {
-	  width: 100px;
-    font-size: 12px;
-    position: relative;
-    top: 20px;
-    left: -302px;
+		position: relative;
+		top:16px;
+		left: 61px;
+	  width: 100%;
+    font-size: .91em;
+    
 }

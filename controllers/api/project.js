@@ -185,10 +185,17 @@ config = require('../../app/config');
 				resultObj= {};
 
 			// Update project table
-			propertyNames = ['projectname', 'email', 'about', 'imglarge', 'imgalt'];
-			newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
-											, "'" + req.body.about + "'" , "'" + req.files.file + "'" 
+			if(req.files.file) {
+				propertyNames = ['projectname', 'email', 'about', 'imglarge', 'imgalt'];
+				newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
+											, "'" + req.body.about + "'" , "'" + req.files.file.name + "'" 
 											, "'" + req.body.imgalt + "'"];
+			} else {
+				propertyNames = ['projectname', 'email', 'about',  'imgalt'];
+				newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
+											, "'" + req.body.about + "'" , "'" + req.body.imgalt + "'"];
+			}
+			
 			Project.updateDB(req.body.id, "project" , propertyNames, newValues, function(err, rows) {
 				if(err) {
 					console.log(err);

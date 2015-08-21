@@ -279,7 +279,7 @@ module.exports = function() {
 		}, this);
 	};
 	this.updateProject = function(projectid) {
-		console.log(projectid)
+		console.log(projectid);
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);
@@ -1106,7 +1106,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"navbar navbar-default navbar-fixed-top\">\n        <div class=\"container-fluid\">\n          <header class=\"navbar-header\">\n            <a href=\"#/\" class=\"navbar-brand\">August9</a>\n\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" \n            data-target=\".navbar-collapse\">\n              <span class='sr-only'>Toggle navigation</span> \n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n            <span id=\"slogan\">— music production for every mood</span>\n          </header>\n          \n          <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n            <li><a href=\"#/login\">login</a></li>\n            <li><a href=\"#/logout\">logout</a></li>\n            <li><a href=\"#/project/newProject\" class=\"admin hidden\">New project</a></li>\n          </ul>\n        </div>\n      </div>";
+  return "<div class=\"navbar navbar-default navbar-fixed-top headerContainer\">\n        <div class=\"container\">\n          <header class=\"navbar-header\">\n            <div class=\" logoContainer\">\n              <span id=\"slogan\">— music production for every mood</span>\n              <a href=\"#/\" id=\"logo\">August9</a>\n            </div>\n            \n\n            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" \n            data-target=\".navbar-collapse\">\n              <span class='sr-only'>Toggle navigation</span> \n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n            \n          </header>\n          \n          <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n            <li><a href=\"#/login\">login</a></li>\n            <li><a href=\"#/logout\">logout</a></li>\n            <li><a href=\"#/project/newProject\" class=\"admin hidden\">New project</a></li>\n          </ul>\n        </div>\n      </div>";
   });
 
 },{"hbsfy/runtime":54}],28:[function(require,module,exports){
@@ -1142,14 +1142,14 @@ function program3(depth0,data) {
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4\">\n		";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.imglarge), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n		<h3> ";
+    + "\">\n\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4 clearfix\">\n		<h3> ";
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h3>\n	</div>\n</a>";
+    + "</h3>\n		";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.imglarge), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n		\n	</div>\n</a>";
   return buffer;
   });
 

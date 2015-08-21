@@ -87,7 +87,7 @@ module.exports = function() {
 		}, this);
 	};
 	this.updateProject = function(projectid) {
-		console.log(projectid)
+		console.log(projectid);
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);

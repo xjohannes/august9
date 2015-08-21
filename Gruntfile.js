@@ -107,7 +107,7 @@ module.exports = function(grunt) {
           },
           compass: {
             files: ['client/styles/**/*.scss'],
-            tasks: ['compass:dev', 'concat']
+            tasks: ['compass:dev', 'concat']//
           },
           test: {
             files: ['build/app.js', 'client/spec/**/*.test.js'],
@@ -195,16 +195,21 @@ module.exports = function(grunt) {
       });
 
 // Loding tasks. Why isn't this loaded with the load-grunt-tasks module?
+
 grunt.loadNpmTasks('grunt-env');
 grunt.loadNpmTasks('grunt-browserify');
 grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-compass');
+
 grunt.loadNpmTasks('grunt-concurrent');
-grunt.loadNpmTasks('grunt-contrib-watch');
+
 grunt.loadNpmTasks('grunt-nodemon');
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-concat');
+
+
+grunt.loadNpmTasks('grunt-contrib-compass');
+grunt.loadNpmTasks('grunt-contrib-watch');
 
 
 
@@ -228,7 +233,7 @@ grunt.registerTask('tdd', ['karma:watcher:start', 'concurrent:test']);
 
 grunt.registerTask('test', ['test:server', 'test:client']);
 
-grunt.registerTask('s', ['watch:compass:dev']);
+grunt.registerTask('css', ['watch:compass:dev']);
 
 
 };

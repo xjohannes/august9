@@ -98,7 +98,7 @@ ol, ul {
 }
 
 /* line 63, ../../client/styles/sass/partials/_test.scss */
-#logo {
+.logo {
   color: #337A17;
   position: relative;
   font-family: fanwood;
@@ -107,13 +107,13 @@ ol, ul {
 }
 
 /* line 70, ../../client/styles/sass/partials/_test.scss */
-#logo:hover {
+.logo:hover {
   color: #337ab7;
   text-decoration: none;
 }
 
 /* line 76, ../../client/styles/sass/partials/_test.scss */
-#slogan {
+.slogan {
   position: relative;
   top: 16px;
   left: 61px;

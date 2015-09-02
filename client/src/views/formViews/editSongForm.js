@@ -3,17 +3,7 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form >' +
-   		'Title:<input type="text" name="title" value="<%= title %>" /><br>' +
-			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
-			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
-			//'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +                
-			'<input type="submit" value="Edit" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/editSongForm.hbs'),
 	events: {
 		'submit': 'save'
 	},

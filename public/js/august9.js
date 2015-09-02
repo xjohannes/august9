@@ -38,7 +38,7 @@ Backbone.sync = function(method, model, options) {
 };
 
 
-},{"./routesController":10,"./routesFrontEnd":11,"Backbone":33,"underscore":57}],2:[function(require,module,exports){
+},{"./routesController":10,"./routesFrontEnd":11,"Backbone":37,"underscore":61}],2:[function(require,module,exports){
 var Backbone = require('Backbone');
 var ProjectModel = require('../models/projectModel');
 
@@ -46,7 +46,7 @@ module.exports = Backbone.Collection.extend({
 	model: ProjectModel,
 	url: "/project/"
 });
-},{"../models/projectModel":7,"Backbone":33}],3:[function(require,module,exports){
+},{"../models/projectModel":7,"Backbone":37}],3:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		SongModel = require('../models/songModel');
 
@@ -54,7 +54,7 @@ module.exports = Backbone.Collection.extend({
 	model: SongModel,
 	url: '/project/'
 });
-},{"../models/songModel":8,"Backbone":33}],4:[function(require,module,exports){
+},{"../models/songModel":8,"Backbone":37}],4:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		UserModel = require('../models/userModel');
 
@@ -62,7 +62,7 @@ module.exports = Backbone.Collection.extend({
 	model: UserModel,
 	url: '/user/'
 });
-},{"../models/userModel":9,"Backbone":33}],5:[function(require,module,exports){
+},{"../models/userModel":9,"Backbone":37}],5:[function(require,module,exports){
 var App = require('./app');
 var august9 = new App();
 
@@ -93,7 +93,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"Backbone":33}],7:[function(require,module,exports){
+},{"Backbone":37}],7:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
@@ -123,7 +123,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"Backbone":33}],8:[function(require,module,exports){
+},{"Backbone":37}],8:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
@@ -166,7 +166,7 @@ module.exports = Backbone.Model.extend({
 
  
 
-},{"Backbone":33}],9:[function(require,module,exports){
+},{"Backbone":37}],9:[function(require,module,exports){
 var Backbone = require('Backbone');
 
 module.exports = Backbone.Model.extend({
@@ -189,7 +189,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"Backbone":33}],10:[function(require,module,exports){
+},{"Backbone":37}],10:[function(require,module,exports){
 var Backbone     					= require('Backbone'),
 		$            					= require('jQuery'),
 		UserModel 						= require('./models/userModel'),
@@ -243,7 +243,7 @@ module.exports = function() {
 		this.userCollectionView = new UserCollectionView({collection:this.userList});
 		$('#mainContent').html(projectForm.render().el);
 		$('.userList').html(this.userCollectionView.render().el);
-		$('#projectList').html(this.projectCollectionView.render().el);
+		//$('#projectList').html(this.projectCollectionView.render().el);
 		$('#header').html(this.headerView.render().el);
 	};
 	this.readProject = function(projectid) {
@@ -396,7 +396,7 @@ module.exports = function() {
 		$('#header').html(that.headerView.render().el);
 	};
 };
-},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":12,"./views/collectionViews/projectCollectionView":14,"./views/collectionViews/projectListItemView":15,"./views/collectionViews/songCollectionView":16,"./views/collectionViews/songListItemView":17,"./views/collectionViews/userCollectionView":18,"./views/collectionViews/userListItemView":19,"./views/formViews/editProjectForm":20,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":33,"jQuery":55}],11:[function(require,module,exports){
+},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":12,"./views/collectionViews/projectCollectionView":14,"./views/collectionViews/projectListItemView":15,"./views/collectionViews/songCollectionView":16,"./views/collectionViews/songListItemView":17,"./views/collectionViews/userCollectionView":18,"./views/collectionViews/userListItemView":19,"./views/formViews/editProjectForm":20,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":37,"jQuery":59}],11:[function(require,module,exports){
 var Backbone     					= require('Backbone'),
 		$            					= require('jQuery'),
 		UserModel 						= require('./models/userModel'),
@@ -490,7 +490,7 @@ module.exports = Router = Backbone.Router.extend({
 		Backbone.history.start();
 	}
 });
-},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":12,"./views/collectionViews/projectCollectionView":14,"./views/collectionViews/projectListItemView":15,"./views/collectionViews/songCollectionView":16,"./views/collectionViews/songListItemView":17,"./views/collectionViews/userCollectionView":18,"./views/collectionViews/userListItemView":19,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":33,"jQuery":55}],12:[function(require,module,exports){
+},{"./collections/projectCollection":2,"./collections/songCollection":3,"./collections/userCollection":4,"./models/loginModel":6,"./models/projectModel":7,"./models/songModel":8,"./models/userModel":9,"./views/collectionViews/homeCollectionView":12,"./views/collectionViews/projectCollectionView":14,"./views/collectionViews/projectListItemView":15,"./views/collectionViews/songCollectionView":16,"./views/collectionViews/songListItemView":17,"./views/collectionViews/userCollectionView":18,"./views/collectionViews/userListItemView":19,"./views/formViews/editSongForm":21,"./views/formViews/loginForm":22,"./views/formViews/projectForm":23,"./views/formViews/songForm":24,"./views/headerView":25,"./views/songDetailsView":26,"Backbone":37,"jQuery":59}],12:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
@@ -526,7 +526,7 @@ module.exports = Backbone.View.extend({
 	}
 	
 });
-},{"./homeListItemView":13,"Backbone":33,"jQuery":55,"underscore":57}],13:[function(require,module,exports){
+},{"./homeListItemView":13,"Backbone":37,"jQuery":59,"underscore":61}],13:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -546,7 +546,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"../../../templates/homeListItem.hbs":28,"backbone":35,"jQuery":55,"underscore":57}],14:[function(require,module,exports){
+},{"../../../templates/homeListItem.hbs":30,"backbone":39,"jQuery":59,"underscore":61}],14:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
@@ -587,7 +587,7 @@ module.exports = Backbone.View.extend({
 	}
 	
 });
-},{"./projectListItemView":15,"Backbone":33,"jQuery":55,"underscore":57}],15:[function(require,module,exports){
+},{"./projectListItemView":15,"Backbone":37,"jQuery":59,"underscore":61}],15:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -612,7 +612,7 @@ module.exports = Backbone.View.extend({
 		$('.admin').toggleClass('hidden');
 	}
 });
-},{"../../../templates/projectListItem.hbs":30,"backbone":35,"jQuery":55,"underscore":57}],16:[function(require,module,exports){
+},{"../../../templates/projectListItem.hbs":33,"backbone":39,"jQuery":59,"underscore":61}],16:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
@@ -652,7 +652,7 @@ module.exports = Backbone.View.extend({
 	}
 	
 });
-},{"./songListItemView":17,"Backbone":33,"jQuery":55,"underscore":57}],17:[function(require,module,exports){
+},{"./songListItemView":17,"Backbone":37,"jQuery":59,"underscore":61}],17:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -682,7 +682,7 @@ module.exports  = Backbone.View.extend({
 		$('.admin').show();
 	}
 });
-},{"../../../templates/songListItem.hbs":31,"backbone":35,"jQuery":55,"underscore":57}],18:[function(require,module,exports){
+},{"../../../templates/songListItem.hbs":35,"backbone":39,"jQuery":59,"underscore":61}],18:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		_ = require('underscore'),
 		$ = require('jQuery'),
@@ -722,7 +722,7 @@ module.exports = Backbone.View.extend({
 	}
 	
 });
-},{"./userListItemView":19,"Backbone":33,"jQuery":55,"underscore":57}],19:[function(require,module,exports){
+},{"./userListItemView":19,"Backbone":37,"jQuery":59,"underscore":61}],19:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -748,27 +748,13 @@ module.exports  = Backbone.View.extend({
 		$('.admin').toggleClass('hidden');
 	}
 });
-},{"../../../templates/userListItem.hbs":32,"backbone":35,"jQuery":55,"underscore":57}],20:[function(require,module,exports){
+},{"../../../templates/userListItem.hbs":36,"backbone":39,"jQuery":59,"underscore":61}],20:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template('<form id =  "projectForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/edit/<%= id %>"' +
-     'method    =  "post">' +
-     '<input type="hidden" name="id" value="<%= id %>">' +
-			'Project name:<input type="text" name="projectname" value="<%= projectname %>" /><br>' +
-			'Email: <input type="text" name="email" value="<%= email %>" /><br>' +
-			'About: <input type="text" name="about" value="<%= about %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'Project image: <input type="file" name="file" /><br>' + 
-			'Image description: <input type="text" name="imgalt" value="<%= imgalt %>" /><br>' +                
-			'<input type="submit" value="Edit" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/editProjectForm.hbs'),
 	events: {
 		'submit': 'save',
 		"change input[type=file]" : "encodeFile"
@@ -822,23 +808,13 @@ module.exports = Backbone.View.extend({
 		//window.history.back();
 	}
 });
-},{"backbone":35,"jQuery":55,"underscore":57}],21:[function(require,module,exports){
+},{"../../../templates/editProjectForm.hbs":27,"backbone":39,"jQuery":59,"underscore":61}],21:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form >' +
-   		'Title:<input type="text" name="title" value="<%= title %>" /><br>' +
-			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
-			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
-			//'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +                
-			'<input type="submit" value="Edit" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/editSongForm.hbs'),
 	events: {
 		'submit': 'save'
 	},
@@ -874,7 +850,7 @@ module.exports = Backbone.View.extend({
 		this.$el.empty();
 	}
 });
-},{"backbone":35,"jQuery":55,"underscore":57}],22:[function(require,module,exports){
+},{"../../../templates/editSongForm.hbs":28,"backbone":39,"jQuery":59,"underscore":61}],22:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore'),
@@ -921,26 +897,13 @@ module.exports = Backbone.View.extend({
 	}
 
 });
-},{"../../../templates/login.hbs":29,"backbone":35,"handlebars":52,"jQuery":55,"underscore":57}],23:[function(require,module,exports){
+},{"../../../templates/login.hbs":31,"backbone":39,"handlebars":56,"jQuery":59,"underscore":61}],23:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template('<form id =  "projectForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/"' +
-     'method    =  "post">' +
-			'Project name:<input type="text" name="projectname" value="<%= projectname %>" /><br>' +
-			'Email: <input type="text" name="email" value="<%= email %>" /><br>' +
-			'About: <input type="text" name="about" value="<%= about %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'Project image: <input type="file" name="file" /><br>' + 
-			'Image description: <input type="text" name="imgalt" value="<%= imgalt %>" /><br>' +                
-			'<input type="submit" value="Save" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/projectForm.hbs'),
 	events: {
 		'submit': 'save',
 		"change input[type=file]" : "encodeFile"
@@ -994,27 +957,13 @@ module.exports = Backbone.View.extend({
 		//window.history.back();
 	}
 });
-},{"backbone":35,"jQuery":55,"underscore":57}],24:[function(require,module,exports){
+},{"../../../templates/projectForm.hbs":32,"backbone":39,"jQuery":59,"underscore":61}],24:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form id =  "uploadForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/<%= projectid %>"' +
-     'method    =  "post">' +
-     	'<input type="hidden" name="projectid" value="<%= projectid %>">' +
-			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
-			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
-			'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'<input type="file" name="file" /><br>' +                 
-			'<input type="submit" value="Save" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/songForm.hbs'),
 	events: {
 		'submit': 'clean',
 		"change input[type=file]" : "encodeFile"
@@ -1050,7 +999,7 @@ module.exports = Backbone.View.extend({
 		
 	}
 });
-},{"backbone":35,"jQuery":55,"underscore":57}],25:[function(require,module,exports){
+},{"../../../templates/songForm.hbs":34,"backbone":39,"jQuery":59,"underscore":61}],25:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore'),
@@ -1066,7 +1015,7 @@ module.exports = Backbone.View.extend({
 	}
 
 });
-},{"../../templates/header.hbs":27,"backbone":35,"handlebars":52,"jQuery":55,"underscore":57}],26:[function(require,module,exports){
+},{"../../templates/header.hbs":29,"backbone":39,"handlebars":56,"jQuery":59,"underscore":61}],26:[function(require,module,exports){
 var Backbone = require('backbone'),
 		$ = require('jQuery'),
 		_ = require('underscore');
@@ -1097,7 +1046,97 @@ module.exports  = Backbone.View.extend({
 		this.$el.empty();
 	}
 });
-},{"backbone":35,"jQuery":55,"underscore":57}],27:[function(require,module,exports){
+},{"backbone":39,"jQuery":59,"underscore":61}],27:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"container\">\n    <h1><span class=\"form august9-songForm\"></span>Edit ";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =  \"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/edit/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"\n	     method    =  \"post\">\n	  <input type=\"hidden\" name=\"id\" value=\"";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n	  <div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"projectname\">Projectname:</label>\n			<input class=\"form-control\" type=\"text\" name=\"projectname\" value=\"";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"email\">Email:</label>\n			<input class=\"form-control\" type=\"text\" name=\"email\" value=\"";
+  if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"about\">About:</label>\n			<input class=\"form-control\" type=\"text\" name=\"about\" value=\"";
+  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"influence\">Influence:</label>\n			<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator\">Participator:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participator\" value=\"";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator_role\">Participator Role:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n				<label for=\"file\">Project image:</label>\n				<input class=\"form-control btn btn-default btn-file\" type=\"file\" name=\"file\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\"btn btn-warning \" type=\"submit\" value=\"Edit project\" name=\"submit\">\n		</div>\n	</form>\n</div>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":58}],28:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"container\">\n    <h1><span class=\"form august9-songForm\"></span>Edit song</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n<form >\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"title\">Song title:</label>\n		<input class=\"form-control\" type=\"text\" name=\"title\" value=\"";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n  <div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"productionstatus\">Productionstatus:</label>\n		<input class=\"form-control\" type=\"text\" name=\"productionstatus\" value=\"";
+  if (helper = helpers.productionstatus) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.productionstatus); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"notes\">Notes:</label>\n		<input class=\"form-control\" type=\"text\" name=\"notes\" value=\"";
+  if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.notes); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"created\">Created:</label>\n		<input class=\"form-control\" type=\"text\" name=\"created\" value=\"";
+  if (helper = helpers.created) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.created); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"influence\">Influence:</label>\n		<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participator\">Participator:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participator\" value=\"";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participator_role\">Participator Role:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n			<label for=\"file\">Song:</label>\n			<input class=\"form-control btn btn-default \" type=\"file\" name=\"file\" /><br>   \n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">               \n			<input class=\"btn btn-warning \" type=\"submit\" value=\"Save\" name=\"submit\">\n		</div>\n		</form>\n</div>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":58}],29:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1106,10 +1145,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"navbar navbar-default navbar-fixed-top headerContainer\">\n        <div class=\"container-fluid row\">\n          <header class=\"navbar-header\">\n            <div class=\" logoContainer \">\n              <span class=\"slogan\">— music production for every mood</span>\n              <a href=\"#/\" class=\"logo\">August9</a>\n            </div>\n            \n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" \n            data-target=\".navbar-collapse\">\n              <span class='sr-only'>Toggle navigation</span> \n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n            \n          </header>\n          \n          <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n            <li><a href=\"#/login\">login</a></li>\n            <li><a href=\"#/logout\">logout</a></li>\n            <li><a href=\"#/project/newProject\" class=\"admin hidden\">New project</a></li>\n          </ul>\n        </div>\n      </div>";
+  return "<div class=\"navbar navbar-default navbar-fixed-top headerContainer\">\n        <div class=\"container-fluid row\">\n          <header class=\"navbar-header\">\n            <div class=\"logoContainer \">\n              <span class=\"slogan\">— music production for every mood</span>\n              <a href=\"#/\" class=\"logo\"><h1>August9</h1></a>\n            </div>\n            \n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" \n            data-target=\".navbar-collapse\">\n              <span class='sr-only'>Toggle navigation</span> \n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n            \n          </header>\n          \n          <ul class=\"nav navbar-nav navbar-right collapse navbar-collapse\">\n            <li><a href=\"#/login\">login</a></li>\n            <li><a href=\"#/logout\">logout</a></li>\n            <li><a href=\"#/project/newProject\" class=\"admin hidden\">New project</a></li>\n          </ul>\n        </div>\n      </div>";
   });
 
-},{"hbsfy/runtime":54}],28:[function(require,module,exports){
+},{"hbsfy/runtime":58}],30:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1142,7 +1181,7 @@ function program3(depth0,data) {
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\n\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4 clearfix\">\n		<h3> ";
+    + "\">\n\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4 \">\n		<h3> ";
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1153,7 +1192,7 @@ function program3(depth0,data) {
   return buffer;
   });
 
-},{"hbsfy/runtime":54}],29:[function(require,module,exports){
+},{"hbsfy/runtime":58}],31:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1162,10 +1201,51 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"\">\n\n    <h1><span class=\"august9-login\"></span> Login </h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n";
+  return "<div class=\"\">\n\n    <h1><span class=\"form august9-login\"></span> Login </h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n";
   });
 
-},{"hbsfy/runtime":54}],30:[function(require,module,exports){
+},{"hbsfy/runtime":58}],32:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"container\">\n    <h1><span class=\"form august9-projectForm\"></span>New project</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =\"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/\"\n	     method    =  \"post\">\n	  \n	  <div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"projectname\">Projectname:</label>\n			<input class=\"form-control\" type=\"text\" name=\"projectname\" value=\"";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"email\">Email:</label>\n			<input class=\"form-control\" type=\"text\" name=\"email\" value=\"";
+  if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"about\">About:</label>\n			<input class=\"form-control\" type=\"text\" name=\"about\" value=\"";
+  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"influence\">Influence:</label>\n			<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator\">Participator:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participator\" value=\"";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator_role\">Participator Role:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n				<label for=\"file\">Project image:</label>\n				<input class=\"form-control btn btn-default btn-file \" type=\"file\" name=\"file\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"imgalt\">Image description:</label>\n			<input class=\"form-control\" type=\"text\" name=\"imgalt\" value=\"";
+  if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js\"></script>\n<script src=\"//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js\"></script>\n<script type=\"text/javascript\">\n$(function() {\n  $('#projectForm').transloadit({\n    wait: true,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":58}],33:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1198,7 +1278,52 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
-},{"hbsfy/runtime":54}],31:[function(require,module,exports){
+},{"hbsfy/runtime":58}],34:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"container\">\n    <h1><span class=\"form august9-songForm\"></span>Upload song</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n<form id =  \"uploadForm\"\n     enctype   =  \"multipart/form-data\"\n     action    =  \"/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"\n     method    =  \"post\">\n  <input type=\"hidden\" name=\"projectid\" value=\"";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" />\n  \n  <div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"productionstatus\">Productionstatus:</label>\n		<input class=\"form-control\" type=\"text\" name=\"productionstatus\" value=\"";
+  if (helper = helpers.productionstatus) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.productionstatus); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"notes\">Notes:</label>\n		<input class=\"form-control\" type=\"text\" name=\"notes\" value=\"";
+  if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.notes); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"created\">Created:</label>\n		<input class=\"form-control\" type=\"text\" name=\"created\" value=\"";
+  if (helper = helpers.created) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.created); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"influence\">Influence:</label>\n		<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participator\">Participator:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participator\" value=\"";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participator_role\">Participator Role:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n			<label for=\"file\">Song:</label>\n			<input class=\" form-control btn btn-default\" type=\"file\" name=\"file\" /><br>   \n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">               \n			<input class=\"btn btn-warning \" type=\"submit\" value=\"Save\" name=\"submit\">\n		</div>\n		</form>\n</div>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":58}],35:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1247,7 +1372,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
-},{"hbsfy/runtime":54}],32:[function(require,module,exports){
+},{"hbsfy/runtime":58}],36:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -1314,7 +1439,7 @@ function program3(depth0,data) {
   return buffer;
   });
 
-},{"hbsfy/runtime":54}],33:[function(require,module,exports){
+},{"hbsfy/runtime":58}],37:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -3191,7 +3316,7 @@ function program3(depth0,data) {
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":56,"underscore":34}],34:[function(require,module,exports){
+},{"jquery":60,"underscore":38}],38:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -4741,13 +4866,13 @@ function program3(depth0,data) {
   }
 }.call(this));
 
-},{}],35:[function(require,module,exports){
-arguments[4][33][0].apply(exports,arguments)
-},{"dup":33,"jquery":56,"underscore":36}],36:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"dup":34}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
+arguments[4][37][0].apply(exports,arguments)
+},{"dup":37,"jquery":60,"underscore":40}],40:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}],41:[function(require,module,exports){
 
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var Handlebars = require("./handlebars.runtime")["default"];
@@ -4785,7 +4910,7 @@ Handlebars = create();
 Handlebars.create = create;
 
 exports["default"] = Handlebars;
-},{"./handlebars.runtime":39,"./handlebars/compiler/ast":41,"./handlebars/compiler/base":42,"./handlebars/compiler/compiler":43,"./handlebars/compiler/javascript-compiler":44}],39:[function(require,module,exports){
+},{"./handlebars.runtime":43,"./handlebars/compiler/ast":45,"./handlebars/compiler/base":46,"./handlebars/compiler/compiler":47,"./handlebars/compiler/javascript-compiler":48}],43:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var base = require("./handlebars/base");
@@ -4818,7 +4943,7 @@ var Handlebars = create();
 Handlebars.create = create;
 
 exports["default"] = Handlebars;
-},{"./handlebars/base":40,"./handlebars/exception":48,"./handlebars/runtime":49,"./handlebars/safe-string":50,"./handlebars/utils":51}],40:[function(require,module,exports){
+},{"./handlebars/base":44,"./handlebars/exception":52,"./handlebars/runtime":53,"./handlebars/safe-string":54,"./handlebars/utils":55}],44:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -4999,7 +5124,7 @@ exports.log = log;var createFrame = function(object) {
   return obj;
 };
 exports.createFrame = createFrame;
-},{"./exception":48,"./utils":51}],41:[function(require,module,exports){
+},{"./exception":52,"./utils":55}],45:[function(require,module,exports){
 "use strict";
 var Exception = require("../exception")["default"];
 
@@ -5227,7 +5352,7 @@ var AST = {
 // Must be exported as an object rather than the root of the module as the jison lexer
 // most modify the object to operate properly.
 exports["default"] = AST;
-},{"../exception":48}],42:[function(require,module,exports){
+},{"../exception":52}],46:[function(require,module,exports){
 "use strict";
 var parser = require("./parser")["default"];
 var AST = require("./ast")["default"];
@@ -5243,7 +5368,7 @@ function parse(input) {
 }
 
 exports.parse = parse;
-},{"./ast":41,"./parser":45}],43:[function(require,module,exports){
+},{"./ast":45,"./parser":49}],47:[function(require,module,exports){
 "use strict";
 var Exception = require("../exception")["default"];
 
@@ -5713,7 +5838,7 @@ exports.precompile = precompile;function compile(input, options, env) {
 }
 
 exports.compile = compile;
-},{"../exception":48}],44:[function(require,module,exports){
+},{"../exception":52}],48:[function(require,module,exports){
 "use strict";
 var COMPILER_REVISION = require("../base").COMPILER_REVISION;
 var REVISION_CHANGES = require("../base").REVISION_CHANGES;
@@ -6656,7 +6781,7 @@ JavaScriptCompiler.isValidJavaScriptVariableName = function(name) {
 };
 
 exports["default"] = JavaScriptCompiler;
-},{"../base":40,"../exception":48}],45:[function(require,module,exports){
+},{"../base":44,"../exception":52}],49:[function(require,module,exports){
 "use strict";
 /* jshint ignore:start */
 /* Jison generated parser */
@@ -7147,7 +7272,7 @@ function Parser () { this.yy = {}; }Parser.prototype = parser;parser.Parser = Pa
 return new Parser;
 })();exports["default"] = handlebars;
 /* jshint ignore:end */
-},{}],46:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 var Visitor = require("./visitor")["default"];
 
@@ -7286,7 +7411,7 @@ PrintVisitor.prototype.content = function(content) {
 PrintVisitor.prototype.comment = function(comment) {
   return this.pad("{{! '" + comment.comment + "' }}");
 };
-},{"./visitor":47}],47:[function(require,module,exports){
+},{"./visitor":51}],51:[function(require,module,exports){
 "use strict";
 function Visitor() {}
 
@@ -7299,7 +7424,7 @@ Visitor.prototype = {
 };
 
 exports["default"] = Visitor;
-},{}],48:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -7328,7 +7453,7 @@ function Exception(message, node) {
 Exception.prototype = new Error();
 
 exports["default"] = Exception;
-},{}],49:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -7466,7 +7591,7 @@ exports.program = program;function invokePartial(partial, name, context, helpers
 exports.invokePartial = invokePartial;function noop() { return ""; }
 
 exports.noop = noop;
-},{"./base":40,"./exception":48,"./utils":51}],50:[function(require,module,exports){
+},{"./base":44,"./exception":52,"./utils":55}],54:[function(require,module,exports){
 "use strict";
 // Build out our basic SafeString type
 function SafeString(string) {
@@ -7478,7 +7603,7 @@ SafeString.prototype.toString = function() {
 };
 
 exports["default"] = SafeString;
-},{}],51:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 /*jshint -W004 */
 var SafeString = require("./safe-string")["default"];
@@ -7555,7 +7680,7 @@ exports.escapeExpression = escapeExpression;function isEmpty(value) {
 }
 
 exports.isEmpty = isEmpty;
-},{"./safe-string":50}],52:[function(require,module,exports){
+},{"./safe-string":54}],56:[function(require,module,exports){
 // USAGE:
 // var handlebars = require('handlebars');
 
@@ -7582,15 +7707,15 @@ if (typeof require !== 'undefined' && require.extensions) {
   require.extensions[".hbs"] = extension;
 }
 
-},{"../dist/cjs/handlebars":38,"../dist/cjs/handlebars/compiler/printer":46,"../dist/cjs/handlebars/compiler/visitor":47,"fs":37}],53:[function(require,module,exports){
+},{"../dist/cjs/handlebars":42,"../dist/cjs/handlebars/compiler/printer":50,"../dist/cjs/handlebars/compiler/visitor":51,"fs":41}],57:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime');
 
-},{"./dist/cjs/handlebars.runtime":39}],54:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":43}],58:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":53}],55:[function(require,module,exports){
+},{"handlebars/runtime":57}],59:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -16802,8 +16927,8 @@ return jQuery;
 
 }));
 
-},{}],56:[function(require,module,exports){
-arguments[4][55][0].apply(exports,arguments)
-},{"dup":55}],57:[function(require,module,exports){
-arguments[4][34][0].apply(exports,arguments)
-},{"dup":34}]},{},[5]);
+},{}],60:[function(require,module,exports){
+arguments[4][59][0].apply(exports,arguments)
+},{"dup":59}],61:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"dup":38}]},{},[5]);

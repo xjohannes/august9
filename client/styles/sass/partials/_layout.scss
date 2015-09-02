@@ -1,0 +1,103 @@
+@mixin position($top:0, $right:0, $bottom:0, $left:0, $pos:relative) {
+	position: $pos;
+	top: $top;
+	right:$right;
+	bottom: $bottom;
+	left: $left;
+}
+
+body {
+	padding-top: 155px;
+	background-color: #100;
+}
+.homeItem {
+	background-color: #fafafa;
+	margin: 1em;
+	width: 20em;
+	height: auto;
+	padding: 0;
+	img {
+		width: 100%;
+		margin: 0 auto;
+		padding-top: 1em;
+		overflow: hidden;
+	}
+	h3 {
+		padding-left: 15px;
+	}
+}
+
+#mainContent {
+	@include position(-30px);
+}
+#homeList {
+	@include position(-23px);
+	/*
+	position: relative;
+	top: -23px;
+	*/
+}
+
+.logoContainer {
+	width: 30em;
+	height: 150px;
+  padding: 0 35px;
+  margin-top: -18px;
+}
+
+.logo  {
+	position: relative;
+}
+.slogan {
+	@include position(37px, 0, 0, 45px, 100%);
+	/*
+		position: relative;
+		top: 37px;
+		left: 45px;
+	  width: 100%;
+	  */
+}
+.navbar-default {
+	height: 130px;
+	border: none;
+}
+.navbar-toggle {
+		top: -125px;
+		right: 10px;
+	}
+
+@media (max-width: 320px) {
+
+  .homeItem {
+    margin: 1em 1em 1em -2.5em;
+  }
+  .navbar-toggle {
+		top: -136px;
+		right: 10px;
+	}
+  .logoContainer {
+		padding: 0px 35px;
+	}	
+
+	
+ .slogan {
+		@include position(44px, 0, 0, 47px);
+		font-size: 0.8em;
+ }
+ .logo  {
+		position: relative;
+ }
+ #mainContent {
+	left: -10px;
+	}
+	#mainContent ul{
+		margin-left: -30px;
+	}
+	#mainContent {
+		&.admin {
+			left: -20px;
+		}
+	}
+	
+	
+}

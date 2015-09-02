@@ -3,20 +3,7 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template('<form id =  "projectForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/"' +
-     'method    =  "post">' +
-			'Project name:<input type="text" name="projectname" value="<%= projectname %>" /><br>' +
-			'Email: <input type="text" name="email" value="<%= email %>" /><br>' +
-			'About: <input type="text" name="about" value="<%= about %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'Project image: <input type="file" name="file" /><br>' + 
-			'Image description: <input type="text" name="imgalt" value="<%= imgalt %>" /><br>' +                
-			'<input type="submit" value="Save" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/projectForm.hbs'),
 	events: {
 		'submit': 'save',
 		"change input[type=file]" : "encodeFile"

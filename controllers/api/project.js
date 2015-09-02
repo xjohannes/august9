@@ -94,6 +94,10 @@ config = require('../../app/config');
 				
 			}), 
 		function(req, res) {
+			console.log("transloadit requst/response");
+			console.log(req.transloadit);
+			console.log(req.uploads);
+			console.log(req.fields);
 			if(req.body.id) {
 				Project.put(req, res);
 			} else {
@@ -160,12 +164,12 @@ config = require('../../app/config');
 																						} else {
 																							resultObj.participator = req.body.participator;
 																							resultObj.participatorRole = req.body.participatorRole;
-																							res.status(201);
+																							res.status(201).send();
 																							console.log("Participation added to the database for " + rows1[0].projectname);
 																						}
 																					});
 																			} else {
-																					res.status(201);
+																					res.status(201).send();
 																			}
 																		}
 																	});

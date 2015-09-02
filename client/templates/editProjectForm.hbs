@@ -1,15 +1,15 @@
 <div class="container">
-    <h1><span class="form august9-projectForm"></span>New project</h1>
+    <h1><span class="form august9-songForm"></span>Edit {{projectname}}</h1>
 
     <!-- show any messages that come back with authentication -->
     <!--<% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
     <% } %>-->
-	<form id ="projectForm"
+	<form id =  "projectForm"
 	     enctype   =  "multipart/form-data"
-	     action    =  "/project/"
+	     action    =  "/project/edit/{{id}}"
 	     method    =  "post">
-	  
+	  <input type="hidden" name="id" value="{{id}}">
 	  <div class="form-group col-xs-12 col-sm-5">   	
 			<label for="projectname">Projectname:</label>
 			<input class="form-control" type="text" name="projectname" value="{{ projectname }}" /><br>
@@ -36,27 +36,10 @@
 		</div>
 		<div class="form-group col-xs-12 col-sm-5"> 
 				<label for="file">Project image:</label>
-				<input class="form-control btn btn-default btn-file " type="file" name="file" /><br>
-		</div>
-		<div class="form-group col-xs-12 col-sm-5">   	
-			<label for="imgalt">Image description:</label>
-			<input class="form-control" type="text" name="imgalt" value="{{ imgalt }}" /><br>
+				<input class="form-control btn btn-default btn-file" type="file" name="file" /><br>
 		</div>
 		<div class="form-group col-xs-12 col-sm-5">                  
-				<input class=" btn btn-warning " type="submit" value="Create project" name="submit">
+				<input class="btn btn-warning " type="submit" value="Edit project" name="submit">
 		</div>
 	</form>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>
-<script type="text/javascript">
-$(function() {
-  $('#projectForm').transloadit({
-    wait: true,
-    params: {
-      auth: { key: "a61cd7c04f0f11e5bf5c996568a98dd0" },
-      template_id: "b68e53b051a611e59211375ae6c9147c"
-    }
-  });
-});
-</script>

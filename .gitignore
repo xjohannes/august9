@@ -32,6 +32,7 @@ build/*
 node_modules/*
 media/*
 public/media/music/*
+public/media/images/*
 
 #sass 
 .sass-cache/*

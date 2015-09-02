@@ -3,21 +3,7 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	template: _.template(
-		'<form id =  "uploadForm"' +
-     'enctype   =  "multipart/form-data"' +
-     'action    =  "/project/<%= projectid %>"' +
-     'method    =  "post">' +
-     	'<input type="hidden" name="projectid" value="<%= projectid %>">' +
-			'Productionstatus:<input type="text" name="productionstatus" value="<%= productionstatus %>" /><br>' +
-			'Notes: <input type="text" name="notes" value="<%= notes %>" /><br>' +
-			'Created: <input type="text" name="created" value="<%= created %>" /><br>' +
-			'Influence: <input type="text" name="influence" value="<%= influence %>" /><br>' +
-			'Participator: <input type="text" name="participator" value="<%= participator %>" /><br>' +
-			'Participator Role: <input type="text" name="participatorRole" value="<%= participatorRole %>" /><br>' +
-			'<input type="file" name="file" /><br>' +                 
-			'<input type="submit" value="Save" name="submit">' +
-		'</form>'),
+	template: require('../../../templates/songForm.hbs'),
 	events: {
 		'submit': 'clean',
 		"change input[type=file]" : "encodeFile"

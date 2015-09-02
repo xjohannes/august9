@@ -1,0 +1,46 @@
+<div class="container">
+    <h1><span class="form august9-songForm"></span>Upload song</h1>
+
+    <!-- show any messages that come back with authentication -->
+    <!--<% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>-->
+<form id =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action    =  "/project/{{ projectid }}"
+     method    =  "post">
+  <input type="hidden" name="projectid" value="{{ projectid }}" />
+  
+  <div class="form-group col-xs-12 col-sm-5">   	
+		<label for="productionstatus">Productionstatus:</label>
+		<input class="form-control" type="text" name="productionstatus" value="{{ productionstatus }}" /><br>
+	</div>
+	<div class="form-group col-xs-12 col-sm-5">   	
+		<label for="notes">Notes:</label>
+		<input class="form-control" type="text" name="notes" value="{{ notes }}" /><br>
+	</div>
+	<div class="form-group col-xs-12 col-sm-5">   	
+		<label for="created">Created:</label>
+		<input class="form-control" type="text" name="created" value="{{ created }}" /><br>
+	</div>
+	<div class="form-group col-xs-12 col-sm-5">   	
+		<label for="influence">Influence:</label>
+		<input class="form-control" type="text" name="influence" value="{{ influence }}" /><br>
+	</div>
+	<div class="form-group col-xs-12 col-sm-5">   	
+		<label for="participator">Participator:</label>
+		<input class="form-control" type="text" name="participator" value="{{ participator }}" /><br>
+	</div>
+	<div class="form-group col-xs-12 col-sm-5">   	
+		<label for="participator_role">Participator Role:</label>
+		<input class="form-control" type="text" name="participatorRole" value="{{ participatorRole }}" /><br>
+	</div>
+		<div class="form-group col-xs-12 col-sm-5"> 
+			<label for="file">Song:</label>
+			<input class=" form-control btn btn-default" type="file" name="file" /><br>   
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">               
+			<input class="btn btn-warning " type="submit" value="Save" name="submit">
+		</div>
+		</form>
+</div>

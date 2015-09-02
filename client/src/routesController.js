@@ -51,7 +51,7 @@ module.exports = function() {
 		this.userCollectionView = new UserCollectionView({collection:this.userList});
 		$('#mainContent').html(projectForm.render().el);
 		$('.userList').html(this.userCollectionView.render().el);
-		$('#projectList').html(this.projectCollectionView.render().el);
+		//$('#projectList').html(this.projectCollectionView.render().el);
 		$('#header').html(this.headerView.render().el);
 	};
 	this.readProject = function(projectid) {

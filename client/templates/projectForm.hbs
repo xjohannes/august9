@@ -47,16 +47,19 @@
 		</div>
 	</form>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>
+
+
+<script> var a = $('#projectForm'); console.log("a");console.log(a);</script>
 <script type="text/javascript">
 $(function() {
+	console.log("instansiate transloadit");
   $('#projectForm').transloadit({
     wait: true,
     params: {
       auth: { key: "a61cd7c04f0f11e5bf5c996568a98dd0" },
       template_id: "b68e53b051a611e59211375ae6c9147c"
-    }
+    },
+    //triggerUploadOnFileSelection: true
   });
 });
 </script>

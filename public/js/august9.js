@@ -1241,7 +1241,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js\"></script>\n<script src=\"//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js\"></script>\n<script type=\"text/javascript\">\n$(function() {\n  $('#projectForm').transloadit({\n    wait: true,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n\n<script> var a = $('#projectForm'); console.log(\"a\");console.log(a);</script>\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"instansiate transloadit\");\n  $('#projectForm').transloadit({\n    wait: true,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    },\n    //triggerUploadOnFileSelection: true\n  });\n});\n</script>";
   return buffer;
   });
 

@@ -16,6 +16,7 @@ module.exports = Backbone.View.extend({
 		this.$el.append(homeView.render().el);
 	},
 	addAll: function() {
+		console.log("cleaning homeCollectionView ADD ALL");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
@@ -28,7 +29,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	clean: function() {
-		//console.log("cleaning homeCollectionView");
+		console.log("cleaning homeCollectionView");
 		this.$el.empty();
 	}
 	

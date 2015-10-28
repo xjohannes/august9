@@ -41,7 +41,6 @@ module.exports = Router = Backbone.Router.extend({
 	url: "/",
 	// Fetch data from project table
 	index: function () {
-		console.log("index");
 		this.controller.index();
 	},
 	login: function() {

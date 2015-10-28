@@ -28,6 +28,7 @@ module.exports = Backbone.View.extend({
 		}, {success: function() {
 			//console.log("token: " + self.model.get('token'));
 			window.localStorage.setItem('token', self.model.get('token'));
+
 		}});
 	
 	},
@@ -38,8 +39,7 @@ module.exports = Backbone.View.extend({
 	},
 	clean: function() {
 		console.log("cleaning loginFormView");
-		this.$el.remove();
-		 //window.history.back();
+		this.$el.empty();
 	}
 
 });

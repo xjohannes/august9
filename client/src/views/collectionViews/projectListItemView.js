@@ -19,6 +19,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	toggleAdminButtons: function() {
+		console.log("toggleAdminButtons");
 		$('.admin').toggleClass('hidden');
 	}
 });

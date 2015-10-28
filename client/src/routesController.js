@@ -28,7 +28,6 @@ module.exports = function() {
 	// Fetch data from project table
 	this.index =function () {
 		$('#homeList').html(that.homeCollectionView.render().el);
-		Backbone.dispacher.trigger('index', that);
 		$("#mainContent").html("");
 	};
 	this.login =function() {
@@ -38,9 +37,9 @@ module.exports = function() {
 		$('#projectList').html(that.projectCollectionView.render().el);
 	};
 	this.logout = function() {
+		console.log("logout");
 		window.localStorage.setItem('token', '');
-		$('#homeList').html(this.homeCollectionView.render().el);
-		//Backbone.history.navigate("/");
+		that.index();
 	};
 	this.createProject = function() {
 		var projectItem = new ProjectModel();
@@ -173,7 +172,7 @@ module.exports = function() {
 		
 	};
 	this.allRoutes = function(e) {
-		if(e !== "index") {
+		if(e !== "index" ) {
 			that.homeCollectionView.clean();
 		}
 		$('#header').html(that.headerView.render().el);
@@ -197,8 +196,8 @@ module.exports = function() {
 		that.projectList.fetch();
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
-		that.projectCollectionView.render();
-		that.homeCollectionView.render();
+		//that.projectCollectionView.render();
+		//that.homeCollectionView.render();
 		that.headerView = new HeaderView({model: new UserModel()});
 		that.songCollectionView = null;
 		$('#header').html(that.headerView.render().el);

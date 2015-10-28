@@ -184,24 +184,29 @@ body {
   right: 10px;
 }
 
+/* line 68, ../../client/styles/sass/partials/_layout.scss */
+.btn {
+  margin-bottom: 7px;
+}
+
 @media (max-width: 320px) {
-  /* line 71, ../../client/styles/sass/partials/_layout.scss */
+  /* line 76, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 74, ../../client/styles/sass/partials/_layout.scss */
+  /* line 79, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 78, ../../client/styles/sass/partials/_layout.scss */
+  /* line 83, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 35px;
   }
 
-  /* line 83, ../../client/styles/sass/partials/_layout.scss */
+  /* line 88, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -211,22 +216,22 @@ body {
     font-size: 0.8em;
   }
 
-  /* line 87, ../../client/styles/sass/partials/_layout.scss */
+  /* line 92, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 90, ../../client/styles/sass/partials/_layout.scss */
+  /* line 95, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 93, ../../client/styles/sass/partials/_layout.scss */
+  /* line 98, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 97, ../../client/styles/sass/partials/_layout.scss */
+  /* line 102, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
@@ -319,24 +324,29 @@ body {
   right: 10px;
 }
 
+/* line 68, ../../client/styles/sass/partials/_layout.scss */
+.btn {
+  margin-bottom: 7px;
+}
+
 @media (max-width: 320px) {
-  /* line 71, ../../client/styles/sass/partials/_layout.scss */
+  /* line 76, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 74, ../../client/styles/sass/partials/_layout.scss */
+  /* line 79, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 78, ../../client/styles/sass/partials/_layout.scss */
+  /* line 83, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 35px;
   }
 
-  /* line 83, ../../client/styles/sass/partials/_layout.scss */
+  /* line 88, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -346,22 +356,22 @@ body {
     font-size: 0.8em;
   }
 
-  /* line 87, ../../client/styles/sass/partials/_layout.scss */
+  /* line 92, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 90, ../../client/styles/sass/partials/_layout.scss */
+  /* line 95, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 93, ../../client/styles/sass/partials/_layout.scss */
+  /* line 98, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 97, ../../client/styles/sass/partials/_layout.scss */
+  /* line 102, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }

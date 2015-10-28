@@ -22,13 +22,11 @@ module.exports = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	},
 	remove: function(project) {
-	
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
 	render: function() {
 		this.addAll();
-		//$('#sidebar').html(this.el);
 		return this;
 	},
 	clean: function(user) {

@@ -220,7 +220,6 @@ module.exports = function() {
 	// Fetch data from project table
 	this.index =function () {
 		$('#homeList').html(that.homeCollectionView.render().el);
-		Backbone.dispacher.trigger('index', that);
 		$("#mainContent").html("");
 	};
 	this.login =function() {
@@ -230,9 +229,9 @@ module.exports = function() {
 		$('#projectList').html(that.projectCollectionView.render().el);
 	};
 	this.logout = function() {
+		console.log("logout");
 		window.localStorage.setItem('token', '');
-		$('#homeList').html(this.homeCollectionView.render().el);
-		//Backbone.history.navigate("/");
+		that.index();
 	};
 	this.createProject = function() {
 		var projectItem = new ProjectModel();
@@ -365,7 +364,7 @@ module.exports = function() {
 		
 	};
 	this.allRoutes = function(e) {
-		if(e !== "index") {
+		if(e !== "index" ) {
 			that.homeCollectionView.clean();
 		}
 		$('#header').html(that.headerView.render().el);
@@ -389,8 +388,8 @@ module.exports = function() {
 		that.projectList.fetch();
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
-		that.projectCollectionView.render();
-		that.homeCollectionView.render();
+		//that.projectCollectionView.render();
+		//that.homeCollectionView.render();
 		that.headerView = new HeaderView({model: new UserModel()});
 		that.songCollectionView = null;
 		$('#header').html(that.headerView.render().el);
@@ -440,7 +439,6 @@ module.exports = Router = Backbone.Router.extend({
 	url: "/",
 	// Fetch data from project table
 	index: function () {
-		console.log("index");
 		this.controller.index();
 	},
 	login: function() {
@@ -509,6 +507,7 @@ module.exports = Backbone.View.extend({
 		this.$el.append(homeView.render().el);
 	},
 	addAll: function() {
+		console.log("cleaning homeCollectionView ADD ALL");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
@@ -521,7 +520,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	clean: function() {
-		//console.log("cleaning homeCollectionView");
+		console.log("cleaning homeCollectionView");
 		this.$el.empty();
 	}
 	
@@ -571,13 +570,11 @@ module.exports = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	},
 	remove: function(project) {
-	
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
 	render: function() {
 		this.addAll();
-		//$('#sidebar').html(this.el);
 		return this;
 	},
 	clean: function(user) {
@@ -609,6 +606,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	toggleAdminButtons: function() {
+		console.log("toggleAdminButtons");
 		$('.admin').toggleClass('hidden');
 	}
 });
@@ -1241,7 +1239,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js\"></script>\n<script src=\"//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js\"></script>\n<script type=\"text/javascript\">\n$(function() {\n  $('#projectForm').transloadit({\n    wait: true,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n  $('#projectForm').transloadit({\n    wait: false,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
   return buffer;
   });
 
@@ -1270,7 +1268,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "/delete\"> <button type=\"button\" class=\"btn btn-xs\" >Delete</button></a>\n	</div>\n	<div class=\"col-sm-4\">\n		<a class=\"admin hidden\" href=\"#/project/";
+    + "/delete\"> <button type=\"button\" class=\"btn btn-xs\" >Delete</button></a>\n	</div>\n	<div class=\"col-sm-5\">\n		<a class=\"admin hidden\" href=\"#/project/";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

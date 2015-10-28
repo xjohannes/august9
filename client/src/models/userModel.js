@@ -13,7 +13,7 @@ module.exports = Backbone.Model.extend({
 		token: ""
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');

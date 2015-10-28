@@ -9,7 +9,7 @@ module.exports = App = function App() {};
     
 App.prototype.start = function(){
 
-Backbone.dispacher   = _.extend({}, Backbone.Events);
+window.Backbone_dispatcher   = _.extend({}, Backbone.Events);
 var originalSync     = Backbone.sync;
 		routesController = new RoutesController();
 
@@ -30,10 +30,10 @@ Backbone.sync = function(method, model, options) {
     //originalSync.call(model, method, model, options);
 };
 
- this.router = new Router({controller: routesController, dispacher : Backbone.dispacher});
+ this.router = new Router({controller: routesController, dispacher : window.Backbone_dispatcher});
  this.router.start();
 
- Backbone.dispacher.listenTo(this.router, 'route', routesController.allRoutes);
+ window.Backbone_dispatcher.listenTo(this.router, 'route', routesController.allRoutes);
  
 };
 
@@ -80,12 +80,12 @@ module.exports = Backbone.Model.extend({
 		token   : ""
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'index', this.index);
+		//this.listenTo(Backbone.dispatcher, 'index', this.index);
 		this.on('change:token', function() {
-			Backbone.dispacher.trigger('login:success', this);
+			window.Backbone_dispatcher.trigger('login:success', this);
 		});
 		this.on('clean:loginForm', function() {
-			//Backbone.dispacher.trigger('clean:loginForm', this);
+			//Backbone.dispatcher.trigger('clean:loginForm', this);
 		});
 	},
 	index: function() {
@@ -112,11 +112,17 @@ module.exports = Backbone.Model.extend({
 		imgalt:  ''
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
-		this.listenTo(Backbone.dispacher, 'index', this.index);
+		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(window.Backbone_dispatcher, 'edit:project', this.triggerEditProject);
+
+		this.listenTo(window.Backbone_dispatcher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
+	},
+	triggerEditProject: function() {
+		console.log("edit project triggered");
+		this.trigger('edit:project');
 	},
 	index: function() {
 		this.trigger('index');
@@ -152,8 +158,8 @@ module.exports = Backbone.Model.extend({
 		influence: 'none'
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
-		this.listenTo(Backbone.dispacher, 'index', this.index);
+		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(window.Backbone_dispatcher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
@@ -182,7 +188,7 @@ module.exports = Backbone.Model.extend({
 		token: ""
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');
@@ -231,6 +237,7 @@ module.exports = function() {
 	this.logout = function() {
 		console.log("logout");
 		window.localStorage.setItem('token', '');
+		$("#mainContent").html("");
 		that.index();
 	};
 	this.createProject = function() {
@@ -256,7 +263,7 @@ module.exports = function() {
 		projectItem.fetch({
 			success: function(project) {
 				var projectSongs = project.attributes.songs;
-				console.log(projectSongs);
+				//console.log(projectSongs);
 				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
 				self.songCollection.url = "/project/" + projectid + "/song";
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection});
@@ -278,7 +285,6 @@ module.exports = function() {
 		}, this);
 	};
 	this.updateProject = function(projectid) {
-		console.log(projectid);
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);
@@ -344,7 +350,7 @@ module.exports = function() {
 				}, this);
 	};
 	this.deleteSong = function(projectid, songid) {
-		console.log("Song ID: " + songid);
+		//console.log("Song ID: " + songid);
 		var songItem = this.songCollection.remove(songid);
 		
 		songItem.destroy({ success: function(model, response) {
@@ -364,7 +370,7 @@ module.exports = function() {
 		
 	};
 	this.allRoutes = function(e) {
-		if(e !== "index" ) {
+		if(e !== "index" && e !== "logout") {
 			that.homeCollectionView.clean();
 		}
 		$('#header').html(that.headerView.render().el);
@@ -376,9 +382,7 @@ module.exports = function() {
 					//console.log(projects);
 				}
 			});
-
 		}
-
 	};
 	this.defaultRoute = function() {
 		console.log("default Route");
@@ -507,7 +511,7 @@ module.exports = Backbone.View.extend({
 		this.$el.append(homeView.render().el);
 	},
 	addAll: function() {
-		console.log("cleaning homeCollectionView ADD ALL");
+		//console.log("cleaning homeCollectionView ADD ALL");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
@@ -520,7 +524,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	clean: function() {
-		console.log("cleaning homeCollectionView");
+		//console.log("cleaning homeCollectionView");
 		this.$el.empty();
 	}
 	
@@ -560,6 +564,7 @@ module.exports = Backbone.View.extend({
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
 		this.collection.on('index', this.clean, this);
+		this.collection.listenTo(window.Backbone_dispatcher, 'edit:project', this.addAll);
 	},
 	addOne: function(projectItem) {
 		var projectView = new ProjectListItemView({model: projectItem});
@@ -606,8 +611,8 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	toggleAdminButtons: function() {
-		console.log("toggleAdminButtons");
-		$('.admin').toggleClass('hidden');
+		//console.log("toggleAdminButtons");
+		$('.admin').removeClass('hidden');
 	}
 });
 },{"../../../templates/projectListItem.hbs":33,"backbone":39,"jQuery":59,"underscore":61}],16:[function(require,module,exports){
@@ -755,7 +760,7 @@ module.exports = Backbone.View.extend({
 	template: require('../../../templates/editProjectForm.hbs'),
 	events: {
 		'submit': 'save',
-		"change input[type=file]" : "encodeFile"
+		"change input" : "encodeFile"
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
@@ -765,10 +770,13 @@ module.exports = Backbone.View.extend({
 	save: function(e) {
 		this.model.fetch({
 			success: function(song) {
-				console.log("this.model.influence");
-				console.log(this.model.influence);
+				//console.log("this.model.influence");
+				//console.log(this.model.influence);
 			}
 		});
+		this.clean();
+		window.Backbone_dispatcher.trigger('edit:project');
+		//Backbone.dispatcher.trigger('login:success', this);
 		/*
 		e.preventDefault();
 		var projectname = this.$('input[name=projectname]').val();
@@ -790,15 +798,15 @@ module.exports = Backbone.View.extend({
 	encodeFile: function() {
 		// Better to get it from the userobject?
 		var token = window.localStorage.getItem('token');
-		console.log(token);
+		//console.log(token);
 		// This is not secure. But havn't found out how to overcome the problems of encoding the header 
 		// when the form is send without the help of Backbone(jquery ajax).
 		// The server does not get the body in the middleware
 		var actionUrl = this.$('#projectForm').attr('action');
-		console.log(actionUrl);
+		//console.log(actionUrl);
 		actionUrl += "?token=" + token;
 		this.$('#projectForm').attr('action', actionUrl);
-		Backbone.history.navigate("#/", {trigger: true});
+		//Backbone.history.navigate("#/", {trigger: true});
 	},
 	clean: function() {
 		console.log("cleaning projectFormView");
@@ -914,8 +922,8 @@ module.exports = Backbone.View.extend({
 	save: function(e) {
 		this.model.fetch({
 			success: function(song) {
-				console.log("this.model.influence");
-				console.log(this.model.influence);
+				//console.log("this.model.influence");
+				//console.log(this.model.influence);
 			}
 		});
 		/*
@@ -939,15 +947,15 @@ module.exports = Backbone.View.extend({
 	encodeFile: function() {
 		// Better to get it from the userobject?
 		var token = window.localStorage.getItem('token');
-		console.log(token);
+		//console.log(token);
 		// This is not secure. But havn't found out how to overcome the problems of encoding the header 
 		// when the form is send without the help of Backbone(jquery ajax).
 		// The server does not get the body in the middleware
 		var actionUrl = this.$('#projectForm').attr('action');
-		console.log(actionUrl);
+		//console.log(actionUrl);
 		actionUrl += "?token=" + token;
 		this.$('#projectForm').attr('action', actionUrl);
-		Backbone.history.navigate("#/", {trigger: true});
+		//Backbone.history.navigate("#/", {trigger: true});
 	},
 	clean: function() {
 		console.log("cleaning projectFormView");
@@ -981,7 +989,7 @@ module.exports = Backbone.View.extend({
 		var actionUrl = this.$('#uploadForm').attr('action');
 		actionUrl += "?token=" + token;
 		this.$('#uploadForm').attr('action', actionUrl);
-		Backbone.history.navigate("#/", {trigger: true});
+		//Backbone.history.navigate("#/", {trigger: true});
 	},
 	save: function(e) {
 		this.model.fetch({

@@ -38,8 +38,9 @@ module.exports = Backbone.View.extend({
 		this.model.on('index', this.clean, this);
 	},
 	clean: function() {
-		console.log("cleaning loginFormView");
-		this.$el.empty();
+		//console.log("cleaning loginFormView");
+		this.$el.remove();
+		 //window.history.back();
 	}
 
 });

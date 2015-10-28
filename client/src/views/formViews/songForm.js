@@ -23,7 +23,7 @@ module.exports = Backbone.View.extend({
 		var actionUrl = this.$('#uploadForm').attr('action');
 		actionUrl += "?token=" + token;
 		this.$('#uploadForm').attr('action', actionUrl);
-		Backbone.history.navigate("#/", {trigger: true});
+		//Backbone.history.navigate("#/", {trigger: true});
 	},
 	save: function(e) {
 		this.model.fetch({

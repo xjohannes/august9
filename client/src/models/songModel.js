@@ -26,8 +26,8 @@ module.exports = Backbone.Model.extend({
 		influence: 'none'
 	},
 	initialize: function() {
-		this.listenTo(Backbone.dispacher, 'login:success', this.triggerLoginSuccess);
-		this.listenTo(Backbone.dispacher, 'index', this.index);
+		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
+		this.listenTo(window.Backbone_dispatcher, 'index', this.index);
 	},
 	triggerLoginSuccess: function() {
 		this.trigger('login:success');

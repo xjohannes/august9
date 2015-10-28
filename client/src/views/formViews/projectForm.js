@@ -16,8 +16,8 @@ module.exports = Backbone.View.extend({
 	save: function(e) {
 		this.model.fetch({
 			success: function(song) {
-				console.log("this.model.influence");
-				console.log(this.model.influence);
+				//console.log("this.model.influence");
+				//console.log(this.model.influence);
 			}
 		});
 		/*
@@ -41,15 +41,15 @@ module.exports = Backbone.View.extend({
 	encodeFile: function() {
 		// Better to get it from the userobject?
 		var token = window.localStorage.getItem('token');
-		console.log(token);
+		//console.log(token);
 		// This is not secure. But havn't found out how to overcome the problems of encoding the header 
 		// when the form is send without the help of Backbone(jquery ajax).
 		// The server does not get the body in the middleware
 		var actionUrl = this.$('#projectForm').attr('action');
-		console.log(actionUrl);
+		//console.log(actionUrl);
 		actionUrl += "?token=" + token;
 		this.$('#projectForm').attr('action', actionUrl);
-		Backbone.history.navigate("#/", {trigger: true});
+		//Backbone.history.navigate("#/", {trigger: true});
 	},
 	clean: function() {
 		console.log("cleaning projectFormView");

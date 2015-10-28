@@ -39,6 +39,7 @@ module.exports = function() {
 	this.logout = function() {
 		console.log("logout");
 		window.localStorage.setItem('token', '');
+		$("#mainContent").html("");
 		that.index();
 	};
 	this.createProject = function() {
@@ -64,7 +65,7 @@ module.exports = function() {
 		projectItem.fetch({
 			success: function(project) {
 				var projectSongs = project.attributes.songs;
-				console.log(projectSongs);
+				//console.log(projectSongs);
 				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
 				self.songCollection.url = "/project/" + projectid + "/song";
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection});
@@ -86,7 +87,6 @@ module.exports = function() {
 		}, this);
 	};
 	this.updateProject = function(projectid) {
-		console.log(projectid);
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#mainContent').html(projectForm.render().el);
@@ -152,7 +152,7 @@ module.exports = function() {
 				}, this);
 	};
 	this.deleteSong = function(projectid, songid) {
-		console.log("Song ID: " + songid);
+		//console.log("Song ID: " + songid);
 		var songItem = this.songCollection.remove(songid);
 		
 		songItem.destroy({ success: function(model, response) {
@@ -172,7 +172,7 @@ module.exports = function() {
 		
 	};
 	this.allRoutes = function(e) {
-		if(e !== "index" ) {
+		if(e !== "index" && e !== "logout") {
 			that.homeCollectionView.clean();
 		}
 		$('#header').html(that.headerView.render().el);
@@ -184,9 +184,7 @@ module.exports = function() {
 					//console.log(projects);
 				}
 			});
-
 		}
-
 	};
 	this.defaultRoute = function() {
 		console.log("default Route");

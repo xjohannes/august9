@@ -8,7 +8,7 @@ module.exports = App = function App() {};
     
 App.prototype.start = function(){
 
-Backbone.dispacher   = _.extend({}, Backbone.Events);
+window.Backbone_dispatcher   = _.extend({}, Backbone.Events);
 var originalSync     = Backbone.sync;
 		routesController = new RoutesController();
 
@@ -29,10 +29,10 @@ Backbone.sync = function(method, model, options) {
     //originalSync.call(model, method, model, options);
 };
 
- this.router = new Router({controller: routesController, dispacher : Backbone.dispacher});
+ this.router = new Router({controller: routesController, dispacher : window.Backbone_dispatcher});
  this.router.start();
 
- Backbone.dispacher.listenTo(this.router, 'route', routesController.allRoutes);
+ window.Backbone_dispatcher.listenTo(this.router, 'route', routesController.allRoutes);
  
 };
 

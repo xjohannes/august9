@@ -60,7 +60,7 @@ table {
 /* line 16, ../../client/styles/sass/partials/_typography.scss */
 body {
   font-family: 'pt';
-  color: black;
+  color: #bbbbbb;
 }
 
 /* line 21, ../../client/styles/sass/partials/_typography.scss */
@@ -236,143 +236,13 @@ body {
     left: -20px;
   }
 }
-/* line 9, ../../client/styles/sass/partials/_layout.scss */
-body {
-  padding-top: 155px;
-  background-color: #100;
-}
-
-/* line 13, ../../client/styles/sass/partials/_layout.scss */
+/* line 1, ../../client/styles/sass/partials/_color.scss */
 .homeItem {
-  background-color: #fafafa;
-  margin: 1em;
-  width: 20em;
-  height: auto;
-  padding: 0;
-}
-/* line 19, ../../client/styles/sass/partials/_layout.scss */
-.homeItem img {
-  width: 100%;
-  margin: 0 auto;
-  padding-top: 1em;
-  overflow: hidden;
-}
-/* line 25, ../../client/styles/sass/partials/_layout.scss */
-.homeItem h3 {
-  padding-left: 15px;
+  background-color: #f8f8f8;
 }
 
-/* line 30, ../../client/styles/sass/partials/_layout.scss */
-#mainContent {
-  position: relative;
-  top: -30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-/* line 33, ../../client/styles/sass/partials/_layout.scss */
-#homeList {
-  position: relative;
-  top: -23px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /*
-  position: relative;
-  top: -23px;
-  */
-}
-
-/* line 41, ../../client/styles/sass/partials/_layout.scss */
-.logoContainer {
-  width: 30em;
-  height: 150px;
-  padding: 0 35px;
-  margin-top: -18px;
-}
-
-/* line 48, ../../client/styles/sass/partials/_layout.scss */
-.logo {
-  position: relative;
-}
-
-/* line 51, ../../client/styles/sass/partials/_layout.scss */
-.slogan {
-  position: 100%;
-  top: 37px;
-  right: 0;
-  bottom: 0;
-  left: 45px;
-  /*
-  	position: relative;
-  	top: 37px;
-  	left: 45px;
-    width: 100%;
-    */
-}
-
-/* line 60, ../../client/styles/sass/partials/_layout.scss */
-.navbar-default {
-  height: 130px;
-  border: none;
-}
-
-/* line 64, ../../client/styles/sass/partials/_layout.scss */
-.navbar-toggle {
-  top: -125px;
-  right: 10px;
-}
-
-/* line 68, ../../client/styles/sass/partials/_layout.scss */
-.btn {
-  margin-bottom: 7px;
-}
-
-@media (max-width: 320px) {
-  /* line 76, ../../client/styles/sass/partials/_layout.scss */
-  .homeItem {
-    margin: 1em 1em 1em -2.5em;
-  }
-
-  /* line 79, ../../client/styles/sass/partials/_layout.scss */
-  .navbar-toggle {
-    top: -136px;
-    right: 10px;
-  }
-
-  /* line 83, ../../client/styles/sass/partials/_layout.scss */
-  .logoContainer {
-    padding: 0px 35px;
-  }
-
-  /* line 88, ../../client/styles/sass/partials/_layout.scss */
-  .slogan {
-    position: relative;
-    top: 44px;
-    right: 0;
-    bottom: 0;
-    left: 47px;
-    font-size: 0.8em;
-  }
-
-  /* line 92, ../../client/styles/sass/partials/_layout.scss */
-  .logo {
-    position: relative;
-  }
-
-  /* line 95, ../../client/styles/sass/partials/_layout.scss */
-  #mainContent {
-    left: -10px;
-  }
-
-  /* line 98, ../../client/styles/sass/partials/_layout.scss */
-  #mainContent ul {
-    margin-left: -30px;
-  }
-
-  /* line 102, ../../client/styles/sass/partials/_layout.scss */
-  #mainContent.admin {
-    left: -20px;
-  }
+/* line 5, ../../client/styles/sass/partials/_color.scss */
+label {
+  color: white;
+  font-weight: normal;
 }

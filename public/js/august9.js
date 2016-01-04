@@ -615,10 +615,10 @@ module.exports = Backbone.View.extend({
 		var token = window.localStorage.getItem('token');
 		if(token) {
 			$('.admin').removeClass('hidden');
-			console.log("removeClass");
+			//console.log("removeClass");
 		} else {
 			$('.admin').addClass('hidden');
-			console.log("addClass");
+			//console.log("addClass");
 		}
 		
 	}
@@ -755,7 +755,7 @@ module.exports  = Backbone.View.extend({
 		return this;
 	},
 	toggleAdminButtons: function() {
-		console.log("toggleAdminButtons user item view");
+		//console.log("toggleAdminButtons user item view");
 		$('.admin').toggleClass('hidden');
 	}
 });
@@ -906,7 +906,7 @@ module.exports = Backbone.View.extend({
 		this.model.on('index', this.clean, this);
 	},
 	clean: function() {
-		console.log("cleaning loginFormView");
+		//console.log("cleaning loginFormView");
 		this.$el.remove();
 		
 	}
@@ -1256,7 +1256,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n  $('#projectForm').transloadit({\n    wait: false,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n/*$(function() {\n  $('#projectForm').transloadit({\n    wait: false,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});*/\n</script>\n";
   return buffer;
   });
 

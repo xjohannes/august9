@@ -49,6 +49,67 @@
 </div>
 
 <script type="text/javascript">
+/*$(function() {
+  $('#projectForm').transloadit({
+    wait: false,
+    params: {
+      auth: { key: "a61cd7c04f0f11e5bf5c996568a98dd0" },
+      template_id: "b68e53b051a611e59211375ae6c9147c"
+    }
+  });
+});*/
+</script>
+{{!-- <div class="container">
+    <h1><span class="form august9-projectForm"></span>New project</h1>
+
+    <!-- show any messages that come back with authentication -->
+    <!--<% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+    <% } %>-->
+	<form id ="projectForm"
+	     enctype   =  "multipart/form-data"
+	     action    =  "/project/"
+	     method    =  "post">
+	  
+	  <div class="form-group col-xs-12 col-sm-5">   	
+			<label for="projectname">Projectname:</label>
+			<input class="form-control" type="text" name="projectname" value="{{ projectname }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="email">Email:</label>
+			<input class="form-control" type="text" name="email" value="{{ email }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="about">About:</label>
+			<input class="form-control" type="text" name="about" value="{{ about }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="influence">Influence:</label>
+			<input class="form-control" type="text" name="influence" value="{{ influence }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="participator">Participator:</label>
+			<input class="form-control" type="text" name="participator" value="{{ participator }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="participator_role">Participator Role:</label>
+			<input class="form-control" type="text" name="participatorRole" value="{{ participatorRole }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5"> 
+				<label for="file">Project image:</label>
+				<input class="form-control btn btn-default btn-file " type="file" name="file" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="imgalt">Image description:</label>
+			<input class="form-control" type="text" name="imgalt" value="{{ imgalt }}" /><br>
+		</div>
+		<div class="form-group col-xs-12 col-sm-5">                  
+				<input class=" btn btn-warning " type="submit" value="Create project" name="submit">
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
 $(function() {
 	console.log("initiating transloadit");
   $('#projectForm').transloadit({
@@ -75,4 +136,4 @@ $(function() {
     }
   });
 });
-</script>
+</script> --}}

@@ -6,7 +6,8 @@ module.exports = Backbone.View.extend({
 	template: require('../../../templates/editProjectForm.hbs'),
 	events: {
 		'submit': 'save',
-		"change input" : "encodeFile"
+		'change input' : 'encodeFile',
+		'edit:project' : 'clean'
 	},
 	render: function() {
 		var attributes = this.model.toJSON();

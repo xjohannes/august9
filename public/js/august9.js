@@ -564,7 +564,7 @@ module.exports = Backbone.View.extend({
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
 		this.collection.on('index', this.clean, this);
-		this.collection.listenTo(window.Backbone_dispatcher, 'edit:project', this.addAll);
+		this.collection.on('edit:project', this.render, this);
 	},
 	addOne: function(projectItem) {
 		var projectView = new ProjectListItemView({model: projectItem});
@@ -607,12 +607,20 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		var attributes = this.model.toJSON();
 		this.$el.html(this.template(attributes));
-		
+		this.toggleAdminButtons();
 		return this;
 	},
 	toggleAdminButtons: function() {
 		//console.log("toggleAdminButtons");
-		$('.admin').removeClass('hidden');
+		var token = window.localStorage.getItem('token');
+		if(token) {
+			$('.admin').removeClass('hidden');
+			console.log("removeClass");
+		} else {
+			$('.admin').addClass('hidden');
+			console.log("addClass");
+		}
+		
 	}
 });
 },{"../../../templates/projectListItem.hbs":33,"backbone":39,"jQuery":59,"underscore":61}],16:[function(require,module,exports){
@@ -760,7 +768,8 @@ module.exports = Backbone.View.extend({
 	template: require('../../../templates/editProjectForm.hbs'),
 	events: {
 		'submit': 'save',
-		"change input" : "encodeFile"
+		'change input' : 'encodeFile',
+		'edit:project' : 'clean'
 	},
 	render: function() {
 		var attributes = this.model.toJSON();

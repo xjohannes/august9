@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
 		this.collection.on('index', this.clean, this);
-		this.collection.listenTo(window.Backbone_dispatcher, 'edit:project', this.addAll);
+		this.collection.on('edit:project', this.render, this);
 	},
 	addOne: function(projectItem) {
 		var projectView = new ProjectListItemView({model: projectItem});

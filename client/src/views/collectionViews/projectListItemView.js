@@ -15,11 +15,19 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		var attributes = this.model.toJSON();
 		this.$el.html(this.template(attributes));
-		
+		this.toggleAdminButtons();
 		return this;
 	},
 	toggleAdminButtons: function() {
 		//console.log("toggleAdminButtons");
-		$('.admin').removeClass('hidden');
+		var token = window.localStorage.getItem('token');
+		if(token) {
+			$('.admin').removeClass('hidden');
+			console.log("removeClass");
+		} else {
+			$('.admin').addClass('hidden');
+			console.log("addClass");
+		}
+		
 	}
 });

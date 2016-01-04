@@ -109,6 +109,10 @@ config = require('../../app/config');
 								+ "VALUES('" + projectName + "', '"
 								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
 								+ req.body.imgalt +"')" ),
+						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
+								+ "VALUES('" + projectName + "', '"
+								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
+								+ req.body.imgalt +"')" ),*/
 						resultObj = {};
 				} else {
 					var projectName = config.capitalize(req.body.projectname),

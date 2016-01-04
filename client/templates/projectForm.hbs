@@ -51,10 +51,26 @@
 <script type="text/javascript">
 $(function() {
   $('#projectForm').transloadit({
-    wait: false,
+    wait: true,
+    triggerUploadOnFileSelection: true,
     params: {
-      auth: { key: "a61cd7c04f0f11e5bf5c996568a98dd0" },
-      template_id: "b68e53b051a611e59211375ae6c9147c"
+      auth: { key: "63fac0a0b2c411e5b32187c4376b74f6" },
+      steps: {
+      	resize_to_125: {
+      		robot	: "/images/resize",
+      		use  	: ":original",
+      		width	: 125,
+      		height: 125
+      	},
+      	resize_to_75: {
+      		robot : "/images/resize",
+      		use   : "resize_to_125",
+      		width : 75,
+      		height: 75
+      		//, sepia: 80
+      	}
+      }
+      //,template_id: "b68e53b051a611e59211375ae6c9147c"
     }
   });
 });

@@ -94,8 +94,8 @@ config = require('../../app/config');
 				
 			}), 
 		function(req, res) {
-			console.log("transloadit requst/response");
-			console.log(req.transloadit);
+			console.log("TRANSLOADIT requst/response");
+			console.log(req.body.transloadit);
 			/*console.log(req.uploads);
 			console.log(req.fields);*/
 			if(req.body.id) {
@@ -107,8 +107,8 @@ config = require('../../app/config');
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
 								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + req.transloadit.results.resize_to_125 + "', '"
-								+ req.body.imgalt + "', '" + req.transloadit.results.resize_to_75 +"')" ),
+								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125 + "', '"
+								+ req.body.imgalt + "', '" + req.body.transloadit.results.resize_to_75 +"')" ),
 						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
 								+ "VALUES('" + projectName + "', '"
 								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"

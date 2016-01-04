@@ -23,10 +23,10 @@ module.exports = Backbone.View.extend({
 		var token = window.localStorage.getItem('token');
 		if(token) {
 			$('.admin').removeClass('hidden');
-			console.log("removeClass");
+			//console.log("removeClass");
 		} else {
 			$('.admin').addClass('hidden');
-			console.log("addClass");
+			//console.log("addClass");
 		}
 		
 	}

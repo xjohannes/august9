@@ -87,7 +87,10 @@ config = require('../../app/config');
 				}
 		},
 		
-		
+		postTest: function(req, res) {
+			console.log("TRANSLOADIT is sending info:");
+			console.log(req.transloadit);
+		},
 		post: [ multer({ 
 			//multer configuration:
 				dest: './public/media/images/',

@@ -102,23 +102,26 @@ http   = require('http');
 			/*console.log(req.uploads);
 			console.log(req.fields);*/
 			if(req.body.transloadit) {
-				console.log("TRANSLOADIT requst/response");
-				console.log(req.body.transloadit);
-				var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125.name);
-				http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
-					response.pipe(file);
-				});
-				file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75.name);
-				http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
-					response2.pipe(file);
-				});
+				
 			}
 			if(req.body.id) {
 				Project.put(req, res);
 			} else {
 				console.log("DEBUG: POST PROJECT");		
 				//Inserting in project
-				if(req.files.file) {
+				if(req.body.transloadit) {
+					// Start downloading form transloadit
+					console.log("TRANSLOADIT requst/response");
+					console.log(req.body.transloadit);
+					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125.name);
+					http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
+						response.pipe(file);
+					});
+					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75.name);
+					http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
+						response2.pipe(file);
+					});
+					// end downloading from transloadit
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
 								+ "VALUES('" + projectName + "', '"

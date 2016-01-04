@@ -1228,7 +1228,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"container\">\n    <h1><span class=\"form august9-projectForm\"></span>New project</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =\"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/\"\n	     method    =  \"post\">\n	  \n	  <div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"projectname\">Projectname:</label>\n			<input class=\"form-control\" type=\"text\" name=\"projectname\" value=\"";
+  buffer += "\n\n<script type=\"text/javascript\">\n/*$(function() {\n  $('#projectForm').transloadit({\n    wait: false,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});*/\n</script>\n<div class=\"container\">\n    <h1><span class=\"form august9-projectForm\"></span>New project</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =\"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/\"\n	     method    =  \"post\">\n	  \n	  <div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"projectname\">Projectname:</label>\n			<input class=\"form-control\" type=\"text\" name=\"projectname\" value=\"";
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1256,35 +1256,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n/*$(function() {\n  $('#projectForm').transloadit({\n    wait: false,\n    params: {\n      auth: { key: \"a61cd7c04f0f11e5bf5c996568a98dd0\" },\n      template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});*/\n</script>\n<div class=\"container\">\n    <h1><span class=\"form august9-projectForm\"></span>New project</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =\"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/\"\n	     method    =  \"post\">\n	  \n	  <div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"projectname\">Projectname:</label>\n			<input class=\"form-control\" type=\"text\" name=\"projectname\" value=\"";
-  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"email\">Email:</label>\n			<input class=\"form-control\" type=\"text\" name=\"email\" value=\"";
-  if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"about\">About:</label>\n			<input class=\"form-control\" type=\"text\" name=\"about\" value=\"";
-  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"influence\">Influence:</label>\n			<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
-  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator\">Participator:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participator\" value=\"";
-  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"participator_role\">Participator Role:</label>\n			<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
-  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n				<label for=\"file\">Project image:</label>\n				<input class=\"form-control btn btn-default btn-file \" type=\"file\" name=\"file\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"imgalt\">Image description:</label>\n			<input class=\"form-control\" type=\"text\" name=\"imgalt\" value=\"";
-  if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"initiating transloadit\");\n  $('#projectForm').transloadit({\n    wait: true,\n    triggerUploadOnFileSelection: true,\n    params: {\n      auth: { key: \"63fac0a0b2c411e5b32187c4376b74f6\" },\n      steps: {\n      	resize_to_125: {\n      		robot	: \"/images/resize\",\n      		use  	: \":original\",\n      		width	: 125,\n      		height: 125\n      	},\n      	resize_to_75: {\n      		robot : \"/images/resize\",\n      		use   : \"resize_to_125\",\n      		width : 75,\n      		height: 75\n      		//, sepia: 80\n      	}\n      }\n      //,template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"initiating transloadit\");\n  $('#projectForm').transloadit({\n    wait: true,\n    triggerUploadOnFileSelection: true,\n    params: {\n      auth: { key: \"63fac0a0b2c411e5b32187c4376b74f6\" },\n      steps: {\n      	resize_to_125: {\n      		robot	: \"/images/resize\",\n      		use  	: \":original\",\n      		width	: 125,\n      		height: 125,\n      		result: true,\n      	},\n      	resize_to_75: {\n      		robot : \"/images/resize\",\n      		use   : \"resize_to_125\",\n      		width : 75,\n      		height: 75\n      		//, sepia: 80\n      	}\n      }\n      //,template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
   return buffer;
   });
 

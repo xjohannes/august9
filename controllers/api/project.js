@@ -5,7 +5,8 @@ mkdirp = require('mkdirp'),
 fs = require('fs'),
 query = require('pg-query'),
 escape = require('pg-escape'),
-config = require('../../app/config');
+config = require('../../app/config'),
+http   = require('http');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -97,10 +98,21 @@ config = require('../../app/config');
 				
 			}), 
 		function(req, res) {
-			console.log("TRANSLOADIT requst/response");
-			console.log(req.body.transloadit);
+			console.log("POST::::::::::::::");
 			/*console.log(req.uploads);
 			console.log(req.fields);*/
+			if(req.body.transloadit) {
+				console.log("TRANSLOADIT requst/response");
+				console.log(req.body.transloadit);
+				var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125.name);
+				http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
+					response.pipe(file);
+				});
+				file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75.name);
+				http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
+					response2.pipe(file);
+				});
+			}
 			if(req.body.id) {
 				Project.put(req, res);
 			} else {
@@ -110,8 +122,8 @@ config = require('../../app/config');
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
 								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125 + "', '"
-								+ req.body.imgalt + "', '" + req.body.transloadit.results.resize_to_75 +"')" ),
+								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125.name + "', '"
+								+ req.body.imgalt + "', '" + "thumb_" +req.body.transloadit.results.resize_to_75.name +"')" ),
 						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
 								+ "VALUES('" + projectName + "', '"
 								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"

@@ -109,27 +109,29 @@ http   = require('http');
 				//Inserting in project
 				if(req.body.transloadit) {
 					// Start downloading form transloadit
-					console.log("TRANSLOADIT requst/response");
-					console.log(req.body.transloadit.ok);
-					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125[0].name);
-					http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
+					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', file = fs.createWriteStream(dest + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext);
+					http.get(transloadit.results.resize_to_125[0].url, function(response) {
 						response.pipe(file);
+						//file.end();
 					});
-					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75[0]		.name);
-					http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
-						response2.pipe(file);
+					thumb = fs.createWriteStream(dest + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext);
+					http.get(transloadit.results.resize_to_75[0].url, function(response2) {
+						response2.pipe(thumb);
+						//thumb.end();
 					});
 					// end downloading from transloadit
+
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
 								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125[0].name + "', '"
-								+ req.body.imgalt + "', '" + "thumb_" +req.body.transloadit.results.resize_to_75[0].name +"')" ),
+								+ req.body.email + "', '"+ req.body.about + "', '" + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext + "', '"
+								+ req.body.imgalt + "', '" + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext + "')" ),
 						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
 								+ "VALUES('" + projectName + "', '"
 								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
 								+ req.body.imgalt +"')" ),*/
 						resultObj = {};
+						console.log("DONE CREATING FILE " + transloadit.results.resize_to_75[0].id);
 				} else {
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about)"
@@ -142,13 +144,14 @@ http   = require('http');
 				query(sql,
 					function(err, rows, result) {	
 						if(err) {
+							console.log("first  error");
 							console.error(err);
 							res.send("Error 1 " + err);
 						} else {
 							query("SELECT * FROM Project WHERE projectname='" + projectName
 								+ "'", function(err1, rows1, result1) {
 									if(err1) {
-										console.error("err1 message:");
+										console.log("err1 message:");
 										console.error(err1);
 										console.log("\n");
 										res.send("Error " + err1);
@@ -164,6 +167,7 @@ http   = require('http');
 				  									query(sql,
 				  										function(err2, rows2, result2) {	
 				  											if(err2) {
+				  												console.log("influence  error");
 				  												console.error(err2);
 				  												res.send("Error 1 " + err2);
 				  											} else {
@@ -171,7 +175,7 @@ http   = require('http');
 				  												
 				  												console.log("Influences added to the database for " + req.body.influence);
 														    			//Insert participation
-																			if(req.body.participation !== "") {
+																			if(req.body.participator !== "") {
 																				var sql = escape("INSERT INTO projectparticipation"
 																					+ " VALUES(" + rows1[0].id +", " + req.body.participator + ", '"
 																						+ req.body.participatorRole + "')" );
@@ -179,6 +183,7 @@ http   = require('http');
 																				query(sql,
 																					function(err3, rows3, result3) {	
 																						if(err3) {
+																							console.log("project participation error");
 																							console.error(err3);
 																							res.send("Error 1 " + err3);
 																						} else {
@@ -187,17 +192,21 @@ http   = require('http');
 																							res.status(201).send();
 																							console.log("Participation added to the database for " + rows1[0].projectname);
 																						}
+																						console.log("inner function");
 																					});
 																			} else {
 																					res.status(201).send();
 																			}
 																		}
+																		console.log("3 th to outer function");
 																	});
 									}
 								}
+								console.log("2th to Outer function");
 							});
 
 						}
+						console.log("Outer function");
 				});
 			}
 			
@@ -344,8 +353,14 @@ http   = require('http');
 			});
 		},
 		deleteFromDB: function(id, table, callback) {
-			var sql = escape("DELETE FROM " + table + " WHERE "); 
-
+			console.log("id: " + id);
+			var sql = escape("DELETE FROM " + table + " WHERE "), path = 'public/media/images/8bd861905f279d9ff73025e534d4d9d8.png'; 
+			pathTest = Project.selectFromDB(id, table, function(err, rows) {
+				console.log("rows");
+				console.log(rows);
+				return rows;
+			});
+			console.log("DELETING>>>");
 			if(table == "project") {
 						sql += "id =" + id;
 					} else {
@@ -361,5 +376,6 @@ http   = require('http');
 					callback(false, rows);
 				}
 			});
+			fs.unlinkSync(path)
 		},
 };

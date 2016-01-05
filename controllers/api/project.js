@@ -16,7 +16,7 @@ http   = require('http');
 		// projcts and song
 		getAll: function(req, res) {
 			'use strict';
-			console.log("DEBUG: GET ALL PROJECTS ORDER BY id");
+			//console.log("DEBUG: GET ALL PROJECTS ORDER BY id");
 
 			var sql = escape("SELECT * FROM Project ORDER BY id");
 			query(sql, function(err, rows, result) {
@@ -89,8 +89,8 @@ http   = require('http');
 		},
 		
 		postTest: function(req, res) {
-			console.log("TRANSLOADIT is sending info:");
-			console.log(req.transloadit);
+			/*console.log("TRANSLOADIT is sending info:");
+			console.log(req.transloadit);*/
 		},
 		post: [ multer({ 
 			//multer configuration:
@@ -110,12 +110,12 @@ http   = require('http');
 				if(req.body.transloadit) {
 					// Start downloading form transloadit
 					console.log("TRANSLOADIT requst/response");
-					console.log(req.body.transloadit);
+					console.log(req.body.transloadit.results);
 					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125[0].name);
 					http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
 						response.pipe(file);
 					});
-					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75[0].name);
+					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75[0]		.name);
 					http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
 						response2.pipe(file);
 					});

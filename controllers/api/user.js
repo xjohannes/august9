@@ -15,7 +15,7 @@ bcrypt     = require('bcryptjs');
 		// Users
 		getAll: function(req, res) {
 			'use strict';
-			console.log("DEBUG: GET ALL USERS ORDER BY id");
+			//console.log("DEBUG: GET ALL USERS ORDER BY id");
 
 			var sql = escape("SELECT * FROM usertable ORDER BY regdate");
 			query(sql, function(err, rows, result) {

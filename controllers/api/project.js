@@ -262,20 +262,41 @@ http   = require('http');
 			
 		},
 		delete: function(req, res) {
+			var id = req.params.id, dest = './public/media/images/';
+			console.log('req.params.id');
+			console.log(req.params.id);
+			Project.selectFromDB(id, 'project', function(err, rows) {
+				console.log("DELETEING PROJECT");
+							var result;
+							if(err) {
+								console.log("delete err");
+								console.log(err);
+							} else {
+								console.log("rows");
+								console.log(rows[0]);
+								try {
+									fs.unlinkSync(dest + rows[0]['imglarge']);
+									fs.unlinkSync(dest + rows[0]['imgthumb']);
+								} catch (e) {
+									console.error(e);
+								}
+							}
+						});
+			
 			// Delete projectinfluence table
-			Project.deleteFromDB(req.params.id, "projectinfluence", function(err, rows) {
+			Project.deleteFromDB(id, "projectinfluence", function(err, rows) {
 				if(err) {
 					console.log(err);
 					res.send(err);
 				} else {
 					// Delete projectparticipation table
-					Project.deleteFromDB(req.params.id, "projectparticipation", function(err, rows) {
+					Project.deleteFromDB(id, "projectparticipation", function(err, rows) {
 						if(err) {
 							console.log(err);
 							res.send(err);
 						} else {
 							// Delete project table
-							Project.deleteFromDB(req.params.id, "project", function(err, rows) {
+							Project.deleteFromDB(id, "project", function(err, rows) {
 								if(err) {
 									console.log(err);
 									res.send(err);
@@ -291,11 +312,21 @@ http   = require('http');
 					
 				}
 			});
+			
 		},
 		// config methods:
+		configProjectId: function(table) {
+			if(table === "project") {
+				return "id";
+			} else {
+				return "projectid";
+			}
+		},
 		selectFromDB: function(id, table, callback) {
-			var sql = escape("SELECT * FROM " + table + " where projectid='" 
+
+			var sql = escape("SELECT * FROM " + table + " where " + Project.configProjectId(table) + "='" 
 				+ id +"'");
+			
 
 			query(sql, function(err, rows, results) {
 				if(err) {
@@ -353,14 +384,8 @@ http   = require('http');
 			});
 		},
 		deleteFromDB: function(id, table, callback) {
-			console.log("id: " + id);
-			var sql = escape("DELETE FROM " + table + " WHERE "), path = 'public/media/images/8bd861905f279d9ff73025e534d4d9d8.png'; 
-			pathTest = Project.selectFromDB(id, table, function(err, rows) {
-				console.log("rows");
-				console.log(rows);
-				return rows;
-			});
-			console.log("DELETING>>>");
+			var sql = escape("DELETE FROM " + table + " WHERE "); 
+
 			if(table == "project") {
 						sql += "id =" + id;
 					} else {
@@ -376,6 +401,6 @@ http   = require('http');
 					callback(false, rows);
 				}
 			});
-			fs.unlinkSync(path)
+
 		},
 };

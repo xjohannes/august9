@@ -350,9 +350,12 @@ module.exports = function() {
 				}, this);
 	};
 	this.deleteSong = function(projectid, songid) {
-		//console.log("Song ID: " + songid);
-		var songItem = this.songCollection.remove(songid);
-		
+		console.log("Song ID: " + songid);
+		console.log(this.songCollection);
+		var songItem = this.songCollection.get(songid);
+		console.log('songItem');
+		console.log(songItem);
+		//this.songCollection.remove(songid);
 		songItem.destroy({ success: function(model, response) {
 			model.off('change');
 		}});
@@ -473,7 +476,7 @@ module.exports = Router = Backbone.Router.extend({
 		this.controller.updateSong(projectid, songid);
 	},
 	deleteSong: function(projectid, songid) {
-		this.controller.deleteSong(projectid);
+		this.controller.deleteSong(projectid, songid);
 	},
 	play: function(projectid, songid) {
 		this.controller.play(projectid, songid);

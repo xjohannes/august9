@@ -71,7 +71,7 @@ module.exports = Router = Backbone.Router.extend({
 		this.controller.updateSong(projectid, songid);
 	},
 	deleteSong: function(projectid, songid) {
-		this.controller.deleteSong(projectid);
+		this.controller.deleteSong(projectid, songid);
 	},
 	play: function(projectid, songid) {
 		this.controller.play(projectid, songid);

@@ -250,7 +250,7 @@ bcrypt     = require('bcryptjs');
 			
 		},
 		delete: function(req, res) {
-			//console.log("DELETE SONG " + req.body.projectname);
+			console.log("DELETE SONG " + req.body.projectname);
 			console.log(req.body);
 			// Delete songinfluence table
 			Song.deleteFromDB(req.params.id, "songinfluence", function(err, rows) {

@@ -110,7 +110,7 @@ http   = require('http');
 				if(req.body.transloadit) {
 					// Start downloading form transloadit
 					console.log("TRANSLOADIT requst/response");
-					console.log(req.body.transloadit.results);
+					console.log(req.body.transloadit.ok);
 					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125[0].name);
 					http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
 						response.pipe(file);

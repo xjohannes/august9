@@ -266,7 +266,7 @@ http   = require('http');
 			console.log('req.params.id');
 			console.log(req.params.id);
 			Project.selectFromDB(id, 'project', function(err, rows) {
-				console.log("DELETEING PROJECT");
+				console.log("DELETEING img");
 							var result;
 							if(err) {
 								console.log("delete err");
@@ -278,7 +278,8 @@ http   = require('http');
 									fs.unlinkSync(dest + rows[0]['imglarge']);
 									fs.unlinkSync(dest + rows[0]['imgthumb']);
 								} catch (e) {
-									console.error(e);
+									console.log("Could not delete image of projct: " + id);
+									console.log(e);
 								}
 							}
 						});
@@ -286,6 +287,7 @@ http   = require('http');
 			// Delete projectinfluence table
 			Project.deleteFromDB(id, "projectinfluence", function(err, rows) {
 				if(err) {
+					console.log(err);
 					console.log(err);
 					res.send(err);
 				} else {
@@ -302,7 +304,7 @@ http   = require('http');
 									res.send(err);
 								} else {
 									res.status(200).json("Deleted projecet successfully");
-									console.log('Deleted project ' + req.params.id 
+									console.log('Deleted project ' + id 
 										+ " from project, projectinfluence and projectparticipation tables");
 									
 								}

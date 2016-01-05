@@ -101,9 +101,7 @@ http   = require('http');
 			console.log("POST::::::::::::::");
 			/*console.log(req.uploads);
 			console.log(req.fields);*/
-			if(req.body.transloadit) {
-				
-			}
+			
 			if(req.body.id) {
 				Project.put(req, res);
 			} else {
@@ -113,11 +111,11 @@ http   = require('http');
 					// Start downloading form transloadit
 					console.log("TRANSLOADIT requst/response");
 					console.log(req.body.transloadit);
-					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125.name);
+					var file = fs.createWriteStream(req.body.transloadit.results.resize_to_125[0].name);
 					http.get('req.body.transloadit.results.resize_to_125.url', function(response) {
 						response.pipe(file);
 					});
-					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75.name);
+					file = fs.createWriteStream("thumb_" +req.body.transloadit.results.resize_to_75[0].name);
 					http.get('req.body.transloadit.results.resize_to_75.url', function(response2) {
 						response2.pipe(file);
 					});
@@ -125,8 +123,8 @@ http   = require('http');
 					var projectName = config.capitalize(req.body.projectname),
 						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
 								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125.name + "', '"
-								+ req.body.imgalt + "', '" + "thumb_" +req.body.transloadit.results.resize_to_75.name +"')" ),
+								+ req.body.email + "', '"+ req.body.about + "', '" + req.body.transloadit.results.resize_to_125[0].name + "', '"
+								+ req.body.imgalt + "', '" + "thumb_" +req.body.transloadit.results.resize_to_75[0].name +"')" ),
 						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
 								+ "VALUES('" + projectName + "', '"
 								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"

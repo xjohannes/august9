@@ -21,12 +21,15 @@ var Backbone     					= require('Backbone'),
 		SongDetailsView 			= require('./views/songDetailsView'),
 		HeaderView 						= require('./views/headerView'),
 		LoginModel 						= require('./models/loginModel'),
-		LoginForm  						= require('./views/formViews/loginForm');
+		LoginForm  						= require('./views/formViews/loginForm'),
+		PlayerCTRL  					= require('./controllers/playerController'),
+		QueueCollection    		= require('./collections/queueCollection');
 
 module.exports = function() {
 	var that = this;
 	// Fetch data from project table
 	this.index =function () {
+		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
 		$("#mainContent").html("");
 	};
@@ -68,7 +71,7 @@ module.exports = function() {
 				//console.log(projectSongs);
 				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
 				self.songCollection.url = "/project/" + projectid + "/song";
-				self.songCollectionView = new SongCollectionView({collection:self.songCollection});
+				self.songCollectionView = new SongCollectionView({collection:self.songCollection, controller: that.playerController});
 				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
 				$('#mainContent').append(self.songCollectionView.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
@@ -163,16 +166,12 @@ module.exports = function() {
 		}});
 	};
 	this.play = function(projectid, songid) {
-
-		console.log("PLAY");
-		var url = './media/music/' + projectid + '/' +
-		          this.songCollection.get(songid).attributes.serverkey;
+		var songModel = this.songCollection.get(songid); 
+		this.playerController.playFromList(songModel);
 		
-		console.log($('#musicPlayer audio').attr('src'));
+		/*console.log($('#musicPlayer audio').attr('src'));
 		var player = $('#musicPlayer audio').attr('src', url );
-		$('#musicPlayer audio').get(0).play();
-
-		
+		$('#musicPlayer audio').get(0).play();*/
 	};
 	this.allRoutes = function(e) {
 		if(e !== "index" && e !== "logout") {
@@ -195,12 +194,14 @@ module.exports = function() {
 	this.initialize = function(options) {
 		that.projectList = new ProjectCollection();
 		that.projectList.fetch();
+		that.queueCollection = new QueueCollection();
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
-		//that.projectCollectionView.render();
-		//that.homeCollectionView.render();
+		that.playerController  = new PlayerCTRL();
+		that.playerController.initialize({collection:that.queueCollection, projectList: that.projectList});
 		that.headerView = new HeaderView({model: new UserModel()});
 		that.songCollectionView = null;
 		$('#header').html(that.headerView.render().el);
+		
 	};
 };

@@ -5,13 +5,88 @@
 	bottom: $bottom;
 	left: $left;
 }
-
+html,
 body {
-	padding-top: 155px;
-	background-color: #100;
+   margin:0;
+   padding:0;
+   height:100%;
+}
+body {
+	padding-top: 130px;
+}
+
+#august9 {
+	min-height: 100%;
+	position: relative;
+	padding-left: 0px;
+	//float:left;
+	width: 100%;
+	
+}
+
+#container-outer {
+	/* float:left;
+  width:100%;
+  overflow:hidden;
+  position:relative; */
+  
+}
+#container1 {
+	/* float:left;
+  width:70%;
+  position:relative; */
+  //right:67%;
+}
+#projectList {
+	float:left;
+  width:30%;
+  position:absolute;
+  top: 0px;
+  bottom:50px;
+  
+	img {
+		width: 50px;
+		height: auto;
+	}
+}
+#mainContent {
+	width: 70%;
+	float: left;
+	position: relative;
+	left: 30%;
+	//min-height: 100%;
+	//@include position(-30px);
+}
+#homeList {
+	@include position(-23px);
+	
+	position: relative;
+	top: -23px;
+	
+}
+#musicPlayer {
+	width: 100%;
+  height: 65px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+#playerControls {
+	position: relative;
+	left: 40px;
+	width: 200px;
+	top: 10px;
+}
+
+#footer {
+	position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: red;
 }
 .homeItem {
-	background-color: #fafafa;
 	margin: 1em;
 	width: 20em;
 	height: auto;
@@ -26,18 +101,7 @@ body {
 		padding-left: 15px;
 	}
 }
-
-#mainContent {
-	@include position(-30px);
-}
-#homeList {
-	@include position(-23px);
-	/*
-	position: relative;
-	top: -23px;
-	*/
-}
-
+// Navigation
 .logoContainer {
 	width: 30em;
 	height: 150px;
@@ -50,12 +114,12 @@ body {
 }
 .slogan {
 	@include position(37px, 0, 0, 45px, 100%);
-	/*
+	
 		position: relative;
 		top: 37px;
 		left: 45px;
 	  width: 100%;
-	  */
+	  
 }
 .navbar-default {
 	height: 130px;
@@ -69,7 +133,7 @@ body {
 	margin-bottom: 7px;
 }
 
-
+// Media
 
 @media (max-width: 320px) {
 
@@ -103,6 +167,14 @@ body {
 			left: -20px;
 		}
 	}
-	
+}
+@media (max-width: 474px) {
+	.adjust-smartPhone {
+		left: 70% !important;
+		top: -15px !important;
+	}
+	.hidden-smartPhone {
+		display: none;
+	}
 	
 }

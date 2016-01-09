@@ -37,7 +37,7 @@ http   = require('http');
 				// is param a number or a string?
 				if(+param === +param) {
 					//getting all info from project table
-					var sql2 = escape("SELECT * from Project where id =" 
+					var sql2 = escape("SELECT * from Project where id=" 
 						+ req.params.id + "");
 
 					query(sql2, function(err2, rows2, result2) {
@@ -47,7 +47,7 @@ http   = require('http');
 						} else {
 							resultObj = rows2[0];
 							// getting all songs for the project
-							var sql = escape("SELECT * from Song where projectid =" 
+							var sql = escape("SELECT * from Song where projectid=" 
 								+ req.params.id + " ORDER BY id");
 
 							query(sql, function(err, rows, result) {

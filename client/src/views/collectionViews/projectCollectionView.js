@@ -5,7 +5,7 @@ var Backbone = require('Backbone'),
 
 module.exports = Backbone.View.extend({
 	tagName: 'ul',
-	className: 'well',
+	className: '',
 
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);
@@ -19,6 +19,7 @@ module.exports = Backbone.View.extend({
 		this.$el.append(projectView.render().el);
 	},
 	addAll: function() {
+
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
@@ -27,12 +28,13 @@ module.exports = Backbone.View.extend({
 		this.collection.forEach(this.addOne, this);
 	},
 	render: function() {
+		this.$el.removeClass('hidden');
 		this.addAll();
 		return this;
 	},
 	clean: function(user) {
 		console.log("cleaning projectCollectionView");
-		this.$el.removeClass('well');
+		this.$el.addClass('hidden');
 		this.$el.empty();
 	}
 	

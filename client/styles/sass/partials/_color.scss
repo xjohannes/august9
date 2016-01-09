@@ -1,8 +1,64 @@
-.homeItem {
-	background-color: #f8f8f8;
+
+//variables
+
+
+body {
 	
 }
 label {
 	color: white;
 	font-weight: normal;
 }
+i {
+	color: white;
+}
+i:hover {
+	color: $base_hover;
+}
+i:active {
+	color: $base_active;
+}
+#playCircle:hover {
+	border: 2px solid $base_hover;
+}
+#playCircle:active {
+	border: 3px solid $base_active;
+}
+.listPlayer {
+	color: $base_font_color;
+}
+.listPlayer:hover {
+	color: $base_hover;
+}
+.listPlayer:active {
+	color: $base_active;
+}
+
+#august9 {
+	background-color: $base_background_color;
+}
+#container1 {
+	
+
+}
+
+#projectList {
+	background-color: $sidebar_color;
+}
+#mainContent {
+	//background-color: #000;
+}
+#musicPlayer {
+	background-color: $sidebar_color;
+	border-top: 1px solid $base_background_color; 
+}
+.homeItem {
+	//background-color: #f8f8f8;
+	
+}
+.logo  {
+	color:$header_color;
+}
+
+
+

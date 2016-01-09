@@ -160,6 +160,12 @@ module.exports = function(grunt) {
               logConcurrentOutput: true
             }
           },
+          style: {
+            tasks: [ 'nodemon:dev','watch:compass'],
+            options: {
+              logConcurrentOutput: true
+            }
+          },
           test: {
             tasks: ['watch:karma'],
             options: {
@@ -233,7 +239,7 @@ grunt.registerTask('tdd', ['karma:watcher:start', 'concurrent:test']);
 
 grunt.registerTask('test', ['test:server', 'test:client']);
 
-grunt.registerTask('css', ['watch:compass:dev']);
+grunt.registerTask('css', ['build:dev', 'concurrent:style']);
 
 
 };

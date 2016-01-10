@@ -189,13 +189,13 @@ http   = require('http');
 																						} else {
 																							resultObj.participator = req.body.participator;
 																							resultObj.participatorRole = req.body.participatorRole;
-																							res.status(201).send();
+																							res.status(201);
 																							console.log("Participation added to the database for " + rows1[0].projectname);
 																						}
 																						console.log("inner function");
 																					});
 																			} else {
-																					res.status(201).send();
+																					res.status(201);
 																			}
 																		}
 																		console.log("3 th to outer function");

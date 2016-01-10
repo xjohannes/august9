@@ -127,7 +127,7 @@ module.exports = function() {
 			// create views
 			this.playerControls = new PlayerControlsView({model: this.currentSong, controller: this});
 			$('#musicPlayer').html(this.playerControls.render().el);
-		},
+		};
 		this.play = function (songModel) { 
 			if(this.currentSong.isPlaying()) {
 					this.currentSong.stop();
@@ -135,7 +135,7 @@ module.exports = function() {
 				this.currentSong = this.queueCollection.getQueueTop();
 				this.currentSong.play();
 			}
-		},
+		};
 		this.playFromList = function (songModel) { 
 			if(songModel.isPlaying() ) {
 				songModel.stop();
@@ -149,26 +149,17 @@ module.exports = function() {
 				this.playerControls.registerNewModel(songModel);
 				this.currentSong.play();
 			}
-		},
+		};
 		this.previousTrack = function () {
 			var songModel = this.queueCollection.previousTrack();
 			//this.currentSong = this.queueCollection.getQueueTop();
 			this.playFromList(songModel);
-		},
+		};
 		this.nextTrack = function () {
 			var songModel = this.queueCollection.nextTrack();
 			
 			this.playFromList(songModel);
-		}/*,
-		this.setCurrentSong = function(songModel, context) {
-			context.currentSong = songModel;
-			//
-		},
-		this.setCurrentSongAndPlay = function(songModel, context) {
-			context.currentSong = songModel;
-			//this.playerControls.registerNewModel(songModel);
-			context.play();
-		}*/
+		};
 };
 },{"../views/collectionViews/currentSongView":14,"../views/collectionViews/durationsView":15,"../views/collectionViews/playerControlsView":18,"../views/collectionViews/playerView":19,"Backbone":45,"jQuery":67}],7:[function(require,module,exports){
 var App = require('./app');
@@ -371,6 +362,7 @@ module.exports = function() {
 		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
 		$("#mainContent").html("");
+		$("#projectList").addClass('hidden');
 	};
 	this.login =function() {
 		that.loginItem = new LoginModel();
@@ -513,6 +505,9 @@ module.exports = function() {
 		$('#musicPlayer audio').get(0).play();*/
 	};
 	this.allRoutes = function(e) {
+		if(e !== "index") {
+			$("#projectList").removeClass('hidden');
+		}
 		if(e !== "index" && e !== "logout") {
 			that.homeCollectionView.clean();
 		}

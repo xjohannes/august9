@@ -32,6 +32,7 @@ module.exports = function() {
 		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
 		$("#mainContent").html("");
+		$("#projectList").addClass('hidden');
 	};
 	this.login =function() {
 		that.loginItem = new LoginModel();
@@ -174,6 +175,9 @@ module.exports = function() {
 		$('#musicPlayer audio').get(0).play();*/
 	};
 	this.allRoutes = function(e) {
+		if(e !== "index") {
+			$("#projectList").removeClass('hidden');
+		}
 		if(e !== "index" && e !== "logout") {
 			that.homeCollectionView.clean();
 		}

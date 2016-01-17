@@ -4,15 +4,12 @@ var Backbone = require('backbone'),
 
 module.exports  = Backbone.View.extend({
 	
-	template: _.template('<h2><%= title %></h2>' +
-												'<p>Added: <%= added %></p>' +
-												'<p>productionstatus: <%= productionstatus %></p>' +
-												'<p>influence: <%= influence %></p>' +
-												'<p>participators userid: <%= participation.userid %></p>' +
-												'<p>participators role: <%= participation.role %></p>'),
+	template: require('../../templates/songInfo.hbs'),
 	tagName: 'aside',
 
-	initialize: function() {
+	initialize: function(options) {
+		this.options 		= options || {};
+		this.project    = options.project;
 		this.model.on('change', this.render, this);
 		this.model.on('index', this.clean, this);
 	},

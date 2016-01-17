@@ -135,7 +135,7 @@ bcrypt     = require('bcryptjs');
 	    				if(err2) {
 	    					console.error("err2 message:");
 	    					console.error(err2);
-								res.send("Error " + err2);
+								res.end("Error " + err2);
 	    				}else {
 	    					// table, valuesArray, callback	    					
 	    					query("SELECT * FROM Song WHERE serverKey ='" + req.files.file.name 
@@ -144,7 +144,7 @@ bcrypt     = require('bcryptjs');
 	  								console.error("err3 message:");
 	  								console.error(err3);
 	  								console.log("\n");
-										res.send("Error " + err3);
+										res.end("Error " + err3);
 	  							}else{
 	  								resultObj = rows3[0];
 	  								if((rows3[0].title) == config.capitalize(req.files.file.originalname)) {
@@ -156,7 +156,7 @@ bcrypt     = require('bcryptjs');
 	  											console.error("err message:");
 				  								console.error(err);
 				  								console.log("\n");
-													res.send(err);
+													res.end(err);
 	  										} else {
 	  											console.log("inserted influence " + req.body.influence + " successfully");
 	  											resultObj.influence = req.body.influence;
@@ -169,18 +169,18 @@ bcrypt     = require('bcryptjs');
 				  											console.error("err message:");
 							  								console.error(err);
 							  								console.log("\n");
-																res.send("Error " + err);
+																res.end("Error " + err);
 				  										} else if(req.body.participator !== "") {
 				  											console.log("inserted participator " + req.body.participator + " successfully")
 				  											resultObj.participator = req.body.participator;
 				  											resultObj.participatorRole = req.body.participatorRole;			  											  											
-		  													res.status(201);
+		  													res.status(201).end("upload succeded");
 				  										} else {
-				  											res.status(201);
+				  											res.status(201).end("upload succeded");
 				  										}
 	  												});
 	  											} else {
-		  											res.status(201);
+		  											res.status(201).end("upload succeded");
 	  											}
 	  										}
 	  									});
@@ -218,7 +218,7 @@ bcrypt     = require('bcryptjs');
 			Song.updateDB(req.body.id, "song" , propertyNames, newValues, function(err, rows) {
 				if(err) {
 					console.log(err);
-					res.send(err);
+					res.end(err);
 				} else {
 					// Update songinfluence table
 					propertyNames = ['influence'];
@@ -226,7 +226,7 @@ bcrypt     = require('bcryptjs');
 					Song.updateDB(req.body.id, "songinfluence" , propertyNames, newValues, function(err, rows) {
 						if(err) {
 							console.log(err);
-							res.send(err);
+							res.end(err);
 						} else {
 							// Update songparticipation table
 						
@@ -235,7 +235,7 @@ bcrypt     = require('bcryptjs');
 							Song.updateDB(req.body.id, "songparticipation" , propertyNames, newValues, function(err, rows) {
 								if(err) {
 									console.log(err);
-									res.send(err);
+									res.end(err);
 								} else {
 									res.status(200).json("The song "+ + req.body.title + " was updated successfully");
 									console.log('update of songname, email, about and influence OK');

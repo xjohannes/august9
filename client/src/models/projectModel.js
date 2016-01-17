@@ -10,7 +10,7 @@ module.exports = Backbone.Model.extend({
 		influence: ['none'],
 		participator: [1],
 		participatorRole: [],
-		about: "",
+		about: "About text bla bla",
 		imgthumb: '',
 		imglarge: '',
 		imgalt:  ''

@@ -1,12 +1,15 @@
 // Modules and Variables
-
-$base_background_color:#252929;
-$base_font_color:#fff;
+// color = font color
+// background = background color
+$base_background:#252929;
+$base_color:#fff;
+$base_text_color:#999;
 $base_hover:#337ab7;
 $base_active:#337ab7;
 $header_color:#337A17;
-$sidebar_color:#222;
-$solgan_color:#eee;
+$sidebar_background:#222;
+$solgan_color:#333;
+$contrast_background:#F8F8F8; //Header background
 
 @import "partials/_typography";
 @import "partials/_layout";

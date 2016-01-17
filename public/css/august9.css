@@ -57,47 +57,47 @@ table {
   src: url("../fonts/font_squirrel/PT-Sans/PTC55F.ttf");
 }
 
-/* line 12, ../../client/styles/sass/partials/_typography.scss */
-body {
-  font-family: 'pt';
-}
-
 /* line 17, ../../client/styles/sass/partials/_typography.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 21, ../../client/styles/sass/partials/_typography.scss */
+/* line 20, ../../client/styles/sass/partials/_typography.scss */
+a {
+  font-size: .91em;
+}
+
+/* line 23, ../../client/styles/sass/partials/_typography.scss */
 .logo {
   font-family: fanwood;
   letter-spacing: .06em;
 }
-/* line 24, ../../client/styles/sass/partials/_typography.scss */
+/* line 26, ../../client/styles/sass/partials/_typography.scss */
 .logo h1 {
   font-size: 6em;
 }
-/* line 27, ../../client/styles/sass/partials/_typography.scss */
+/* line 29, ../../client/styles/sass/partials/_typography.scss */
 .logo:hover {
   color: #337ab7;
   text-decoration: none;
 }
 
-/* line 33, ../../client/styles/sass/partials/_typography.scss */
+/* line 35, ../../client/styles/sass/partials/_typography.scss */
 .slogan {
   font-size: .91em;
 }
 
-/* line 37, ../../client/styles/sass/partials/_typography.scss */
+/* line 40, ../../client/styles/sass/partials/_typography.scss */
 #mainContent .glyphicon {
   font-size: 26px;
 }
 
-/* line 41, ../../client/styles/sass/partials/_typography.scss */
+/* line 44, ../../client/styles/sass/partials/_typography.scss */
 #musicPlayer .glyphicon {
   font-size: 26px;
 }
 
-/* line 44, ../../client/styles/sass/partials/_typography.scss */
+/* line 47, ../../client/styles/sass/partials/_typography.scss */
 #musicPlayer .glyphicon-play, #musicPlayer .glyphicon-pause {
   font-size: 32px;
   position: relative;
@@ -105,14 +105,14 @@ ol, ul {
   padding: 0 8px 0 12px;
 }
 
-/* line 52, ../../client/styles/sass/partials/_typography.scss */
+/* line 55, ../../client/styles/sass/partials/_typography.scss */
 #playCircle {
   position: relative;
   top: -36px;
   left: 34px;
 }
 
-/* line 59, ../../client/styles/sass/partials/_typography.scss */
+/* line 62, ../../client/styles/sass/partials/_typography.scss */
 .circle {
   border-radius: 50%;
   width: 45px;
@@ -121,7 +121,7 @@ ol, ul {
 }
 
 @media (max-width: 320px) {
-  /* line 68, ../../client/styles/sass/partials/_typography.scss */
+  /* line 71, ../../client/styles/sass/partials/_typography.scss */
   .logo {
     font-family: fanwood;
     letter-spacing: .06em;
@@ -140,7 +140,20 @@ body {
   padding-top: 130px;
 }
 
-/* line 18, ../../client/styles/sass/partials/_layout.scss */
+/* line 17, ../../client/styles/sass/partials/_layout.scss */
+header + ul {
+  float: right;
+  position: relative;
+  top: -45px;
+  right: -30px;
+}
+
+/* line 24, ../../client/styles/sass/partials/_layout.scss */
+header + ul li {
+  float: left;
+}
+
+/* line 28, ../../client/styles/sass/partials/_layout.scss */
 #august9 {
   min-height: 100%;
   position: relative;
@@ -148,7 +161,7 @@ body {
   width: 100%;
 }
 
-/* line 27, ../../client/styles/sass/partials/_layout.scss */
+/* line 37, ../../client/styles/sass/partials/_layout.scss */
 #container-outer {
   	/* float:left;
     width:100%;
@@ -156,47 +169,104 @@ body {
     position:relative; */
 }
 
-/* line 34, ../../client/styles/sass/partials/_layout.scss */
+/* line 44, ../../client/styles/sass/partials/_layout.scss */
 #container1 {
   	/* float:left;
     width:70%;
     position:relative; */
 }
 
-/* line 40, ../../client/styles/sass/partials/_layout.scss */
+/* line 50, ../../client/styles/sass/partials/_layout.scss */
 #projectList {
   float: left;
-  width: 30%;
+  width: 20%;
   position: absolute;
   top: 0px;
-  bottom: 50px;
+  bottom: 0px;
 }
-/* line 47, ../../client/styles/sass/partials/_layout.scss */
+/* line 57, ../../client/styles/sass/partials/_layout.scss */
 #projectList img {
   width: 50px;
   height: auto;
 }
+/* line 62, ../../client/styles/sass/partials/_layout.scss */
+#projectList li {
+  padding-top: 10px;
+  border-bottom: 1px solid #252929;
+}
+/* line 67, ../../client/styles/sass/partials/_layout.scss */
+#projectList .projectImgCrop {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+/* line 74, ../../client/styles/sass/partials/_layout.scss */
+#projectList .editButtons {
+  margin: 0 -13px;
+}
 
-/* line 52, ../../client/styles/sass/partials/_layout.scss */
+/* line 79, ../../client/styles/sass/partials/_layout.scss */
 #mainContent {
-  width: 70%;
+  width: 50%;
   float: left;
   position: relative;
-  left: 30%;
+  left: 20%;
+}
+/* line 84, ../../client/styles/sass/partials/_layout.scss */
+#mainContent h2 {
+  position: relative;
+  left: 45px;
+}
+/* line 88, ../../client/styles/sass/partials/_layout.scss */
+#mainContent .row {
+  border-bottom: 1px solid #222222;
+  padding: 2px;
+}
+/* line 92, ../../client/styles/sass/partials/_layout.scss */
+#mainContent .title {
+  position: relative;
+  top: 5px;
+}
+/* line 96, ../../client/styles/sass/partials/_layout.scss */
+#mainContent .listPlayer {
+  position: relative;
+  left: 10px;
 }
 
-/* line 60, ../../client/styles/sass/partials/_layout.scss */
+/* line 105, ../../client/styles/sass/partials/_layout.scss */
+#info {
+  float: right;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  right: 35px;
+  top: 35px;
+}
+/* line 113, ../../client/styles/sass/partials/_layout.scss */
+#info .details {
+  padding: 10px;
+}
+/* line 116, ../../client/styles/sass/partials/_layout.scss */
+#info .details li {
+  padding: 3px 0;
+}
+
+/**/
+/* line 120, ../../client/styles/sass/partials/_layout.scss */
 #homeList {
-  position: relative;
-  top: -23px;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 100%;
   position: relative;
   top: -23px;
 }
 
-/* line 67, ../../client/styles/sass/partials/_layout.scss */
+/* line 127, ../../client/styles/sass/partials/_layout.scss */
+#homeList ul {
+  margin: 0 auto;
+}
+
+/* line 131, ../../client/styles/sass/partials/_layout.scss */
 #musicPlayer {
   width: 100%;
   height: 65px;
@@ -205,7 +275,7 @@ body {
   left: 0;
 }
 
-/* line 74, ../../client/styles/sass/partials/_layout.scss */
+/* line 138, ../../client/styles/sass/partials/_layout.scss */
 #playerControls {
   position: relative;
   left: 40px;
@@ -213,7 +283,7 @@ body {
   top: 10px;
 }
 
-/* line 81, ../../client/styles/sass/partials/_layout.scss */
+/* line 145, ../../client/styles/sass/partials/_layout.scss */
 #footer {
   position: absolute;
   bottom: 0;
@@ -223,26 +293,56 @@ body {
   background-color: red;
 }
 
-/* line 89, ../../client/styles/sass/partials/_layout.scss */
+/* line 153, ../../client/styles/sass/partials/_layout.scss */
+#userImg {
+  margin: 0 auto;
+}
+
+/* line 159, ../../client/styles/sass/partials/_layout.scss */
+.modalWindow {
+  padding: 10px;
+  box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
+  position: relative;
+  top: 10px;
+  border-radius: 5px;
+  z-index: 10;
+  width: 100%;
+}
+
+/* line 169, ../../client/styles/sass/partials/_layout.scss */
 .homeItem {
   margin: 1em;
   width: 20em;
   height: auto;
   padding: 0;
 }
-/* line 94, ../../client/styles/sass/partials/_layout.scss */
+/* line 174, ../../client/styles/sass/partials/_layout.scss */
 .homeItem img {
   width: 100%;
   margin: 0 auto;
   padding-top: 1em;
   overflow: hidden;
 }
-/* line 100, ../../client/styles/sass/partials/_layout.scss */
+/* line 180, ../../client/styles/sass/partials/_layout.scss */
 .homeItem h3 {
   padding-left: 15px;
 }
 
-/* line 105, ../../client/styles/sass/partials/_layout.scss */
+/* line 184, ../../client/styles/sass/partials/_layout.scss */
+.userList {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+/* line 190, ../../client/styles/sass/partials/_layout.scss */
+.imgCrop {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+/* line 198, ../../client/styles/sass/partials/_layout.scss */
 .logoContainer {
   width: 30em;
   height: 150px;
@@ -250,59 +350,72 @@ body {
   margin-top: -18px;
 }
 
-/* line 112, ../../client/styles/sass/partials/_layout.scss */
+/* line 205, ../../client/styles/sass/partials/_layout.scss */
 .logo {
   position: relative;
 }
 
-/* line 115, ../../client/styles/sass/partials/_layout.scss */
+/* line 208, ../../client/styles/sass/partials/_layout.scss */
 .slogan {
-  position: 100%;
-  top: 37px;
-  right: 0;
-  bottom: 0;
-  left: 45px;
   position: relative;
   top: 37px;
   left: 45px;
   width: 100%;
 }
 
-/* line 124, ../../client/styles/sass/partials/_layout.scss */
+/* line 218, ../../client/styles/sass/partials/_layout.scss */
+.navbar-default .navbar-collapse {
+  border: none;
+  position: relative;
+}
+
+/* line 222, ../../client/styles/sass/partials/_layout.scss */
+.navbar-collapse {
+  padding-right: -10px;
+}
+
+/* line 225, ../../client/styles/sass/partials/_layout.scss */
 .navbar-default {
   height: 130px;
-  border: none;
 }
 
-/* line 128, ../../client/styles/sass/partials/_layout.scss */
+/* line 228, ../../client/styles/sass/partials/_layout.scss */
 .navbar-toggle {
   top: -125px;
-  right: 10px;
+  margin-right: 5px;
 }
 
-/* line 132, ../../client/styles/sass/partials/_layout.scss */
+/* line 232, ../../client/styles/sass/partials/_layout.scss */
 .btn {
   margin-bottom: 7px;
 }
 
+@media (min-width: 768px) {
+  /* line 239, ../../client/styles/sass/partials/_layout.scss */
+  header + ul {
+    position: relative;
+    top: -140px;
+    right: 15px;
+  }
+}
 @media (max-width: 320px) {
-  /* line 140, ../../client/styles/sass/partials/_layout.scss */
+  /* line 247, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 143, ../../client/styles/sass/partials/_layout.scss */
+  /* line 250, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 147, ../../client/styles/sass/partials/_layout.scss */
+  /* line 254, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
-    padding: 0px 35px;
+    padding: 0px 10px;
   }
 
-  /* line 152, ../../client/styles/sass/partials/_layout.scss */
+  /* line 259, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -312,101 +425,130 @@ body {
     font-size: 0.8em;
   }
 
-  /* line 156, ../../client/styles/sass/partials/_layout.scss */
+  /* line 263, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 159, ../../client/styles/sass/partials/_layout.scss */
+  /* line 267, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 162, ../../client/styles/sass/partials/_layout.scss */
+  /* line 270, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 166, ../../client/styles/sass/partials/_layout.scss */
+  /* line 274, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
 }
 @media (max-width: 474px) {
-  /* line 172, ../../client/styles/sass/partials/_layout.scss */
-  .adjust-smartPhone {
-    left: 70% !important;
-    top: -15px !important;
+  /* line 281, ../../client/styles/sass/partials/_layout.scss */
+  .hidden-smartPhone {
+    display: none !important;
   }
 
-  /* line 176, ../../client/styles/sass/partials/_layout.scss */
-  .hidden-smartPhone {
-    display: none;
+  /* line 284, ../../client/styles/sass/partials/_layout.scss */
+  #mainContent.moveLeft-smartPhone, #description.moveLeft {
+    left: 1%;
   }
 }
+/* line 5, ../../client/styles/sass/partials/_color.scss */
+body {
+  color: white;
+}
+
 /* line 8, ../../client/styles/sass/partials/_color.scss */
+p {
+  color: #999999;
+}
+
+/* line 11, ../../client/styles/sass/partials/_color.scss */
 label {
   color: white;
   font-weight: normal;
 }
 
-/* line 12, ../../client/styles/sass/partials/_color.scss */
+/* line 16, ../../client/styles/sass/partials/_color.scss */
+header .slogan {
+  color: #333333;
+}
+
+/* line 20, ../../client/styles/sass/partials/_color.scss */
 i {
   color: white;
 }
 
-/* line 15, ../../client/styles/sass/partials/_color.scss */
+/* line 23, ../../client/styles/sass/partials/_color.scss */
 i:hover {
   color: #337ab7;
 }
 
-/* line 18, ../../client/styles/sass/partials/_color.scss */
+/* line 26, ../../client/styles/sass/partials/_color.scss */
 i:active {
   color: #337ab7;
 }
 
-/* line 21, ../../client/styles/sass/partials/_color.scss */
-#playCircle:hover {
-  border: 2px solid #337ab7;
+/* line 29, ../../client/styles/sass/partials/_color.scss */
+a {
+  color: #999999;
 }
 
-/* line 24, ../../client/styles/sass/partials/_color.scss */
-#playCircle:active {
-  border: 3px solid #337ab7;
-}
-
-/* line 27, ../../client/styles/sass/partials/_color.scss */
-.listPlayer {
-  color: white;
-}
-
-/* line 30, ../../client/styles/sass/partials/_color.scss */
-.listPlayer:hover {
-  color: #337ab7;
-}
-
-/* line 33, ../../client/styles/sass/partials/_color.scss */
-.listPlayer:active {
-  color: #337ab7;
-}
-
-/* line 37, ../../client/styles/sass/partials/_color.scss */
+/* line 32, ../../client/styles/sass/partials/_color.scss */
 #august9 {
   background-color: #252929;
 }
 
-/* line 45, ../../client/styles/sass/partials/_color.scss */
+/* line 40, ../../client/styles/sass/partials/_color.scss */
 #projectList {
   background-color: #222222;
 }
 
-/* line 51, ../../client/styles/sass/partials/_color.scss */
+/* line 46, ../../client/styles/sass/partials/_color.scss */
+#info .details {
+  color: #999999;
+}
+
+/* line 49, ../../client/styles/sass/partials/_color.scss */
 #musicPlayer {
   background-color: #222222;
   border-top: 1px solid #252929;
 }
 
-/* line 59, ../../client/styles/sass/partials/_color.scss */
+/* line 53, ../../client/styles/sass/partials/_color.scss */
+#playCircle:hover {
+  border: 2px solid #337ab7;
+}
+
+/* line 56, ../../client/styles/sass/partials/_color.scss */
+#playCircle:active {
+  border: 3px solid #337ab7;
+}
+
+/* line 60, ../../client/styles/sass/partials/_color.scss */
+.listPlayer {
+  color: white;
+}
+
+/* line 63, ../../client/styles/sass/partials/_color.scss */
+.listPlayer:hover {
+  color: #337ab7;
+}
+
+/* line 66, ../../client/styles/sass/partials/_color.scss */
+.listPlayer:active {
+  color: #337ab7;
+}
+
+/* line 71, ../../client/styles/sass/partials/_color.scss */
+.modalWindow {
+  background-color: #f8f8f8;
+}
+
+/* line 77, ../../client/styles/sass/partials/_color.scss */
 .logo {
   color: #337a17;
 }

@@ -23,7 +23,8 @@ var Backbone     					= require('Backbone'),
 		LoginModel 						= require('./models/loginModel'),
 		LoginForm  						= require('./views/formViews/loginForm'),
 		PlayerCTRL  					= require('./controllers/playerController'),
-		QueueCollection    		= require('./collections/queueCollection');
+		QueueCollection    		= require('./collections/queueCollection'),
+		ProjectInfoView 			= require('./views/projectInfoView');
 
 module.exports = function() {
 	var that = this;
@@ -32,19 +33,25 @@ module.exports = function() {
 		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
 		$("#mainContent").html("");
-		$("#projectList").addClass('hidden');
+		$("#projectList").html("");
+		$("#info").html("");
+		$("#info").css('display', 'none');
+		$("#projectList").css('display', 'none');
 	};
 	this.login =function() {
 		that.loginItem = new LoginModel();
 		that.loginForm = new LoginForm({model: that.loginItem });
 		$('#mainContent').html(that.loginForm.render().el);
-		$('#projectList').html(that.projectCollectionView.render().el);
+		//$('#projectList').html(that.projectCollectionView.render().el);
+		
 	};
 	this.logout = function() {
 		console.log("logout");
+		$("#projectList").css('display', 'none');
 		window.localStorage.setItem('token', '');
 		$("#mainContent").html("");
 		that.index();
+		
 	};
 	this.createProject = function() {
 		var projectItem = new ProjectModel();
@@ -68,13 +75,16 @@ module.exports = function() {
 		
 		projectItem.fetch({
 			success: function(project) {
-				var projectSongs = project.attributes.songs;
+				var projectSongs = project.attributes.songs, projectInfo;
 				//console.log(projectSongs);
 				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
 				self.songCollection.url = "/project/" + projectid + "/song";
-				self.songCollectionView = new SongCollectionView({collection:self.songCollection, controller: that.playerController});
+				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
+																													controller: that.playerController});
 				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
 				$('#mainContent').append(self.songCollectionView.render().el);
+				projectInfo = new ProjectInfoView({model: project});
+				$('#info').html(projectInfo.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
 
 				if(window.localStorage.getItem('token')) {
@@ -120,7 +130,7 @@ module.exports = function() {
 				songItem.fetch({
 					success: function(song) {
 						var songView = new SongDetailsView({model: song});
-						$('#description').html(songView.render().el);	
+						$('#songInfo').html(songView.render().el);	
 						if(!self.songCollection) {
 							var songs = project.attributes.songs;
 							self.songCollection = new SongCollection(songs);
@@ -177,9 +187,12 @@ module.exports = function() {
 	this.allRoutes = function(e) {
 		if(e !== "index") {
 			$("#projectList").removeClass('hidden');
+			$("#info").css('display', 'block');
+			
 		}
 		if(e !== "index" && e !== "logout") {
 			that.homeCollectionView.clean();
+			$("#projectList").css('display', 'block');
 		}
 		$('#header').html(that.headerView.render().el);
 

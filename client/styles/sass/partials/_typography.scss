@@ -10,14 +10,16 @@
 
 
 body {
-	font-family: 'pt';
+	//font-family: 'pt';
 	
 }
 
 ol, ul {
     list-style: none;
 }
-
+a {
+	font-size: .91em;
+}
 .logo  {
 	font-family: fanwood;
   letter-spacing: .06em;
@@ -33,6 +35,7 @@ ol, ul {
 .slogan {
     font-size: .91em;
 }
+
 
 #mainContent .glyphicon {
 	font-size: 26px;

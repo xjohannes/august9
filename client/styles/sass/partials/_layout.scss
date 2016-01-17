@@ -14,6 +14,16 @@ body {
 body {
 	padding-top: 130px;
 }
+header + ul {
+		float: right;
+		position: relative;
+		top: -45px;
+		right: -30px;
+	}	
+
+header + ul li {
+		float: left;
+	}	
 
 #august9 {
 	min-height: 100%;
@@ -37,33 +47,87 @@ body {
   position:relative; */
   //right:67%;
 }
-#projectList {
+ #projectList {
 	float:left;
-  width:30%;
+  width:20%;
   position:absolute;
   top: 0px;
-  bottom:50px;
+  bottom:0px;
   
 	img {
 		width: 50px;
 		height: auto;
+
 	}
+	li {
+		padding-top: 10px;
+		border-bottom: 1px solid $base_background;
+	}
+
+	.projectImgCrop {
+		border-radius: 50%;
+		width: 35px;
+		height: 35px; 
+		overflow: hidden;
+		margin-bottom: 5px;
+	}
+	.editButtons {
+ 		margin: 0 -13px;
+ }
 }
+
 #mainContent {
-	width: 70%;
+	width: 50%;
 	float: left;
 	position: relative;
-	left: 30%;
+	left: 20%;
+	h2 {
+		position: relative;
+		left: 45px;
+	}
+	.row {
+		border-bottom: 1px solid $sidebar_background;
+		padding: 2px;
+	}
+	.title {
+		position: relative;
+		top: 5px;
+	}
+	.listPlayer {
+		position: relative;
+		left: 10px;
+	}
 	//min-height: 100%;
 	//@include position(-30px);
-}
-#homeList {
-	@include position(-23px);
 	
+}
+
+#info{
+	float: right;
+	position: relative;
+	overflow: hidden;
+	width: 200px;
+	
+	right: 35px;
+	top: 35px;
+	.details {
+		padding: 10px;
+	}
+	.details li {
+		padding: 3px 0;
+	}
+} /**/
+#homeList {
+	//@include position(-23px);
+	width: 100%;
 	position: relative;
 	top: -23px;
 	
 }
+#homeList ul {
+	margin: 0 auto;
+}
+
 #musicPlayer {
 	width: 100%;
   height: 65px;
@@ -86,6 +150,22 @@ body {
   height: 60px;
   background-color: red;
 }
+#userImg {
+	margin: 0 auto;
+}
+#userImg {
+	
+}
+.modalWindow {
+	padding: 10px;
+	
+	box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
+	position: relative;
+	top: 10px;
+	border-radius: 5px;
+	z-index: 10;
+	width: 100%;
+}
 .homeItem {
 	margin: 1em;
 	width: 20em;
@@ -101,6 +181,19 @@ body {
 		padding-left: 15px;
 	}
 }
+.userList {
+	position: absolute;
+	right: 1em;
+	top: 1em;
+}
+
+.imgCrop {
+	  width: 100px;
+    height: 100px;
+    
+    overflow: hidden;
+}
+
 // Navigation
 .logoContainer {
 	width: 30em;
@@ -113,7 +206,7 @@ body {
 	position: relative;
 }
 .slogan {
-	@include position(37px, 0, 0, 45px, 100%);
+	//@include position(37px, 0, 0, 45px);
 	
 		position: relative;
 		top: 37px;
@@ -121,13 +214,20 @@ body {
 	  width: 100%;
 	  
 }
+
+.navbar-default .navbar-collapse {
+	border: none;
+	position: relative;
+}
+.navbar-collapse {
+	padding-right: -10px;
+}
 .navbar-default {
 	height: 130px;
-	border: none;
 }
 .navbar-toggle {
 		top: -125px;
-		right: 10px;
+		margin-right: 5px;
 }
 .btn {
 	margin-bottom: 7px;
@@ -135,6 +235,13 @@ body {
 
 // Media
 
+@media (min-width: 768px) {
+	header + ul {
+		position: relative;
+		top: -140px;
+		right: 15px;
+	}	
+}
 @media (max-width: 320px) {
 
   .homeItem {
@@ -145,7 +252,7 @@ body {
 		right: 10px;
 	}
   .logoContainer {
-		padding: 0px 35px;
+		padding: 0px 10px;
 	}	
 
 	
@@ -156,6 +263,7 @@ body {
  .logo  {
 		position: relative;
  }
+ 
  #mainContent {
 	left: -10px;
 	}
@@ -169,12 +277,11 @@ body {
 	}
 }
 @media (max-width: 474px) {
-	.adjust-smartPhone {
-		left: 70% !important;
-		top: -15px !important;
-	}
-	.hidden-smartPhone {
-		display: none;
-	}
 	
+	.hidden-smartPhone {
+		display: none !important;
+	}
+	#mainContent.moveLeft-smartPhone, #description.moveLeft {
+		left: 1%;
+	}
 }

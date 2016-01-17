@@ -29,6 +29,7 @@ module.exports = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.removeClass('hidden');
+		//this.$el.css('display', block);
 		this.addAll();
 		return this;
 	},

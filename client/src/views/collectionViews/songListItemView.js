@@ -13,7 +13,7 @@ module.exports  = Backbone.View.extend({
 	className: '',
 
 	initialize: function(options) {
-		this.options = options || {};
+		this.options 		= options || {};
 		this.controller = options.controller;
 		this.model.on('change', this.render, this);
 		this.model.on('login:success', this.showAdminButtons);
@@ -21,8 +21,8 @@ module.exports  = Backbone.View.extend({
 		this.model.on('pause', this.enablePlayButton, this);
 	},
 	render: function() {
-	
 		var attributes = this.model.toJSON();
+		attributes.project = this.project;
 		this.$el.html(this.template(attributes));
 		if(window.localStorage.getItem('token') !== null) {
 			$('.admin').removeClass('hidden');

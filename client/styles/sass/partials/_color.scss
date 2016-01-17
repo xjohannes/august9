@@ -9,7 +9,6 @@ p {
 	color: $base_text_color;
 }
 label {
-	color: white;
 	font-weight: normal;
 }
 header {
@@ -43,7 +42,7 @@ a {
 #mainContent {
 	//background-color: #000;
 }
-#info .details{
+#info .details, #songInfo .details{
 	color: $base_text_color;
 }
 #musicPlayer {
@@ -70,6 +69,7 @@ a {
 
 .modalWindow {
 	background-color: $contrast_background;
+	color: $sidebar_background;
 }
 .homeItem {
 	

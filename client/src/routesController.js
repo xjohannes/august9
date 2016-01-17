@@ -81,8 +81,8 @@ module.exports = function() {
 				self.songCollection.url = "/project/" + projectid + "/song";
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
 																													controller: that.playerController});
-				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
-				$('#mainContent').append(self.songCollectionView.render().el);
+				//$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
+				$('#songList').html(self.songCollectionView.render().el);
 				projectInfo = new ProjectInfoView({model: project});
 				$('#info').html(projectInfo.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
@@ -129,14 +129,17 @@ module.exports = function() {
 			success: function(project) {
 				songItem.fetch({
 					success: function(song) {
-						var songView = new SongDetailsView({model: song});
+						var songView = new SongDetailsView({model: song}),
+						projectInfo = new ProjectInfoView({model: project});
+						$('#info').html(projectInfo.render().el);
+
 						$('#songInfo').html(songView.render().el);	
 						if(!self.songCollection) {
 							var songs = project.attributes.songs;
 							self.songCollection = new SongCollection(songs);
-							$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
+							//$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
 							self.songCollectionView = new SongCollectionView({collection:self.songCollection});
-							$('#mainContent').append(self.songCollectionView.render().el);
+							$('#songList').html(self.songCollectionView.render().el);
 							console.log("self.projectList.get(projectid).attributes" );
 							console.log(self.projectList.get(projectid).attributes );
 						}

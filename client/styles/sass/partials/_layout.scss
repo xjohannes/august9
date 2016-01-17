@@ -24,7 +24,9 @@ header + ul {
 header + ul li {
 		float: left;
 	}	
-
+button {
+	color: $sidebar_background;
+}
 #august9 {
 	min-height: 100%;
 	position: relative;
@@ -48,11 +50,12 @@ header + ul li {
   //right:67%;
 }
  #projectList {
+ 	overflow-y: scroll;
 	float:left;
   width:20%;
   position:absolute;
   top: 0px;
-  bottom:0px;
+  bottom:65px;
   
 	img {
 		width: 50px;
@@ -77,10 +80,11 @@ header + ul li {
 }
 
 #mainContent {
-	width: 50%;
+	width: 77%;
 	float: left;
 	position: relative;
 	left: 20%;
+	margin-bottom: 65px;
 	h2 {
 		position: relative;
 		left: 45px;
@@ -103,13 +107,23 @@ header + ul li {
 }
 
 #info{
-	float: right;
 	position: relative;
 	overflow: hidden;
-	width: 200px;
 	
-	right: 35px;
-	top: 35px;
+	border-bottom: 2px solid $sidebar_background;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+	ul {
+		//float: right;
+	}
+	.about {
+		width: 50%;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: 41px;
+    left: 20%;
+	}
 	.details {
 		padding: 10px;
 	}
@@ -117,6 +131,20 @@ header + ul li {
 		padding: 3px 0;
 	}
 } /**/
+.projectInfoCrop {
+	float: right;
+}
+#songList {
+	float: left;
+	width: 70%;
+}
+#songInfo {
+	position: relative;
+    float: right;
+    top: -30px;
+    right: 0px;
+    overflow: hidden;
+}
 #homeList {
 	//@include position(-23px);
 	width: 100%;
@@ -165,6 +193,7 @@ header + ul li {
 	border-radius: 5px;
 	z-index: 10;
 	width: 100%;
+
 }
 .homeItem {
 	margin: 1em;

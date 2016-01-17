@@ -411,8 +411,8 @@ module.exports = function() {
 				self.songCollection.url = "/project/" + projectid + "/song";
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
 																													controller: that.playerController});
-				$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
-				$('#mainContent').append(self.songCollectionView.render().el);
+				//$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
+				$('#songList').html(self.songCollectionView.render().el);
 				projectInfo = new ProjectInfoView({model: project});
 				$('#info').html(projectInfo.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
@@ -459,14 +459,17 @@ module.exports = function() {
 			success: function(project) {
 				songItem.fetch({
 					success: function(song) {
-						var songView = new SongDetailsView({model: song});
+						var songView = new SongDetailsView({model: song}),
+						projectInfo = new ProjectInfoView({model: project});
+						$('#info').html(projectInfo.render().el);
+
 						$('#songInfo').html(songView.render().el);	
 						if(!self.songCollection) {
 							var songs = project.attributes.songs;
 							self.songCollection = new SongCollection(songs);
-							$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
+							//$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
 							self.songCollectionView = new SongCollectionView({collection:self.songCollection});
-							$('#mainContent').append(self.songCollectionView.render().el);
+							$('#songList').html(self.songCollectionView.render().el);
 							console.log("self.projectList.get(projectid).attributes" );
 							console.log(self.projectList.get(projectid).attributes );
 						}
@@ -1639,15 +1642,31 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imglarge) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imglarge); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\"/>\n	</div>\n	<ul id=\"\" class=\"details\">\n		<li class=\"about\">About:";
-  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "\"/>\n	</div>\n	<h2>";
+  if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"email\">Email:";
+    + "</h2>\n	<ul id=\"\" class=\"details\">\n		<li class=\"email\">Email: ";
   if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n	</ul>\n	<div id=\"songInfo\" class=\"\"></div>\n";
+    + "</li>\n		<li class=\"email\">Influence: ";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</li>\n		<li class=\"email\">Participator: ";
+  if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</li>\n		<li class=\"email\">Participator role: ";
+  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</li>\n\n		<li class=\"about\">\"";
+  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\"</li>\n		\n	</ul>\n\n	\n";
   return buffer;
   });
 
@@ -1742,11 +1761,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "\n	\n	<p>";
+  buffer += "\n	\n	<h4>";
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\n	<ul id=\"\" class=\"details\">\n		<li class=\"added\">Date:";
+    + "</h4>\n	<ul id=\"\" class=\"details\">\n		<li class=\"added\">Date:";
   if (helper = helpers.added) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.added); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

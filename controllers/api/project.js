@@ -11,7 +11,11 @@ cloudinary = require('cloudinary');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
-		
+		cloudinary.config({ 
+		  cloud_name: 'hpk8jms0s', 
+		  api_key: '149776374978429', 
+		  api_secret: 'vwzS7y3u6DJ0OSfBBc1xAvwKOjs' 
+		});
 
 		module.exports = Project = {
 		// projcts and song
@@ -88,6 +92,9 @@ cloudinary = require('cloudinary');
 					res.status(404).json("Could not find a project with id: " + param);
 				}
 		},
+		postQuery: function(req, res, file) {
+
+		},
 		post: function(req, res) {
 			console.log("POST::::::::::::::");
 			/*console.log(req.uploads);
@@ -101,45 +108,73 @@ cloudinary = require('cloudinary');
 				if(req.body.transloadit) {
 					console.log("Server: Project: Post: transloadit");
 					// Start downloading form transloadit
-					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', 
-					file = fs.createWriteStream(dest + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext);
+					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', stream, stream2;
+
 					http.get(transloadit.results.resize_to_125[0].url, function(response) {
 						//Cloudinary setup
-						console.log("Server: Project: Post: Getting transloadit url");
-						cloudinary.uploader.upload((transloadit.results.resize_to_125[0].id + transloadit.results.resize_to_125[0].ext), function(result) { 
-							console.log("Server: Project: Post: cloudinary result:");
-							console.log(result);
-						});
-			// End Cloudinary setup
-						response.pipe(file);
-						//file.end();
+					  stream = cloudinary.uploader.upload_stream(function(result) {
+					  	var projectName = config.capitalize(req.body.projectname);
+						  query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows) {
+						  	if(errProId) {
+						  		console.log('Error Getting project id');
+						  		console.log(errProId);
+						  		res.send('Error Getting project id ' + errProId);
+						  	} else {
+						  		console.log("Getting id from project OK. Id: " + rows[0].id);
+						  		Project.updateDB(rows[0].id, 'project', ['imglarge', 'imgalt'], ["'" + result.url +"'", "'" + req.body.about + "'"], function(errImgLarge, rows2) {
+						  			if(errImgLarge) {
+						  				console.log('Error updating db with large img ');
+						  				console.log(errImgLarge);
+						  				res.send('Error updating db with large img ' + errImgLarge);
+						  			} else {
+						  				console.log("Upload of large image to Cloudinary OK");
+						  				//res.status(201);
+						  			}
+						  		});
+						  	}
+						  });
+					  	/*res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
+             		cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fill" }));*/
+					  }, { public_id: req.body.title } );
+						response.pipe(stream);
 					});
-					thumb = fs.createWriteStream(dest + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext);
+					//thumb = fs.createWriteStream(dest + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext);
 					http.get(transloadit.results.resize_to_75[0].url, function(response2) {
-						response2.pipe(thumb);
+						stream2 = cloudinary.uploader.upload_stream(function(result) {
+					    //console.log(result);
+					    
+					    query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows3) {
+					  	if(errProId) {
+					  		console.log('Error Getting project id thumb');
+					  		console.log(errProId);
+					  		res.send('Error Getting project id thumb' + errProId);
+					  	} else {
+					  		console.log("Getting id from project OK thumb");
+					  		Project.updateDB(rows3[0].id, 'project', ['imgthumb'], ["'" + result.url +"'"], function(errImgLarge, rows4) {
+					  			if(errImgLarge) {
+					  				console.log('Error updating db with thumb img ');
+					  				console.log(errImgLarge);
+					  				res.send('Error updating db with thumb img ' + errImgLarge);
+					  			} else {
+					  				console.log("Upload of image thumb to Cloudinary OK");
+					  				//res.status(201);
+					  			}
+					  		});
+					  	}
+					  });
+					  }, { public_id: req.body.title } );
+						response2.pipe(stream2);
 						//thumb.end();
 					});
-					// end downloading from transloadit
-
-					var projectName = config.capitalize(req.body.projectname),
-						sql = escape("INSERT INTO project(projectname, email, about, imglarge, imgalt, imgthumb)"
-								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext + "', '"
-								+ req.body.imgalt + "', '" + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext + "')" ),
-						/*escape("INSERT INTO project(projectname, email, about, imglarge, imgalt)"
-								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "', '" + req.files.file.name + "', '"
-								+ req.body.imgalt +"')" ),*/
-						resultObj = {};
-						console.log("DONE CREATING FILE " + transloadit.results.resize_to_75[0].id);
-				} else {
-					var projectName = config.capitalize(req.body.projectname),
-						sql = escape("INSERT INTO project(projectname, email, about)"
-								+ "VALUES('" + projectName + "', '"
-								+ req.body.email + "', '"+ req.body.about + "')" ),
-						resultObj = {};
-				}
-				
+					// end downloading from transloadit and uploading to cloudinary
+					
+					console.log("DONE CREATING FILE " + transloadit.results.resize_to_75[0].id);
+				} 
+				var projectName = config.capitalize(req.body.projectname),
+					sql = escape("INSERT INTO project(projectname, email, about)"
+							+ "VALUES('" + projectName + "', '"
+							+ req.body.email + "', '"+ req.body.about + "')" ),
+					resultObj = {};
 				
 				query(sql,
 					function(err, rows, result) {	
@@ -189,13 +224,13 @@ cloudinary = require('cloudinary');
 																						} else {
 																							resultObj.participator = req.body.participator;
 																							resultObj.participatorRole = req.body.participatorRole;
-																							res.status(201);
+																							//res.status(201);
 																							console.log("Participation added to the database for " + rows1[0].projectname);
 																						}
 																						console.log("inner function");
 																					});
 																			} else {
-																					res.status(201);
+																					//res.status(201);
 																			}
 																		}
 																		console.log("3 th to outer function");
@@ -204,12 +239,10 @@ cloudinary = require('cloudinary');
 								}
 								console.log("2th to Outer function");
 							});
-
 						}
 						console.log("Outer function");
 				});
-			}
-			
+			}	
 		},
 		put: function(req, res) {
 			console.log("PUT PROJECT with id: " + req.body.id);

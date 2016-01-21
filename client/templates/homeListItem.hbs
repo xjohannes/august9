@@ -1,12 +1,31 @@
-<a href="#/project/{{id}}">
 
-	<div id="" class="homeItem col-xs-11 col-sm-6 col-md-4 ">
-		<h3> {{projectname}}</h3>
-		{{#if imglarge}}
-			<img src="./media/images/{{imglarge}}" alt="{{imgAlt}}"/>
-		{{else}}
-			<img src="./media/images/tre.jpg" alt="Et flott eiketre på toppen av en åskam"/>
-		{{/if}}
+	<div class="homeItem col-xs-11 col-sm-6 col-md-4 ">
+		<a href="#/project/{{id}}">
+			<header  class="homeItemHeader">
+				<h3> {{projectname}}</h3>
+			</header>
+		</a>
+		<section class="">
+			<a href="#/project/{{id}}">
+				<div id="" class="homeImgCrop">
+					{{#if imglarge}}
+						<img src="./media/images/{{imglarge}}" alt="{{imgAlt}}"/>
+					{{else}}
+						<img src="./media/images/tre.jpg" alt="Et flott eiketre på toppen av en åskam"/>	
+					{{/if}}
+				</div>
+			</a>
+			<div id="" class="projectInfo"><p>{{about}}</p>
+
+			</div>
+		</section>
+		<aside class="featuredSong">
+			<div class="col-xs-1 listPlayer glyphicon glyphicon-play-circle">
+			</div>
+			<div class="title col-xs-8 col-xs-offset-1"><a href="#/project/{{			projectid}}/song/{{id}}">{{ title}}</a> 
+			</div>
+		</aside>
+			
+
 		
 	</div>
-</a>

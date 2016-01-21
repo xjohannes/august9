@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend({
 	
 	template: require('../../../templates/homeListItem.hbs'),
 	tagName: 'li',
-	
+
 	initialize: function() {
 		this.model.on('change', this.render, this);
 	},

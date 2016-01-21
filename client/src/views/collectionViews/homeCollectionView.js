@@ -5,6 +5,7 @@ var Backbone = require('Backbone'),
 
 module.exports = Backbone.View.extend({
 	tagName: 'ul',
+	
 
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);

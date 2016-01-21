@@ -14,6 +14,11 @@ body {
 body {
 	padding-top: 130px;
 }
+header {
+	/* background-image: url('/media/images/tre.jpg');
+	background-repeat:no-repeat;
+  background-size:cover; */
+} 
 header + ul {
 		float: right;
 		position: relative;
@@ -43,19 +48,46 @@ button {
   position:relative; */
   
 }
-#container1 {
-	/* float:left;
-  width:70%;
-  position:relative; */
-  //right:67%;
+#homeList {
+	//@include position(-23px);
+	width: 100%;
+	position: relative;
+	top: -23px;
+	ul {
+		display: table;
+		margin: 0 auto;
+	}
+	ul li{
+		display: inline-block;
+	}
+	header {
+
+	}
+	section {
+
+	}
+	aside {
+		clear: both;
+	}
+	.projectInfo {
+		width: 50%;
+		height: 100px;
+		overflow-y: scroll;
+	}
+	.homeImgCrop {
+		float: left;
+		width: 50%;
+	}	
 }
+
  #projectList {
  	overflow-y: scroll;
 	float:left;
-  width:20%;
+  width:15%;
   position:absolute;
   top: 0px;
   bottom:65px;
+  z-index: 50;
   
 	img {
 		width: 50px;
@@ -117,15 +149,16 @@ button {
 		//float: right;
 	}
 	.about {
-		width: 50%;
+		width: 30%;
     height: 100px;
     overflow: scroll;
     position: absolute;
     top: 41px;
-    left: 20%;
+    left: 30%;
 	}
 	.details {
 		padding: 10px;
+		margin-left: 20px;
 	}
 	.details li {
 		padding: 3px 0;
@@ -145,16 +178,7 @@ button {
     right: 0px;
     overflow: hidden;
 }
-#homeList {
-	//@include position(-23px);
-	width: 100%;
-	position: relative;
-	top: -23px;
-	
-}
-#homeList ul {
-	margin: 0 auto;
-}
+
 
 #musicPlayer {
 	width: 100%;
@@ -184,15 +208,18 @@ button {
 #userImg {
 	
 }
+#modal {
+	position: relative;
+	top: 10px;
+}
 .modalWindow {
 	padding: 10px;
 	
 	box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
-	position: relative;
-	top: 10px;
+	
 	border-radius: 5px;
 	z-index: 10;
-	width: 100%;
+	width: 60%;
 
 }
 .homeItem {
@@ -263,7 +290,16 @@ button {
 }
 
 // Media
-
+@media (max-width: 822px) {
+	.hidden-pad {
+		display: none !important;
+	}
+	#info .moveRight-pad {
+    top: 61px;
+    left: 0% ;
+    width: 50%;
+	}
+}
 @media (min-width: 768px) {
 	header + ul {
 		position: relative;

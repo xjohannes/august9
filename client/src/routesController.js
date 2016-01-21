@@ -32,7 +32,6 @@ module.exports = function() {
 	this.index =function () {
 		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
-		$("#mainContent").html("");
 		$("#projectList").html("");
 		$("#info").html("");
 		$("#info").css('display', 'none');
@@ -41,7 +40,7 @@ module.exports = function() {
 	this.login =function() {
 		that.loginItem = new LoginModel();
 		that.loginForm = new LoginForm({model: that.loginItem });
-		$('#mainContent').html(that.loginForm.render().el);
+		$('#modal').html(that.loginForm.render().el);
 		//$('#projectList').html(that.projectCollectionView.render().el);
 		
 	};
@@ -49,7 +48,7 @@ module.exports = function() {
 		console.log("logout");
 		$("#projectList").css('display', 'none');
 		window.localStorage.setItem('token', '');
-		$("#mainContent").html("");
+		$("#mainContent").css("display", "none");
 		that.index();
 		
 	};
@@ -60,7 +59,7 @@ module.exports = function() {
 		this.userList = new UserCollection();
 		this.userList.fetch();
 		this.userCollectionView = new UserCollectionView({collection:this.userList});
-		$('#mainContent').html(projectForm.render().el);
+		$('#modal').html(projectForm.render().el);
 		$('.userList').html(this.userCollectionView.render().el);
 		//$('#projectList').html(this.projectCollectionView.render().el);
 		$('#header').html(this.headerView.render().el);
@@ -82,6 +81,7 @@ module.exports = function() {
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
 																													controller: that.playerController});
 				//$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
+				$("#mainContent").css("display", "block");
 				$('#songList').html(self.songCollectionView.render().el);
 				projectInfo = new ProjectInfoView({model: project});
 				$('#info').html(projectInfo.render().el);
@@ -103,7 +103,7 @@ module.exports = function() {
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
-		$('#mainContent').html(projectForm.render().el);
+		$('#modal').html(projectForm.render().el);
 	};
 	this.deleteProject = function(projectid) {
 		var projectItem = this.projectList.remove(projectid);
@@ -116,7 +116,7 @@ module.exports = function() {
 		var songItem = new SongModel();
 		songItem.set({'projectid':  projectid, 'projectname': projectname });
 		var songForm = new SongForm({model: songItem });
-		$('#mainContent').html(songForm.render().el);
+		$('#modal').html(songForm.render().el);
 	};
 	this.readSong = function(projectid, songid) {
 		var self = this;
@@ -131,6 +131,7 @@ module.exports = function() {
 					success: function(song) {
 						var songView = new SongDetailsView({model: song}),
 						projectInfo = new ProjectInfoView({model: project});
+						
 						$('#info').html(projectInfo.render().el);
 
 						$('#songInfo').html(songView.render().el);	
@@ -161,7 +162,7 @@ module.exports = function() {
 			success: function(song) {
 				console.log("update song: " + songItem.attributes.influence);
 				var songForm = new EditSongForm({model: songItem});
-				$('#mainContent').html(songForm.render().el);
+				$('#modal').html(songForm.render().el);
 					},
 					error: function(err) {
 						console.log(err);
@@ -188,6 +189,19 @@ module.exports = function() {
 		$('#musicPlayer audio').get(0).play();*/
 	};
 	this.allRoutes = function(e) {
+		if(e === "login" || e === "createProject" ||
+			 e === "updateProject" || e === "createSong" ||
+			 e === "updateSong" ) {
+			$('#modal').css('display', 'block');
+			$('#mainContent').css('display', 'none');
+			
+		} else if(e ==="index") {
+			$('#mainContent').css('display', 'none');
+			$('#modal').css('display', 'none');
+		} else {
+			$('#modal').css('display', 'none');
+			$('#mainContent').css('display', 'block');
+		}
 		if(e !== "index") {
 			$("#projectList").removeClass('hidden');
 			$("#info").css('display', 'block');

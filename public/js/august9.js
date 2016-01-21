@@ -362,7 +362,6 @@ module.exports = function() {
 	this.index =function () {
 		that.homeCollectionView.clean();
 		$('#homeList').html(that.homeCollectionView.render().el);
-		$("#mainContent").html("");
 		$("#projectList").html("");
 		$("#info").html("");
 		$("#info").css('display', 'none');
@@ -371,7 +370,7 @@ module.exports = function() {
 	this.login =function() {
 		that.loginItem = new LoginModel();
 		that.loginForm = new LoginForm({model: that.loginItem });
-		$('#mainContent').html(that.loginForm.render().el);
+		$('#modal').html(that.loginForm.render().el);
 		//$('#projectList').html(that.projectCollectionView.render().el);
 		
 	};
@@ -379,7 +378,7 @@ module.exports = function() {
 		console.log("logout");
 		$("#projectList").css('display', 'none');
 		window.localStorage.setItem('token', '');
-		$("#mainContent").html("");
+		$("#mainContent").css("display", "none");
 		that.index();
 		
 	};
@@ -390,7 +389,7 @@ module.exports = function() {
 		this.userList = new UserCollection();
 		this.userList.fetch();
 		this.userCollectionView = new UserCollectionView({collection:this.userList});
-		$('#mainContent').html(projectForm.render().el);
+		$('#modal').html(projectForm.render().el);
 		$('.userList').html(this.userCollectionView.render().el);
 		//$('#projectList').html(this.projectCollectionView.render().el);
 		$('#header').html(this.headerView.render().el);
@@ -412,6 +411,7 @@ module.exports = function() {
 				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
 																													controller: that.playerController});
 				//$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
+				$("#mainContent").css("display", "block");
 				$('#songList').html(self.songCollectionView.render().el);
 				projectInfo = new ProjectInfoView({model: project});
 				$('#info').html(projectInfo.render().el);
@@ -433,7 +433,7 @@ module.exports = function() {
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
 		var projectForm = new ProjectEditForm({model: projectItem});
-		$('#mainContent').html(projectForm.render().el);
+		$('#modal').html(projectForm.render().el);
 	};
 	this.deleteProject = function(projectid) {
 		var projectItem = this.projectList.remove(projectid);
@@ -446,7 +446,7 @@ module.exports = function() {
 		var songItem = new SongModel();
 		songItem.set({'projectid':  projectid, 'projectname': projectname });
 		var songForm = new SongForm({model: songItem });
-		$('#mainContent').html(songForm.render().el);
+		$('#modal').html(songForm.render().el);
 	};
 	this.readSong = function(projectid, songid) {
 		var self = this;
@@ -461,6 +461,7 @@ module.exports = function() {
 					success: function(song) {
 						var songView = new SongDetailsView({model: song}),
 						projectInfo = new ProjectInfoView({model: project});
+						
 						$('#info').html(projectInfo.render().el);
 
 						$('#songInfo').html(songView.render().el);	
@@ -491,7 +492,7 @@ module.exports = function() {
 			success: function(song) {
 				console.log("update song: " + songItem.attributes.influence);
 				var songForm = new EditSongForm({model: songItem});
-				$('#mainContent').html(songForm.render().el);
+				$('#modal').html(songForm.render().el);
 					},
 					error: function(err) {
 						console.log(err);
@@ -518,6 +519,19 @@ module.exports = function() {
 		$('#musicPlayer audio').get(0).play();*/
 	};
 	this.allRoutes = function(e) {
+		if(e === "login" || e === "createProject" ||
+			 e === "updateProject" || e === "createSong" ||
+			 e === "updateSong" ) {
+			$('#modal').css('display', 'block');
+			$('#mainContent').css('display', 'none');
+			
+		} else if(e ==="index") {
+			$('#mainContent').css('display', 'none');
+			$('#modal').css('display', 'none');
+		} else {
+			$('#modal').css('display', 'none');
+			$('#mainContent').css('display', 'block');
+		}
 		if(e !== "index") {
 			$("#projectList").removeClass('hidden');
 			$("#info").css('display', 'block');
@@ -720,6 +734,7 @@ var Backbone = require('Backbone'),
 
 module.exports = Backbone.View.extend({
 	tagName: 'ul',
+	
 
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);
@@ -758,7 +773,7 @@ module.exports = Backbone.View.extend({
 	
 	template: require('../../../templates/homeListItem.hbs'),
 	tagName: 'li',
-	
+
 	initialize: function() {
 		this.model.on('change', this.render, this);
 	},
@@ -1506,7 +1521,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1, helper;
-  buffer += "\n			<img src=\"./media/images/";
+  buffer += "\n						<img src=\"./media/images/";
   if (helper = helpers.imglarge) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imglarge); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1514,28 +1529,48 @@ function program1(depth0,data) {
   if (helper = helpers.imgAlt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgAlt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\"/>\n		";
+    + "\"/>\n					";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   
-  return "\n			<img src=\"./media/images/tre.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>\n		";
+  return "\n						<img src=\"./media/images/tre.jpg\" alt=\"Et flott eiketre på toppen av en åskam\"/>	\n					";
   }
 
-  buffer += "<a href=\"#/project/";
+  buffer += "\n	<div class=\"homeItem col-xs-11 col-sm-6 col-md-4 \">\n		<a href=\"#/project/";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\n\n	<div id=\"\" class=\"homeItem col-xs-11 col-sm-6 col-md-4 \">\n		<h3> ";
+    + "\">\n			<header  class=\"homeItemHeader\">\n				<h3> ";
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h3>\n		";
+    + "</h3>\n			</header>\n		</a>\n		<section class=\"\">\n			<a href=\"#/project/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n				<div id=\"\" class=\"homeImgCrop\">\n					";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.imglarge), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n		\n	</div>\n</a>";
+  buffer += "\n				</div>\n			</a>\n			<div id=\"\" class=\"projectInfo\"><p>";
+  if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</p>\n\n			</div>\n		</section>\n		<aside class=\"featuredSong\">\n			<div class=\"col-xs-1 listPlayer glyphicon glyphicon-play-circle\">\n			</div>\n			<div class=\"title col-xs-8 col-xs-offset-1\"><a href=\"#/project/";
+  if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "/song/";
+  if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</a> \n			</div>\n		</aside>\n			\n\n		\n	</div>\n";
   return buffer;
   });
 
@@ -1548,7 +1583,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"modalWindow\">\n\n    <h1><span class=\"form august9-login\"></span> Login </h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n";
+  return "<div class=\"container modalWindow\">\n\n    <h1><span class=\"form august9-login\"></span> Login </h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n\n    <!-- LOGIN FORM -->\n    <form action=\"/login\" method=\"post\">\n        <div class=\"form-group\">\n            <label>Username</label>\n            <input type=\"text\" class=\"form-control\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n            <label>Password</label>\n            <input type=\"password\" class=\"form-control\" name=\"password\">\n        </div>\n\n        <button type=\"submit\" class=\"btn btn-warning btn-lg\">Login</button>\n    </form>\n    <hr>\n</div>\n";
   });
 
 },{"hbsfy/runtime":69}],39:[function(require,module,exports){
@@ -1646,27 +1681,27 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h2>\n	<ul id=\"\" class=\"details\">\n		<li class=\"email\">Email: ";
+    + "</h2>\n	<ul id=\"\" class=\"details\">\n		<span class=\"hidden-pad\">\n			<li class=\"email\">Email: ";
   if (helper = helpers.email) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.email); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"email\">Influence: ";
+    + "</li>\n			<li class=\"email\">Influence: ";
   if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"email\">Participator: ";
+    + "</li>\n			<li class=\"email\">Participator: ";
   if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"email\">Participator role: ";
+    + "</li>\n			<li class=\"email\">Participator role: ";
   if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n\n		<li class=\"about\">\"";
+    + "</li>\n		</span>\n		<li class=\"about moveRight-pad\">\"";
   if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\"</li>\n		\n	</ul>\n\n	\n";
+    + "\"</li>\n	</ul>\n\n	\n";
   return buffer;
   });
 

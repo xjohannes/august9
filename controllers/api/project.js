@@ -6,7 +6,8 @@ fs = require('fs'),
 query = require('pg-query'),
 escape = require('pg-escape'),
 config = require('../../app/config'),
-http   = require('http');
+http   = require('http'),
+cloudinary = require('cloudinary');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -87,17 +88,7 @@ http   = require('http');
 					res.status(404).json("Could not find a project with id: " + param);
 				}
 		},
-		
-		postTest: function(req, res) {
-			/*console.log("TRANSLOADIT is sending info:");
-			console.log(req.transloadit);*/
-		},
-		post: [ multer({ 
-			//multer configuration:
-				dest: './public/media/images/',
-				
-			}), 
-		function(req, res) {
+		post: function(req, res) {
 			console.log("POST::::::::::::::");
 			/*console.log(req.uploads);
 			console.log(req.fields);*/
@@ -108,9 +99,18 @@ http   = require('http');
 				console.log("DEBUG: POST PROJECT");		
 				//Inserting in project
 				if(req.body.transloadit) {
+					console.log("Server: Project: Post: transloadit");
 					// Start downloading form transloadit
-					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', file = fs.createWriteStream(dest + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext);
+					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', 
+					file = fs.createWriteStream(dest + transloadit.results.resize_to_125[0].id + "." + transloadit.results.resize_to_125[0].ext);
 					http.get(transloadit.results.resize_to_125[0].url, function(response) {
+						//Cloudinary setup
+						console.log("Server: Project: Post: Getting transloadit url");
+						cloudinary.uploader.upload((transloadit.results.resize_to_125[0].id + transloadit.results.resize_to_125[0].ext), function(result) { 
+							console.log("Server: Project: Post: cloudinary result:");
+							console.log(result);
+						});
+			// End Cloudinary setup
 						response.pipe(file);
 						//file.end();
 					});
@@ -210,7 +210,7 @@ http   = require('http');
 				});
 			}
 			
-		}],
+		},
 		put: function(req, res) {
 			console.log("PUT PROJECT with id: " + req.body.id);
 			var propertyNames,

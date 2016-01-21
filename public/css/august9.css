@@ -146,6 +146,13 @@ body {
 }
 
 /* line 17, ../../client/styles/sass/partials/_layout.scss */
+header {
+  	/* background-image: url('/media/images/tre.jpg');
+  	background-repeat:no-repeat;
+    background-size:cover; */
+}
+
+/* line 22, ../../client/styles/sass/partials/_layout.scss */
 header + ul {
   float: right;
   position: relative;
@@ -153,17 +160,17 @@ header + ul {
   right: -30px;
 }
 
-/* line 24, ../../client/styles/sass/partials/_layout.scss */
+/* line 29, ../../client/styles/sass/partials/_layout.scss */
 header + ul li {
   float: left;
 }
 
-/* line 27, ../../client/styles/sass/partials/_layout.scss */
+/* line 32, ../../client/styles/sass/partials/_layout.scss */
 button {
   color: #222222;
 }
 
-/* line 30, ../../client/styles/sass/partials/_layout.scss */
+/* line 35, ../../client/styles/sass/partials/_layout.scss */
 #august9 {
   min-height: 100%;
   position: relative;
@@ -171,7 +178,7 @@ button {
   width: 100%;
 }
 
-/* line 39, ../../client/styles/sass/partials/_layout.scss */
+/* line 44, ../../client/styles/sass/partials/_layout.scss */
 #container-outer {
   	/* float:left;
     width:100%;
@@ -179,33 +186,58 @@ button {
     position:relative; */
 }
 
-/* line 46, ../../client/styles/sass/partials/_layout.scss */
-#container1 {
-  	/* float:left;
-    width:70%;
-    position:relative; */
+/* line 51, ../../client/styles/sass/partials/_layout.scss */
+#homeList {
+  width: 100%;
+  position: relative;
+  top: -23px;
+}
+/* line 56, ../../client/styles/sass/partials/_layout.scss */
+#homeList ul {
+  display: table;
+  margin: 0 auto;
+}
+/* line 60, ../../client/styles/sass/partials/_layout.scss */
+#homeList ul li {
+  display: inline-block;
+}
+/* line 69, ../../client/styles/sass/partials/_layout.scss */
+#homeList aside {
+  clear: both;
+}
+/* line 72, ../../client/styles/sass/partials/_layout.scss */
+#homeList .projectInfo {
+  width: 50%;
+  height: 100px;
+  overflow-y: scroll;
+}
+/* line 77, ../../client/styles/sass/partials/_layout.scss */
+#homeList .homeImgCrop {
+  float: left;
+  width: 50%;
 }
 
-/* line 52, ../../client/styles/sass/partials/_layout.scss */
+/* line 83, ../../client/styles/sass/partials/_layout.scss */
 #projectList {
   overflow-y: scroll;
   float: left;
-  width: 20%;
+  width: 15%;
   position: absolute;
   top: 0px;
   bottom: 65px;
+  z-index: 50;
 }
-/* line 60, ../../client/styles/sass/partials/_layout.scss */
+/* line 92, ../../client/styles/sass/partials/_layout.scss */
 #projectList img {
   width: 50px;
   height: auto;
 }
-/* line 65, ../../client/styles/sass/partials/_layout.scss */
+/* line 97, ../../client/styles/sass/partials/_layout.scss */
 #projectList li {
   padding-top: 10px;
   border-bottom: 1px solid #252929;
 }
-/* line 70, ../../client/styles/sass/partials/_layout.scss */
+/* line 102, ../../client/styles/sass/partials/_layout.scss */
 #projectList .projectImgCrop {
   border-radius: 50%;
   width: 35px;
@@ -213,12 +245,12 @@ button {
   overflow: hidden;
   margin-bottom: 5px;
 }
-/* line 77, ../../client/styles/sass/partials/_layout.scss */
+/* line 109, ../../client/styles/sass/partials/_layout.scss */
 #projectList .editButtons {
   margin: 0 -13px;
 }
 
-/* line 82, ../../client/styles/sass/partials/_layout.scss */
+/* line 114, ../../client/styles/sass/partials/_layout.scss */
 #mainContent {
   width: 77%;
   float: left;
@@ -226,28 +258,28 @@ button {
   left: 20%;
   margin-bottom: 65px;
 }
-/* line 88, ../../client/styles/sass/partials/_layout.scss */
+/* line 120, ../../client/styles/sass/partials/_layout.scss */
 #mainContent h2 {
   position: relative;
   left: 45px;
 }
-/* line 92, ../../client/styles/sass/partials/_layout.scss */
+/* line 124, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .row {
   border-bottom: 1px solid #222222;
   padding: 2px;
 }
-/* line 96, ../../client/styles/sass/partials/_layout.scss */
+/* line 128, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .title {
   position: relative;
   top: 5px;
 }
-/* line 100, ../../client/styles/sass/partials/_layout.scss */
+/* line 132, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .listPlayer {
   position: relative;
   left: 10px;
 }
 
-/* line 109, ../../client/styles/sass/partials/_layout.scss */
+/* line 141, ../../client/styles/sass/partials/_layout.scss */
 #info {
   position: relative;
   overflow: hidden;
@@ -255,37 +287,38 @@ button {
   margin-bottom: 30px;
   padding-bottom: 10px;
 }
-/* line 119, ../../client/styles/sass/partials/_layout.scss */
+/* line 151, ../../client/styles/sass/partials/_layout.scss */
 #info .about {
-  width: 50%;
+  width: 30%;
   height: 100px;
   overflow: scroll;
   position: absolute;
   top: 41px;
-  left: 20%;
+  left: 30%;
 }
-/* line 127, ../../client/styles/sass/partials/_layout.scss */
+/* line 159, ../../client/styles/sass/partials/_layout.scss */
 #info .details {
   padding: 10px;
+  margin-left: 20px;
 }
-/* line 130, ../../client/styles/sass/partials/_layout.scss */
+/* line 163, ../../client/styles/sass/partials/_layout.scss */
 #info .details li {
   padding: 3px 0;
 }
 
 /**/
-/* line 134, ../../client/styles/sass/partials/_layout.scss */
+/* line 167, ../../client/styles/sass/partials/_layout.scss */
 .projectInfoCrop {
   float: right;
 }
 
-/* line 137, ../../client/styles/sass/partials/_layout.scss */
+/* line 170, ../../client/styles/sass/partials/_layout.scss */
 #songList {
   float: left;
   width: 70%;
 }
 
-/* line 141, ../../client/styles/sass/partials/_layout.scss */
+/* line 174, ../../client/styles/sass/partials/_layout.scss */
 #songInfo {
   position: relative;
   float: right;
@@ -294,19 +327,7 @@ button {
   overflow: hidden;
 }
 
-/* line 148, ../../client/styles/sass/partials/_layout.scss */
-#homeList {
-  width: 100%;
-  position: relative;
-  top: -23px;
-}
-
-/* line 155, ../../client/styles/sass/partials/_layout.scss */
-#homeList ul {
-  margin: 0 auto;
-}
-
-/* line 159, ../../client/styles/sass/partials/_layout.scss */
+/* line 183, ../../client/styles/sass/partials/_layout.scss */
 #musicPlayer {
   width: 100%;
   height: 65px;
@@ -315,7 +336,7 @@ button {
   left: 0;
 }
 
-/* line 166, ../../client/styles/sass/partials/_layout.scss */
+/* line 190, ../../client/styles/sass/partials/_layout.scss */
 #playerControls {
   position: relative;
   left: 40px;
@@ -323,7 +344,7 @@ button {
   top: 10px;
 }
 
-/* line 173, ../../client/styles/sass/partials/_layout.scss */
+/* line 197, ../../client/styles/sass/partials/_layout.scss */
 #footer {
   position: absolute;
   bottom: 0;
@@ -333,56 +354,60 @@ button {
   background-color: red;
 }
 
-/* line 181, ../../client/styles/sass/partials/_layout.scss */
+/* line 205, ../../client/styles/sass/partials/_layout.scss */
 #userImg {
   margin: 0 auto;
 }
 
-/* line 187, ../../client/styles/sass/partials/_layout.scss */
+/* line 211, ../../client/styles/sass/partials/_layout.scss */
+#modal {
+  position: relative;
+  top: 10px;
+}
+
+/* line 215, ../../client/styles/sass/partials/_layout.scss */
 .modalWindow {
   padding: 10px;
   box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
-  position: relative;
-  top: 10px;
   border-radius: 5px;
   z-index: 10;
-  width: 100%;
+  width: 60%;
 }
 
-/* line 198, ../../client/styles/sass/partials/_layout.scss */
+/* line 225, ../../client/styles/sass/partials/_layout.scss */
 .homeItem {
   margin: 1em;
   width: 20em;
   height: auto;
   padding: 0;
 }
-/* line 203, ../../client/styles/sass/partials/_layout.scss */
+/* line 230, ../../client/styles/sass/partials/_layout.scss */
 .homeItem img {
   width: 100%;
   margin: 0 auto;
   padding-top: 1em;
   overflow: hidden;
 }
-/* line 209, ../../client/styles/sass/partials/_layout.scss */
+/* line 236, ../../client/styles/sass/partials/_layout.scss */
 .homeItem h3 {
   padding-left: 15px;
 }
 
-/* line 213, ../../client/styles/sass/partials/_layout.scss */
+/* line 240, ../../client/styles/sass/partials/_layout.scss */
 .userList {
   position: absolute;
   right: 1em;
   top: 1em;
 }
 
-/* line 219, ../../client/styles/sass/partials/_layout.scss */
+/* line 246, ../../client/styles/sass/partials/_layout.scss */
 .imgCrop {
   width: 100px;
   height: 100px;
   overflow: hidden;
 }
 
-/* line 227, ../../client/styles/sass/partials/_layout.scss */
+/* line 254, ../../client/styles/sass/partials/_layout.scss */
 .logoContainer {
   width: 30em;
   height: 150px;
@@ -390,12 +415,12 @@ button {
   margin-top: -18px;
 }
 
-/* line 234, ../../client/styles/sass/partials/_layout.scss */
+/* line 261, ../../client/styles/sass/partials/_layout.scss */
 .logo {
   position: relative;
 }
 
-/* line 237, ../../client/styles/sass/partials/_layout.scss */
+/* line 264, ../../client/styles/sass/partials/_layout.scss */
 .slogan {
   position: relative;
   top: 37px;
@@ -403,35 +428,48 @@ button {
   width: 100%;
 }
 
-/* line 247, ../../client/styles/sass/partials/_layout.scss */
+/* line 274, ../../client/styles/sass/partials/_layout.scss */
 .navbar-default .navbar-collapse {
   border: none;
   position: relative;
 }
 
-/* line 251, ../../client/styles/sass/partials/_layout.scss */
+/* line 278, ../../client/styles/sass/partials/_layout.scss */
 .navbar-collapse {
   padding-right: -10px;
 }
 
-/* line 254, ../../client/styles/sass/partials/_layout.scss */
+/* line 281, ../../client/styles/sass/partials/_layout.scss */
 .navbar-default {
   height: 130px;
 }
 
-/* line 257, ../../client/styles/sass/partials/_layout.scss */
+/* line 284, ../../client/styles/sass/partials/_layout.scss */
 .navbar-toggle {
   top: -125px;
   margin-right: 5px;
 }
 
-/* line 261, ../../client/styles/sass/partials/_layout.scss */
+/* line 288, ../../client/styles/sass/partials/_layout.scss */
 .btn {
   margin-bottom: 7px;
 }
 
+@media (max-width: 822px) {
+  /* line 294, ../../client/styles/sass/partials/_layout.scss */
+  .hidden-pad {
+    display: none !important;
+  }
+
+  /* line 297, ../../client/styles/sass/partials/_layout.scss */
+  #info .moveRight-pad {
+    top: 61px;
+    left: 0%;
+    width: 50%;
+  }
+}
 @media (min-width: 768px) {
-  /* line 268, ../../client/styles/sass/partials/_layout.scss */
+  /* line 304, ../../client/styles/sass/partials/_layout.scss */
   header + ul {
     position: relative;
     top: -140px;
@@ -439,23 +477,23 @@ button {
   }
 }
 @media (max-width: 320px) {
-  /* line 276, ../../client/styles/sass/partials/_layout.scss */
+  /* line 312, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 279, ../../client/styles/sass/partials/_layout.scss */
+  /* line 315, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 283, ../../client/styles/sass/partials/_layout.scss */
+  /* line 319, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 10px;
   }
 
-  /* line 288, ../../client/styles/sass/partials/_layout.scss */
+  /* line 324, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -465,33 +503,33 @@ button {
     font-size: 0.8em;
   }
 
-  /* line 292, ../../client/styles/sass/partials/_layout.scss */
+  /* line 328, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 296, ../../client/styles/sass/partials/_layout.scss */
+  /* line 332, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 299, ../../client/styles/sass/partials/_layout.scss */
+  /* line 335, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 303, ../../client/styles/sass/partials/_layout.scss */
+  /* line 339, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
 }
 @media (max-width: 474px) {
-  /* line 310, ../../client/styles/sass/partials/_layout.scss */
+  /* line 346, ../../client/styles/sass/partials/_layout.scss */
   .hidden-smartPhone {
     display: none !important;
   }
 
-  /* line 313, ../../client/styles/sass/partials/_layout.scss */
+  /* line 349, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.moveLeft-smartPhone, #description.moveLeft {
     left: 1%;
   }
@@ -506,89 +544,84 @@ p {
   color: #999999;
 }
 
-/* line 11, ../../client/styles/sass/partials/_color.scss */
-label {
-  font-weight: normal;
-}
-
-/* line 15, ../../client/styles/sass/partials/_color.scss */
+/* line 13, ../../client/styles/sass/partials/_color.scss */
 header .slogan {
   color: #333333;
 }
 
-/* line 19, ../../client/styles/sass/partials/_color.scss */
+/* line 17, ../../client/styles/sass/partials/_color.scss */
 i {
   color: white;
 }
 
-/* line 22, ../../client/styles/sass/partials/_color.scss */
+/* line 20, ../../client/styles/sass/partials/_color.scss */
 i:hover {
   color: #337ab7;
 }
 
-/* line 25, ../../client/styles/sass/partials/_color.scss */
+/* line 23, ../../client/styles/sass/partials/_color.scss */
 i:active {
   color: #337ab7;
 }
 
-/* line 28, ../../client/styles/sass/partials/_color.scss */
+/* line 26, ../../client/styles/sass/partials/_color.scss */
 a {
   color: #999999;
 }
 
-/* line 31, ../../client/styles/sass/partials/_color.scss */
+/* line 29, ../../client/styles/sass/partials/_color.scss */
 #august9 {
   background-color: #252929;
 }
 
-/* line 39, ../../client/styles/sass/partials/_color.scss */
+/* line 37, ../../client/styles/sass/partials/_color.scss */
 #projectList {
   background-color: #222222;
 }
 
-/* line 45, ../../client/styles/sass/partials/_color.scss */
+/* line 43, ../../client/styles/sass/partials/_color.scss */
 #info .details, #songInfo .details {
   color: #999999;
 }
 
-/* line 48, ../../client/styles/sass/partials/_color.scss */
+/* line 46, ../../client/styles/sass/partials/_color.scss */
 #musicPlayer {
   background-color: #222222;
   border-top: 1px solid #252929;
 }
 
-/* line 52, ../../client/styles/sass/partials/_color.scss */
+/* line 50, ../../client/styles/sass/partials/_color.scss */
 #playCircle:hover {
   border: 2px solid #337ab7;
 }
 
-/* line 55, ../../client/styles/sass/partials/_color.scss */
+/* line 53, ../../client/styles/sass/partials/_color.scss */
 #playCircle:active {
   border: 3px solid #337ab7;
 }
 
-/* line 59, ../../client/styles/sass/partials/_color.scss */
+/* line 57, ../../client/styles/sass/partials/_color.scss */
 .listPlayer {
   color: white;
 }
 
-/* line 62, ../../client/styles/sass/partials/_color.scss */
+/* line 60, ../../client/styles/sass/partials/_color.scss */
 .listPlayer:hover {
   color: #337ab7;
 }
 
-/* line 65, ../../client/styles/sass/partials/_color.scss */
+/* line 63, ../../client/styles/sass/partials/_color.scss */
 .listPlayer:active {
   color: #337ab7;
 }
 
-/* line 70, ../../client/styles/sass/partials/_color.scss */
+/* line 68, ../../client/styles/sass/partials/_color.scss */
 .modalWindow {
   background-color: #f8f8f8;
   color: #222222;
 }
 
-/* line 77, ../../client/styles/sass/partials/_color.scss */
+/* line 75, ../../client/styles/sass/partials/_color.scss */
 .logo {
   color: #337a17;
 }

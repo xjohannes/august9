@@ -97,8 +97,6 @@ cloudinary = require('cloudinary');
 		},
 		post: function(req, res) {
 			console.log("POST::::::::::::::");
-			/*console.log(req.uploads);
-			console.log(req.fields);*/
 			
 			if(req.body.id) {
 				Project.put(req, res);
@@ -108,37 +106,7 @@ cloudinary = require('cloudinary');
 				if(req.body.transloadit) {
 					console.log("Server: Project: Post: transloadit");
 					// Start downloading form transloadit
-					var transloadit = JSON.parse(req.body.transloadit), thumb, dest = './public/media/images/', stream, stream2;
-
-					http.get(transloadit.results.resize_to_125[0].url, function(response) {
-						//Cloudinary setup
-					  stream = cloudinary.uploader.upload_stream(function(result) {
-					  	var projectName = config.capitalize(req.body.projectname);
-						  query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows) {
-						  	if(errProId) {
-						  		console.log('Error Getting project id');
-						  		console.log(errProId);
-						  		res.send('Error Getting project id ' + errProId);
-						  	} else {
-						  		console.log("Getting id from project OK. Id: " + rows[0].id);
-						  		Project.updateDB(rows[0].id, 'project', ['imglarge', 'imgalt'], ["'" + result.url +"'", "'" + req.body.about + "'"], function(errImgLarge, rows2) {
-						  			if(errImgLarge) {
-						  				console.log('Error updating db with large img ');
-						  				console.log(errImgLarge);
-						  				res.send('Error updating db with large img ' + errImgLarge);
-						  			} else {
-						  				console.log("Upload of large image to Cloudinary OK");
-						  				//res.status(201);
-						  			}
-						  		});
-						  	}
-						  });
-					  	/*res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
-             		cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fill" }));*/
-					  }, { public_id: req.body.title } );
-						response.pipe(stream);
-					});
-					//thumb = fs.createWriteStream(dest + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext);
+					var transloadit = JSON.parse(req.body.transloadit), thumb, stream, stream2;
 					http.get(transloadit.results.resize_to_75[0].url, function(response2) {
 						stream2 = cloudinary.uploader.upload_stream(function(result) {
 					    //console.log(result);
@@ -166,6 +134,36 @@ cloudinary = require('cloudinary');
 						response2.pipe(stream2);
 						//thumb.end();
 					});
+					http.get(transloadit.results.resize_to_125[0].url, function(response) {
+						//Cloudinary setup
+					  stream = cloudinary.uploader.upload_stream(function(result) {
+					  	var projectName = config.capitalize(req.body.projectname);
+						  query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows) {
+						  	if(errProId) {
+						  		console.log('Error Getting project id');
+						  		console.log(errProId);
+						  		res.send('Error Getting project id ' + errProId);
+						  	} else {
+						  		console.log("Getting id from project OK. Id: " + rows[0].id);
+						  		Project.updateDB(rows[0].id, 'project', ['imglarge', 'imgalt'], ["'" + result.url +"'", "'" + req.body.about + "'"], function(errImgLarge, rows2) {
+						  			if(errImgLarge) {
+						  				console.log('Error updating db with large img ');
+						  				console.log(errImgLarge);
+						  				res.send('Error updating db with large img ' + errImgLarge);
+						  			} else {
+						  				console.log("Upload of large image to Cloudinary OK");
+						  				res.status(201);
+						  			}
+						  		});
+						  	}
+						  });
+					  	/*res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
+             		cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fill" }));*/
+					  }, { public_id: req.body.title } );
+						response.pipe(stream);
+					});
+					//thumb = fs.createWriteStream(dest + "thumb_" + transloadit.results.resize_to_75[0].id + "." + transloadit.results.resize_to_75[0].ext);
+					
 					// end downloading from transloadit and uploading to cloudinary
 					
 					console.log("DONE CREATING FILE " + transloadit.results.resize_to_75[0].id);
@@ -249,18 +247,59 @@ cloudinary = require('cloudinary');
 			var propertyNames,
 				newValues,
 				resultObj= {};
-
+				console.log('req.body.transloadit.results');
+				console.log(req.body.transloadit.results);
 			// Update project table
-			if(req.files.file) {
-				propertyNames = ['projectname', 'email', 'about', 'imglarge', 'imgalt'];
+			if(req.body.transloadit.results) {
+				var transloadit = JSON.parse(req.body.transloadit), thumb, stream, stream2;
+				http.get(transloadit.results.resize_to_125[0].url, function(response) {
+					//Cloudinary update thumb
+				  stream = cloudinary.uploader.upload_stream(function(result) {
+				  	var projectName = config.capitalize(req.body.projectname);
+					  Project.updateDB(req.body.id, 'project', ['imgthumb'], ["'" + result.url +"'"], function(errImgLarge, rows2) {
+			  			if(errImgLarge) {
+			  				console.log('Error updating db with large img ');
+			  				console.log(errImgLarge);
+			  				res.send('Error updating db with large img ' + errImgLarge);
+			  			} else {
+			  				console.log("Upload of large image to Cloudinary OK");
+			  				//res.status(201);
+			  			}
+					  });
+				  	/*res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
+           		cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fill" }));*/
+				  }, { public_id: req.body.title } );
+					response.pipe(stream);
+				});
+				http.get(transloadit.results.resize_to_125[0].url, function(response) {
+					//Cloudinary update large img
+				  stream = cloudinary.uploader.upload_stream(function(result) {
+				  	var projectName = config.capitalize(req.body.projectname);
+					  Project.updateDB(req.body.id, 'project', ['imglarge', 'imgalt'], ["'" + result.url +"'", "'" + req.body.about + "'"], function(errImgLarge, rows2) {
+			  			if(errImgLarge) {
+			  				console.log('Error updating db with large img ');
+			  				console.log(errImgLarge);
+			  				res.send('Error updating db with large img ' + errImgLarge);
+			  			} else {
+			  				console.log("Upload of large image to Cloudinary OK");
+			  				res.status(201);
+			  			}
+					  });
+				  	/*res.send('Done:<br/> <img src="' + result.url + '"/><br/>' +
+           		cloudinary.image(result.public_id, { format: "png", width: 100, height: 130, crop: "fill" }));*/
+				  }, { public_id: req.body.title } );
+					response.pipe(stream);
+				});
+				
+				/*propertyNames = ['projectname', 'email', 'about', 'imglarge', 'imgalt'];
 				newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
 											, "'" + req.body.about + "'" , "'" + req.files.file.name + "'" 
-											, "'" + req.body.imgalt + "'"];
-			} else {
-				propertyNames = ['projectname', 'email', 'about',  'imgalt'];
-				newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
-											, "'" + req.body.about + "'" , "'" + req.body.imgalt + "'"];
+											, "'" + req.body.imgalt + "'"];*/
 			}
+			propertyNames = ['projectname', 'email', 'about',  'imgalt'];
+			newValues = ["'" + req.body.projectname + "'", "'" + req.body.email + "'"
+										, "'" + req.body.about + "'" , "'" + req.body.imgalt + "'"];
+			
 			
 			Project.updateDB(req.body.id, "project" , propertyNames, newValues, function(err, rows) {
 				if(err) {
@@ -307,13 +346,16 @@ cloudinary = require('cloudinary');
 							} else {
 								console.log("rows");
 								console.log(rows[0]);
-								try {
+								Project.deleteFromCloudinary(rows[0]['imglarge']);
+								Project.deleteFromCloudinary(rows[0]['imgthumb']);
+
+								/*try {
 									fs.unlinkSync(dest + rows[0]['imglarge']);
 									fs.unlinkSync(dest + rows[0]['imgthumb']);
 								} catch (e) {
 									console.log("Could not delete image of projct: " + id);
 									console.log(e);
-								}
+								}*/
 							}
 						});
 			
@@ -348,6 +390,12 @@ cloudinary = require('cloudinary');
 				}
 			});
 			
+		},
+		deleteFromCloudinary: function(imgUrl) {
+			var index = imgUrl.lastIndexOf("/") + 1,
+					filename = imgUrl.slice(index).replace(/\.[^/.]+$/, "");
+					console.log(filename);
+					cloudinary.uploader.destroy(filename, function(result) { console.log('cloudinary result:'); console.log(result) });
 		},
 		// config methods:
 		configProjectId: function(table) {

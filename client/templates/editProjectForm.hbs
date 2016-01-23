@@ -5,7 +5,7 @@
     <!--<% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
     <% } %>-->
-	<form id =  "projectForm"
+	<form id ="projectForm"
 	     enctype   =  "multipart/form-data"
 	     action    =  "/project/edit/{{id}}"
 	     method    =  "post">
@@ -38,8 +38,42 @@
 				<label for="file">Project image:</label>
 				<input class="form-control btn btn-default btn-file" type="file" name="file" /><br>
 		</div>
+		<div class="form-group col-xs-12 col-sm-5">   	
+			<label for="imgalt">Image description:</label>
+			<input class="form-control" type="text" name="imgalt" value="{{ imgalt }}" /><br>
+		</div>
 		<div class="form-group col-xs-12 col-sm-5">                  
 				<input class="btn btn-warning " type="submit" value="Edit project" name="submit">
 		</div>
 	</form>
 </div>
+<script type="text/javascript">
+$(function() {
+	console.log("initiating transloadit EDIT");
+  $('#projectForm').transloadit({
+    wait: true,
+    triggerUploadOnFileSelection: true,
+    params: {
+      auth: { key: "63fac0a0b2c411e5b32187c4376b74f6" },
+      steps: {
+        resize_to_125: {
+          robot: "/image/resize",
+          use: ":original",
+          width: 225,
+          height: 225,
+          result: true
+        },
+        resize_to_75: {
+          robot: "/image/resize",
+          use: "resize_to_125",
+          width: 75,
+          height: 75
+          //,sepia: 80
+        }
+      }
+      //,notify_url: "https://august9.herokuapp.com/projectTest/"
+      //,template_id: "b68e53b051a611e59211375ae6c9147c"
+    }
+  });
+});
+</script>

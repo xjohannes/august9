@@ -271,8 +271,7 @@ module.exports = Backbone.Model.extend({
 		if(!this.attributes.serverkey) {
 			this.fetch({
 				success: function(songModel) {
-					url = './media/music/' + self.attributes.projectid + '/' +
-		          self.attributes.serverkey;
+					url = self.attributes.serverkey;
 					self.audioObj = new Audio(url);
 					self.audioObj.play();
 					self.trigger('playing', self.audioObj);
@@ -283,8 +282,7 @@ module.exports = Backbone.Model.extend({
 				}
 			});
 		} else {
-			url = './media/music/' + this.attributes.projectid + '/' +
-		          this.attributes.serverkey;
+			url = this.attributes.serverkey;
 			this.audioObj = new Audio(url);
 			this.audioObj.play();
 			this.trigger('playing', this.audioObj);
@@ -432,6 +430,8 @@ module.exports = function() {
 	};
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
+		console.log("RoutesController: updateProject: projectitem:");
+		console.log(projectItem);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#modal').html(projectForm.render().el);
 	};
@@ -1421,7 +1421,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.projectname) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectname); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =  \"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/edit/";
+    + "</h1>\n\n    <!-- show any messages that come back with authentication -->\n    <!--<% if (message.length > 0) { %>\n        <div class=\"alert alert-danger\"><%= message %></div>\n    <% } %>-->\n	<form id =\"projectForm\"\n	     enctype   =  \"multipart/form-data\"\n	     action    =  \"/project/edit/";
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1453,7 +1453,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n				<label for=\"file\">Project image:</label>\n				<input class=\"form-control btn btn-default btn-file\" type=\"file\" name=\"file\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\"btn btn-warning \" type=\"submit\" value=\"Edit project\" name=\"submit\">\n		</div>\n	</form>\n</div>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n				<label for=\"file\">Project image:</label>\n				<input class=\"form-control btn btn-default btn-file\" type=\"file\" name=\"file\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">   	\n			<label for=\"imgalt\">Image description:</label>\n			<input class=\"form-control\" type=\"text\" name=\"imgalt\" value=\"";
+  if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\"btn btn-warning \" type=\"submit\" value=\"Edit project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"initiating transloadit EDIT\");\n  $('#projectForm').transloadit({\n    wait: true,\n    triggerUploadOnFileSelection: true,\n    params: {\n      auth: { key: \"63fac0a0b2c411e5b32187c4376b74f6\" },\n      steps: {\n        resize_to_125: {\n          robot: \"/image/resize\",\n          use: \":original\",\n          width: 225,\n          height: 225,\n          result: true\n        },\n        resize_to_75: {\n          robot: \"/image/resize\",\n          use: \"resize_to_125\",\n          width: 75,\n          height: 75\n          //,sepia: 80\n        }\n      }\n      //,notify_url: \"https://august9.herokuapp.com/projectTest/\"\n      //,template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
   return buffer;
   });
 
@@ -1660,7 +1664,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.imgalt) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.imgalt); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"initiating transloadit\");\n  $('#projectForm').transloadit({\n    wait: true,\n    triggerUploadOnFileSelection: true,\n    params: {\n      auth: { key: \"63fac0a0b2c411e5b32187c4376b74f6\" },\n      steps: {\n        resize_to_125: {\n          robot: \"/image/resize\",\n          use: \":original\",\n          width: 225,\n          height: 225,\n          result: true\n        },\n        resize_to_75: {\n          robot: \"/image/resize\",\n          use: \"resize_to_125\",\n          width: 75,\n          height: 75\n          //,sepia: 80\n        }\n      }\n      //,notify_url: \"https://august9.herokuapp.com/projectTest/\"\n      //,template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
+    + "\" /><br>\n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">                  \n				<input class=\" btn btn-warning \" type=\"submit\" value=\"Create project\" name=\"submit\">\n		</div>\n	</form>\n</div>\n\n<script type=\"text/javascript\">\n$(function() {\n	console.log(\"initiating transloadit CREATE\");\n  $('#projectForm').transloadit({\n    wait: true,\n    triggerUploadOnFileSelection: true,\n    params: {\n      auth: { key: \"63fac0a0b2c411e5b32187c4376b74f6\" },\n      steps: {\n        resize_to_125: {\n          robot: \"/image/resize\",\n          use: \":original\",\n          width: 225,\n          height: 225,\n          result: true\n        },\n        resize_to_75: {\n          robot: \"/image/resize\",\n          use: \"resize_to_125\",\n          width: 75,\n          height: 75\n          //,sepia: 80\n        }\n      }\n      //,notify_url: \"https://august9.herokuapp.com/projectTest/\"\n      //,template_id: \"b68e53b051a611e59211375ae6c9147c\"\n    }\n  });\n});\n</script>";
   return buffer;
   });
 

@@ -40,8 +40,7 @@ module.exports = Backbone.Model.extend({
 		if(!this.attributes.serverkey) {
 			this.fetch({
 				success: function(songModel) {
-					url = './media/music/' + self.attributes.projectid + '/' +
-		          self.attributes.serverkey;
+					url = self.attributes.serverkey;
 					self.audioObj = new Audio(url);
 					self.audioObj.play();
 					self.trigger('playing', self.audioObj);
@@ -52,8 +51,7 @@ module.exports = Backbone.Model.extend({
 				}
 			});
 		} else {
-			url = './media/music/' + this.attributes.projectid + '/' +
-		          this.attributes.serverkey;
+			url = this.attributes.serverkey;
 			this.audioObj = new Audio(url);
 			this.audioObj.play();
 			this.trigger('playing', this.audioObj);

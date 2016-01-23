@@ -102,6 +102,8 @@ module.exports = function() {
 	};
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
+		console.log("RoutesController: updateProject: projectitem:");
+		console.log(projectItem);
 		var projectForm = new ProjectEditForm({model: projectItem});
 		$('#modal').html(projectForm.render().el);
 	};

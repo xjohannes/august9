@@ -6,7 +6,8 @@ query      = require('pg-query'),
 escape     = require('pg-escape'),
 config     = require('../../app/config'),
 jwt        = require('jsonwebtoken'),
-bcrypt     = require('bcryptjs');
+bcrypt     = require('bcryptjs'),
+cloudinary = require('cloudinary');
 
 		//configuration
 		query.connectionParameters = process.env.DATABASE_URL;
@@ -21,15 +22,6 @@ bcrypt     = require('bcryptjs');
 				// is param a number or a string?
 				if(+param === +param) {
 					//getting all info from project table
-					/*
-					var sql2 = escape("SELECT * from Song, songcomment," 
-						+ "songinfluence, songparticipation "
-						+ "WHERE song.id = songcomment.songid "
-						+ "AND song.id = songinfluence.songid " 
-						+ "AND song.id = songparticipation.songid " 
-						+ "  AND song.id =" + req.params.id + "");
-
-*/
 					console.log("req.params.id");
 					console.log(req.params.id);
 					var sql2 = escape("SELECT * FROM song s "
@@ -92,41 +84,13 @@ bcrypt     = require('bcryptjs');
 					res.status(404).json("Could not find a project with id: " + param);
 				}
 		},
-		post : [ multer({ 
-			//multer configuration:
-				dest: './public/media/music/',
-				
-				changeDest: function(dest, req, response) {
-				  var projectPath = dest + req.body.projectid,
-				  stat = null;
-				  console.log("project path: " + projectPath);
-				  try {
-				      stat = fs.statSync(projectPath);
-				  } catch(err) {
-				      mkdirp(projectPath, function (err) {
-			    			if (err) { console.error(err); }
-			    			else { console.log('pow!'); }
-							});
-				  }
-				  if (stat && !stat.isDirectory()) {
-				      // Woh! This file/link/etc already exists, so isn't a directory. Can't save in it. Handle appropriately.
-				      throw new Error('Directory cannot be created because an inode of a different type exists at "'
-				       + dest + '"');
-				  }
-				  return projectPath;
-				}
-			}), 
-
-			function(req, res){
-					console.log("DEBUG: SAVING SONG");
-					
-			    if(req.files.file !== undefined) {
-			    	var escapedQuery = escape("INSERT INTO song(title, projectid, "
+		postToDb: function(req, res) {
+			var escapedQuery = escape("INSERT INTO song(title, projectid, "
 	    			+ "hasProductionStatus, added, serverKey) "
 						+ "VALUES(%L," 
 							+ req.params.projectid + ",'"
 							+ (req.body.productionstatus).toLowerCase() +"', NOW(), '"
-							+ req.files.file.name +"');", config.capitalize(req.files.file.originalname)),
+							+ req.result.url +"');", config.capitalize(req.files.file.originalname)),
 	    			resultObj = {};
 	    			
 	    			query(escapedQuery, 
@@ -138,7 +102,7 @@ bcrypt     = require('bcryptjs');
 								res.end("Error " + err2);
 	    				}else {
 	    					// table, valuesArray, callback	    					
-	    					query("SELECT * FROM Song WHERE serverKey ='" + req.files.file.name 
+	    					query("SELECT * FROM Song WHERE serverKey ='" + req.result.url
 	    						+ "'", function(err3, rows3, result3) {
 	  							if(err3) {
 	  								console.error("err3 message:");
@@ -169,7 +133,7 @@ bcrypt     = require('bcryptjs');
 				  											console.error("err message:");
 							  								console.error(err);
 							  								console.log("\n");
-																res.end("Error " + err);
+																res.end("Error 4 " + err);
 				  										} else if(req.body.participator !== "") {
 				  											console.log("inserted participator " + req.body.participator + " successfully")
 				  											resultObj.participator = req.body.participator;
@@ -194,6 +158,29 @@ bcrypt     = require('bcryptjs');
 								});
     					}	
 						});
+		},
+		post : [ multer({ 
+			//multer configuration:
+				dest: './public/media/music/'
+			}), 
+
+			function(req, res){
+					console.log("DEBUG: SAVING SONG");
+					console.log(req.body);
+			    if(req.files.file !== undefined) {
+			    	var cloudinaryStream, readStream = fs.createReadStream('./public/media/music/' + req.files.file.name);
+			    	cloudinaryStream = cloudinary.uploader.upload_stream(function(result) {
+					    console.log('cloudinary result url');
+					    console.log(result.url);
+					    req['result']= result;
+					    Song.postToDb(req, res);
+					    // Delete from heroku after upload to cloudinary
+					    var songUrl = './public/media/music/' + req.files.file.name;
+															fs.unlinkSync(songUrl);
+															console.log('Deleted song ' + req.params.id 
+																+ " from song, songinfluence and songparticipation tables");
+					  	}, {  resource_type: 'raw' } );
+			    	readStream.pipe(cloudinaryStream);
 			    } else {
 			    	res.status(400).json("No file attached. Remember to add a file.");
 			    }
@@ -289,10 +276,10 @@ bcrypt     = require('bcryptjs');
 															console.log(err);
 															res.send(err);
 														} else {
-
+															Song.deleteFromCloudinary(serverkey);
 															res.status(200).json('Successfully deleted song ' + req.body.title);
-															var songUrl = './public/media/music/' + projectid + '/' + serverkey;
-															fs.unlinkSync(songUrl);
+															/*var songUrl = './public/media/music/' + projectid + '/' + serverkey;
+															fs.unlinkSync(songUrl);*/
 															console.log('Deleted song ' + req.params.id 
 																+ " from song, songinfluence and songparticipation tables");
 															
@@ -312,6 +299,13 @@ bcrypt     = require('bcryptjs');
 					
 				}
 			});
+		},
+		deleteFromCloudinary: function(imgUrl) {
+			var index = imgUrl.lastIndexOf("/") + 1,
+					filename = imgUrl.slice(index).replace(/\.[^/.]+$/, "");
+					console.log('filename');
+					console.log(filename);
+					cloudinary.uploader.destroy(filename, function(result) { console.log('cloudinary result:'); console.log(result) });
 		},
 		// config methods:
 		selectFromDB: function(id, table, callback) {

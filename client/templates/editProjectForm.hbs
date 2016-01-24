@@ -51,8 +51,8 @@
 $(function() {
 	console.log("initiating transloadit EDIT");
   $('#projectForm').transloadit({
-    wait: true,
-    triggerUploadOnFileSelection: true,
+    wait: false,
+    triggerUploadOnFileSelection: false,
     params: {
       auth: { key: "63fac0a0b2c411e5b32187c4376b74f6" },
       steps: {
@@ -66,8 +66,8 @@ $(function() {
         resize_to_75: {
           robot: "/image/resize",
           use: "resize_to_125",
-          width: 75,
-          height: 75
+          width: 100,
+          height: 100
           //,sepia: 80
         }
       }

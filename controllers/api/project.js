@@ -104,13 +104,18 @@ cloudinary = require('cloudinary');
 				console.log("DEBUG: POST PROJECT");		
 				//Inserting in project
 				if(req.body.transloadit) {
+					var projectName;
 					console.log("Server: Project: Post: transloadit");
 					// Start downloading form transloadit
 					var transloadit = JSON.parse(req.body.transloadit), thumb, stream, stream2;
+					console.log(transloadit.results);
+					if(transloadit.results === undefined) {
+						transloadit.results.url = "http://res.cloudinary.com/hpk8jms0s/image/upload/v1453493522/tre_wmn788"
+					}
 					http.get(transloadit.results.resize_to_75[0].url, function(response2) {
 						stream2 = cloudinary.uploader.upload_stream(function(result) {
 					    //console.log(result);
-					    
+					    projectName = config.capitalize(req.body.projectname);
 					    query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows3) {
 					  	if(errProId) {
 					  		console.log('Error Getting project id thumb');
@@ -137,7 +142,7 @@ cloudinary = require('cloudinary');
 					http.get(transloadit.results.resize_to_125[0].url, function(response) {
 						//Cloudinary setup
 					  stream = cloudinary.uploader.upload_stream(function(result) {
-					  	var projectName = config.capitalize(req.body.projectname);
+					  	projectName = config.capitalize(req.body.projectname);
 						  query("SELECT id from project where projectname ='" + projectName + "'", function(errProId, rows) {
 						  	if(errProId) {
 						  		console.log('Error Getting project id');

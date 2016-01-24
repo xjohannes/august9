@@ -229,8 +229,12 @@ module.exports = function() {
 	};
 	this.initialize = function(options) {
 		that.projectList = new ProjectCollection();
-		that.projectList.fetch();
-		that.queueCollection = new QueueCollection();
+		that.projectList.fetch({
+			success: function(projects) {
+				that.queueCollection.fetchProjectSongs(projects);
+			}
+		});
+		that.queueCollection = new QueueCollection({projectList: that.projectList});
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
 		that.playerController  = new PlayerCTRL();

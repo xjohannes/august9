@@ -48,15 +48,22 @@ module.exports = Backbone.Collection.extend({
 });
 },{"../models/projectModel":9,"Backbone":48}],3:[function(require,module,exports){
 var Backbone = require('Backbone'),
-		SongModel = require('../models/songModel');
+		SongModel = require('../models/songModel'),
+		_					= require('underscore');
 
 module.exports = Backbone.Collection.extend({
 	model: SongModel,
 	url: '/project/',
-	initialize: function() {
+	self: this,
+	initialize: function(options) {
+
+		this.options 			= options || {};
+		this.projectList 	= this.options.projectList;
+
+		//this.fetchProjectSongs();
 		// create placeholder queue from projects or most plays or 5 featured songs
 		//var songId = [121,123, 124, 125, 126], projectId = [106,107];
-		var songItem;
+		/*var songItem;
 		
 		songItem = new SongModel({id: 126});
 		songItem.set({projectId: 106});
@@ -75,8 +82,26 @@ module.exports = Backbone.Collection.extend({
 		this.add(songItem);
 
 		console.log("QueueCollection done initializing stack");
-		console.log(this.length);
+		console.log(this.length);*/
 		
+	},
+	fetchProjectSongs: function(projects) {
+		var self = this;
+		console.log("QueueCollection: fetchProjectSongs");
+		this.projectList.each(function(element, index, list) {
+			element.fetch({
+				success: function(project) {
+					console.log('project');
+					console.log(project);
+					var projectSongs = project.attributes.songs;
+					_.each(projectSongs, function(element, index, list) {
+						self.add(element);
+						console.log("QueueCollecton fetchProjectSongs " + self.length);
+					});
+				}
+			});
+		});
+
 	},
 	getQueueTop: function() {
 		return this.at(this.length-1);
@@ -92,7 +117,7 @@ module.exports = Backbone.Collection.extend({
 		return this.getQueueTop();
 	}
 });
-},{"../models/songModel":10,"Backbone":48}],4:[function(require,module,exports){
+},{"../models/songModel":10,"Backbone":48,"underscore":72}],4:[function(require,module,exports){
 var Backbone = require('Backbone'),
 		SongModel = require('../models/songModel');
 
@@ -557,8 +582,12 @@ module.exports = function() {
 	};
 	this.initialize = function(options) {
 		that.projectList = new ProjectCollection();
-		that.projectList.fetch();
-		that.queueCollection = new QueueCollection();
+		that.projectList.fetch({
+			success: function(projects) {
+				that.queueCollection.fetchProjectSongs(projects);
+			}
+		});
+		that.queueCollection = new QueueCollection({projectList: that.projectList});
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
 		that.playerController  = new PlayerCTRL();

@@ -35,24 +35,33 @@ button {
 #august9 {
 	min-height: 100%;
 	position: relative;
-	padding-left: 0px;
-	//float:left;
 	width: 100%;
+	padding: 0;
 	
 }
 
-#container-outer {
-	/* float:left;
-  width:100%;
-  overflow:hidden;
-  position:relative; */
-  
+#aboutAugust9 {
+	width: 100%;
+	position: relative;
+	display: none;
+
+	span {
+		clear: both;
+	}
+	header {
+		float: left;
+		width: 85%;
+	}
+	
+	.homeItem {
+		width: 100%;
+	}
 }
 #homeList {
 	//@include position(-23px);
 	width: 100%;
 	position: relative;
-	top: -23px;
+	top: 15px;
 	ul {
 		display: table;
 		margin: 0 auto;
@@ -60,24 +69,59 @@ button {
 	ul li{
 		display: inline-block;
 	}
-	header {
-
-	}
-	section {
-
-	}
+	
 	aside {
 		clear: both;
 	}
-	.projectInfo {
-		width: 50%;
-		height: 100px;
-		overflow-y: scroll;
-	}
-	.homeImgCrop {
+	
+	
+}
+.homeItem {
+	width: 400px;
+	height: auto;
+	padding: 0;
+	margin-right: 10px;
+	header {
 		float: left;
-		width: 50%;
+	}
+	h4 {
+		padding-left: 15px;
+	}
+	section {
+		width:100%;
+		background-color: $sidebar_background;
+	}
+	.imgCrop {
+		float: left;
+		width: 200px;
+		height: 200px;
+		overflow: hidden;
 	}	
+	img {
+		width: 200px;
+		min-height: 200px;
+	}
+	.projectInfo {
+		width: 200px;
+		height: 161px;
+		overflow-y: scroll;
+		border-bottom: 1px solid $base_background;
+
+		p {
+			padding: 10px;
+		}
+	}
+	label {
+		width: 100%;
+	}
+	aside {
+		height: 40px;
+		background-color: $sidebar_background;
+		.listPlayer {
+			height: 30px;
+			margin: 7px 0;
+		}
+	}
 }
 
  #projectList {
@@ -222,21 +266,7 @@ button {
 	width: 60%;
 
 }
-.homeItem {
-	margin: 1em;
-	width: 20em;
-	height: auto;
-	padding: 0;
-	img {
-		width: 100%;
-		margin: 0 auto;
-		padding-top: 1em;
-		overflow: hidden;
-	}
-	h3 {
-		padding-left: 15px;
-	}
-}
+
 .userList {
 	position: absolute;
 	right: 1em;

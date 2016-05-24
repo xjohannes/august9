@@ -174,50 +174,109 @@ button {
 #august9 {
   min-height: 100%;
   position: relative;
-  padding-left: 0px;
+  width: 100%;
+  padding: 0;
+}
+
+/* line 43, ../../client/styles/sass/partials/_layout.scss */
+#aboutAugust9 {
+  width: 100%;
+  position: relative;
+  display: none;
+}
+/* line 48, ../../client/styles/sass/partials/_layout.scss */
+#aboutAugust9 span {
+  clear: both;
+}
+/* line 51, ../../client/styles/sass/partials/_layout.scss */
+#aboutAugust9 header {
+  float: left;
+  width: 85%;
+}
+/* line 56, ../../client/styles/sass/partials/_layout.scss */
+#aboutAugust9 .homeItem {
   width: 100%;
 }
 
-/* line 44, ../../client/styles/sass/partials/_layout.scss */
-#container-outer {
-  	/* float:left;
-    width:100%;
-    overflow:hidden;
-    position:relative; */
-}
-
-/* line 51, ../../client/styles/sass/partials/_layout.scss */
+/* line 60, ../../client/styles/sass/partials/_layout.scss */
 #homeList {
   width: 100%;
   position: relative;
-  top: -23px;
+  top: 15px;
 }
-/* line 56, ../../client/styles/sass/partials/_layout.scss */
+/* line 65, ../../client/styles/sass/partials/_layout.scss */
 #homeList ul {
   display: table;
   margin: 0 auto;
 }
-/* line 60, ../../client/styles/sass/partials/_layout.scss */
+/* line 69, ../../client/styles/sass/partials/_layout.scss */
 #homeList ul li {
   display: inline-block;
 }
-/* line 69, ../../client/styles/sass/partials/_layout.scss */
+/* line 73, ../../client/styles/sass/partials/_layout.scss */
 #homeList aside {
   clear: both;
 }
-/* line 72, ../../client/styles/sass/partials/_layout.scss */
-#homeList .projectInfo {
-  width: 50%;
-  height: 100px;
-  overflow-y: scroll;
+
+/* line 79, ../../client/styles/sass/partials/_layout.scss */
+.homeItem {
+  width: 400px;
+  height: auto;
+  padding: 0;
+  margin-right: 10px;
 }
-/* line 77, ../../client/styles/sass/partials/_layout.scss */
-#homeList .homeImgCrop {
+/* line 84, ../../client/styles/sass/partials/_layout.scss */
+.homeItem header {
   float: left;
-  width: 50%;
+}
+/* line 87, ../../client/styles/sass/partials/_layout.scss */
+.homeItem h4 {
+  padding-left: 15px;
+}
+/* line 90, ../../client/styles/sass/partials/_layout.scss */
+.homeItem section {
+  width: 100%;
+  background-color: #222222;
+}
+/* line 94, ../../client/styles/sass/partials/_layout.scss */
+.homeItem .imgCrop {
+  float: left;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+/* line 100, ../../client/styles/sass/partials/_layout.scss */
+.homeItem img {
+  width: 200px;
+  min-height: 200px;
+}
+/* line 104, ../../client/styles/sass/partials/_layout.scss */
+.homeItem .projectInfo {
+  width: 200px;
+  height: 161px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #252929;
+}
+/* line 110, ../../client/styles/sass/partials/_layout.scss */
+.homeItem .projectInfo p {
+  padding: 10px;
+}
+/* line 114, ../../client/styles/sass/partials/_layout.scss */
+.homeItem label {
+  width: 100%;
+}
+/* line 117, ../../client/styles/sass/partials/_layout.scss */
+.homeItem aside {
+  height: 40px;
+  background-color: #222222;
+}
+/* line 120, ../../client/styles/sass/partials/_layout.scss */
+.homeItem aside .listPlayer {
+  height: 30px;
+  margin: 7px 0;
 }
 
-/* line 83, ../../client/styles/sass/partials/_layout.scss */
+/* line 127, ../../client/styles/sass/partials/_layout.scss */
 #projectList {
   overflow-y: scroll;
   float: left;
@@ -227,17 +286,17 @@ button {
   bottom: 65px;
   z-index: 50;
 }
-/* line 92, ../../client/styles/sass/partials/_layout.scss */
+/* line 136, ../../client/styles/sass/partials/_layout.scss */
 #projectList img {
   width: 50px;
   height: auto;
 }
-/* line 97, ../../client/styles/sass/partials/_layout.scss */
+/* line 141, ../../client/styles/sass/partials/_layout.scss */
 #projectList li {
   padding-top: 10px;
   border-bottom: 1px solid #252929;
 }
-/* line 102, ../../client/styles/sass/partials/_layout.scss */
+/* line 146, ../../client/styles/sass/partials/_layout.scss */
 #projectList .projectImgCrop {
   border-radius: 50%;
   width: 35px;
@@ -245,12 +304,12 @@ button {
   overflow: hidden;
   margin-bottom: 5px;
 }
-/* line 109, ../../client/styles/sass/partials/_layout.scss */
+/* line 153, ../../client/styles/sass/partials/_layout.scss */
 #projectList .editButtons {
   margin: 0 -13px;
 }
 
-/* line 114, ../../client/styles/sass/partials/_layout.scss */
+/* line 158, ../../client/styles/sass/partials/_layout.scss */
 #mainContent {
   width: 77%;
   float: left;
@@ -258,28 +317,28 @@ button {
   left: 20%;
   margin-bottom: 65px;
 }
-/* line 120, ../../client/styles/sass/partials/_layout.scss */
+/* line 164, ../../client/styles/sass/partials/_layout.scss */
 #mainContent h2 {
   position: relative;
   left: 45px;
 }
-/* line 124, ../../client/styles/sass/partials/_layout.scss */
+/* line 168, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .row {
   border-bottom: 1px solid #222222;
   padding: 2px;
 }
-/* line 128, ../../client/styles/sass/partials/_layout.scss */
+/* line 172, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .title {
   position: relative;
   top: 5px;
 }
-/* line 132, ../../client/styles/sass/partials/_layout.scss */
+/* line 176, ../../client/styles/sass/partials/_layout.scss */
 #mainContent .listPlayer {
   position: relative;
   left: 10px;
 }
 
-/* line 141, ../../client/styles/sass/partials/_layout.scss */
+/* line 185, ../../client/styles/sass/partials/_layout.scss */
 #info {
   position: relative;
   overflow: hidden;
@@ -287,7 +346,7 @@ button {
   margin-bottom: 30px;
   padding-bottom: 10px;
 }
-/* line 151, ../../client/styles/sass/partials/_layout.scss */
+/* line 195, ../../client/styles/sass/partials/_layout.scss */
 #info .about {
   width: 30%;
   height: 100px;
@@ -296,29 +355,29 @@ button {
   top: 41px;
   left: 30%;
 }
-/* line 159, ../../client/styles/sass/partials/_layout.scss */
+/* line 203, ../../client/styles/sass/partials/_layout.scss */
 #info .details {
   padding: 10px;
   margin-left: 20px;
 }
-/* line 163, ../../client/styles/sass/partials/_layout.scss */
+/* line 207, ../../client/styles/sass/partials/_layout.scss */
 #info .details li {
   padding: 3px 0;
 }
 
 /**/
-/* line 167, ../../client/styles/sass/partials/_layout.scss */
+/* line 211, ../../client/styles/sass/partials/_layout.scss */
 .projectInfoCrop {
   float: right;
 }
 
-/* line 170, ../../client/styles/sass/partials/_layout.scss */
+/* line 214, ../../client/styles/sass/partials/_layout.scss */
 #songList {
   float: left;
   width: 70%;
 }
 
-/* line 174, ../../client/styles/sass/partials/_layout.scss */
+/* line 218, ../../client/styles/sass/partials/_layout.scss */
 #songInfo {
   position: relative;
   float: right;
@@ -327,7 +386,7 @@ button {
   overflow: hidden;
 }
 
-/* line 183, ../../client/styles/sass/partials/_layout.scss */
+/* line 227, ../../client/styles/sass/partials/_layout.scss */
 #musicPlayer {
   width: 100%;
   height: 65px;
@@ -336,7 +395,7 @@ button {
   left: 0;
 }
 
-/* line 190, ../../client/styles/sass/partials/_layout.scss */
+/* line 234, ../../client/styles/sass/partials/_layout.scss */
 #playerControls {
   position: relative;
   left: 40px;
@@ -344,7 +403,7 @@ button {
   top: 10px;
 }
 
-/* line 197, ../../client/styles/sass/partials/_layout.scss */
+/* line 241, ../../client/styles/sass/partials/_layout.scss */
 #footer {
   position: absolute;
   bottom: 0;
@@ -354,18 +413,18 @@ button {
   background-color: red;
 }
 
-/* line 205, ../../client/styles/sass/partials/_layout.scss */
+/* line 249, ../../client/styles/sass/partials/_layout.scss */
 #userImg {
   margin: 0 auto;
 }
 
-/* line 211, ../../client/styles/sass/partials/_layout.scss */
+/* line 255, ../../client/styles/sass/partials/_layout.scss */
 #modal {
   position: relative;
   top: 10px;
 }
 
-/* line 215, ../../client/styles/sass/partials/_layout.scss */
+/* line 259, ../../client/styles/sass/partials/_layout.scss */
 .modalWindow {
   padding: 10px;
   box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
@@ -374,40 +433,21 @@ button {
   width: 60%;
 }
 
-/* line 225, ../../client/styles/sass/partials/_layout.scss */
-.homeItem {
-  margin: 1em;
-  width: 20em;
-  height: auto;
-  padding: 0;
-}
-/* line 230, ../../client/styles/sass/partials/_layout.scss */
-.homeItem img {
-  width: 100%;
-  margin: 0 auto;
-  padding-top: 1em;
-  overflow: hidden;
-}
-/* line 236, ../../client/styles/sass/partials/_layout.scss */
-.homeItem h3 {
-  padding-left: 15px;
-}
-
-/* line 240, ../../client/styles/sass/partials/_layout.scss */
+/* line 270, ../../client/styles/sass/partials/_layout.scss */
 .userList {
   position: absolute;
   right: 1em;
   top: 1em;
 }
 
-/* line 246, ../../client/styles/sass/partials/_layout.scss */
+/* line 276, ../../client/styles/sass/partials/_layout.scss */
 .imgCrop {
   width: 100px;
   height: 100px;
   overflow: hidden;
 }
 
-/* line 254, ../../client/styles/sass/partials/_layout.scss */
+/* line 284, ../../client/styles/sass/partials/_layout.scss */
 .logoContainer {
   width: 30em;
   height: 150px;
@@ -415,12 +455,12 @@ button {
   margin-top: -18px;
 }
 
-/* line 261, ../../client/styles/sass/partials/_layout.scss */
+/* line 291, ../../client/styles/sass/partials/_layout.scss */
 .logo {
   position: relative;
 }
 
-/* line 264, ../../client/styles/sass/partials/_layout.scss */
+/* line 294, ../../client/styles/sass/partials/_layout.scss */
 .slogan {
   position: relative;
   top: 37px;
@@ -428,40 +468,40 @@ button {
   width: 100%;
 }
 
-/* line 274, ../../client/styles/sass/partials/_layout.scss */
+/* line 304, ../../client/styles/sass/partials/_layout.scss */
 .navbar-default .navbar-collapse {
   border: none;
   position: relative;
 }
 
-/* line 278, ../../client/styles/sass/partials/_layout.scss */
+/* line 308, ../../client/styles/sass/partials/_layout.scss */
 .navbar-collapse {
   padding-right: -10px;
 }
 
-/* line 281, ../../client/styles/sass/partials/_layout.scss */
+/* line 311, ../../client/styles/sass/partials/_layout.scss */
 .navbar-default {
   height: 130px;
 }
 
-/* line 284, ../../client/styles/sass/partials/_layout.scss */
+/* line 314, ../../client/styles/sass/partials/_layout.scss */
 .navbar-toggle {
   top: -125px;
   margin-right: 5px;
 }
 
-/* line 288, ../../client/styles/sass/partials/_layout.scss */
+/* line 318, ../../client/styles/sass/partials/_layout.scss */
 .btn {
   margin-bottom: 7px;
 }
 
 @media (max-width: 822px) {
-  /* line 294, ../../client/styles/sass/partials/_layout.scss */
+  /* line 324, ../../client/styles/sass/partials/_layout.scss */
   .hidden-pad {
     display: none !important;
   }
 
-  /* line 297, ../../client/styles/sass/partials/_layout.scss */
+  /* line 327, ../../client/styles/sass/partials/_layout.scss */
   #info .moveRight-pad {
     top: 61px;
     left: 0%;
@@ -469,7 +509,7 @@ button {
   }
 }
 @media (min-width: 768px) {
-  /* line 304, ../../client/styles/sass/partials/_layout.scss */
+  /* line 334, ../../client/styles/sass/partials/_layout.scss */
   header + ul {
     position: relative;
     top: -140px;
@@ -477,23 +517,23 @@ button {
   }
 }
 @media (max-width: 320px) {
-  /* line 312, ../../client/styles/sass/partials/_layout.scss */
+  /* line 342, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 315, ../../client/styles/sass/partials/_layout.scss */
+  /* line 345, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 319, ../../client/styles/sass/partials/_layout.scss */
+  /* line 349, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 10px;
   }
 
-  /* line 324, ../../client/styles/sass/partials/_layout.scss */
+  /* line 354, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -503,33 +543,33 @@ button {
     font-size: 0.8em;
   }
 
-  /* line 328, ../../client/styles/sass/partials/_layout.scss */
+  /* line 358, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 332, ../../client/styles/sass/partials/_layout.scss */
+  /* line 362, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 335, ../../client/styles/sass/partials/_layout.scss */
+  /* line 365, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 339, ../../client/styles/sass/partials/_layout.scss */
+  /* line 369, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
 }
 @media (max-width: 474px) {
-  /* line 346, ../../client/styles/sass/partials/_layout.scss */
+  /* line 376, ../../client/styles/sass/partials/_layout.scss */
   .hidden-smartPhone {
     display: none !important;
   }
 
-  /* line 349, ../../client/styles/sass/partials/_layout.scss */
+  /* line 379, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.moveLeft-smartPhone, #description.moveLeft {
     left: 1%;
   }

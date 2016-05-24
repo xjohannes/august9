@@ -24,14 +24,17 @@ var Backbone     					= require('Backbone'),
 		LoginForm  						= require('./views/formViews/loginForm'),
 		PlayerCTRL  					= require('./controllers/playerController'),
 		QueueCollection    		= require('./collections/queueCollection'),
-		ProjectInfoView 			= require('./views/projectInfoView');
+		ProjectInfoView 			= require('./views/projectInfoView'),
+		AboutAugust9View      = require('./views/aboutAugust9View');
 
 module.exports = function() {
 	var that = this;
 	// Fetch data from project table
 	this.index =function () {
+		that.aboutAugust9 = new AboutAugust9View();
 		that.homeCollectionView.clean();
-		$('#homeList').html(that.homeCollectionView.render().el);
+		$('#aboutAugust9').html(that.aboutAugust9.render().el);
+		$('#homeList').append(that.homeCollectionView.render().el);
 		$("#projectList").html("");
 		$("#info").html("");
 		$("#info").css('display', 'none');
@@ -219,13 +222,18 @@ module.exports = function() {
 			//console.log("fetching projects");
 			that.projectList.fetch({
 				success: function(projects) {
+					//console.log("success");
 					//console.log(projects);
+				},
+				error: function(err) {
+					console.log("Err:");
+					console.log(err);
 				}
 			});
 		}
 	};
 	this.defaultRoute = function() {
-		console.log("default Route");
+		//console.log("Default Route");
 	};
 	this.initialize = function(options) {
 		that.projectList = new ProjectCollection();

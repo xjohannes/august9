@@ -35,6 +35,7 @@ module.exports.initialize = function(app) {
                     return res.status(401).json({success: false, message: "Failed to authenticate"});
                 } else {
                     req.decoded = decode;
+                    
                     next();
                 }
             });

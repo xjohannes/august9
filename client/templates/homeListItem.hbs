@@ -1,31 +1,26 @@
 
-	<div class="homeItem col-xs-11 col-sm-6 col-md-4 ">
-		<a href="#/project/{{id}}">
+<section class="">
+	<a href="#/project/{{id}}">
+			<div id="" class="imgCrop">
+				{{#if imglarge}}
+					<img src="{{imglarge}}" alt="{{imgAlt}}"/>
+				{{else}}
+					<img src="./media/images/summer.jpg" alt="Sommereng i solnedgang"/>	
+				{{/if}}
+			</div>
 			<header  class="homeItemHeader">
-				<h3> {{projectname}}</h3>
-			</header>
+			<h4> {{projectname}}</h4>
+		</header>
 		</a>
-		<section class="">
-			<a href="#/project/{{id}}">
-				<div id="" class="homeImgCrop">
-					{{#if imglarge}}
-						<img src="{{imglarge}}" alt="{{imgAlt}}"/>
-					{{else}}
-						<img src="./media/images/tre.jpg" alt="Et flott eiketre på toppen av en åskam"/>	
-					{{/if}}
-				</div>
-			</a>
-			<div id="" class="projectInfo"><p>{{about}}</p>
-
-			</div>
-		</section>
-		<aside class="featuredSong">
-			<div class="col-xs-1 listPlayer glyphicon glyphicon-play-circle">
-			</div>
-			<div class="title col-xs-8 col-xs-offset-1"><a href="#/project/{{			projectid}}/song/{{id}}">{{ title}}</a> 
-			</div>
-		</aside>
-			
-
-		
+	<div id="" class="projectInfo">
+		<p>{{about}}</p>
 	</div>
+</section>
+<aside class="featuredSong">
+	<label id="" class="">Featured song</label>
+	<div class="col-xs-1 listPlayer glyphicon glyphicon-play-circle">
+	</div>
+	<div class="title col-xs-8 col-xs-offset-1"><a href="#/project/{{projectid}}/song/{{id}}">Song title{{title}}</a> 
+	</div>
+</aside>
+

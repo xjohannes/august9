@@ -21,13 +21,14 @@ cloudinary = require('cloudinary');
 		// projcts and song
 		getAll: function(req, res) {
 			'use strict';
-			//console.log("DEBUG: GET ALL PROJECTS ORDER BY id");
+			console.log("DEBUG: GET ALL PROJECTS ORDER BY id");
 
 			var sql = escape("SELECT * FROM Project ORDER BY id");
 			query(sql, function(err, rows, result) {
 				if(err) {
+					console.error("Error get all");
 					console.error(err);
-					res.send("Error " + err);
+					res.send("Error Get All projects" + err);
 				} else {
 					res.send(rows);
 					console.log(rows);
@@ -58,7 +59,7 @@ cloudinary = require('cloudinary');
 							query(sql, function(err, rows, result) {
 								if(err) {
 									console.error("Err: " + err);
-									res.send("Error " + err);
+									res.send("Error get all songs" + err);
 								} else {
 									resultObj['songs'] = rows;
 

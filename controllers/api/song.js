@@ -100,7 +100,7 @@ cloudinary = require('cloudinary');
 	    					console.error("err2 message:");
 	    					console.error(err2);
 								res.end("Error " + err2);
-	    				}else {
+	    				} else {
 	    					// table, valuesArray, callback	    					
 	    					query("SELECT * FROM Song WHERE serverKey ='" + req.result.url
 	    						+ "'", function(err3, rows3, result3) {
@@ -138,13 +138,22 @@ cloudinary = require('cloudinary');
 				  											console.log("inserted participator " + req.body.participator + " successfully")
 				  											resultObj.participator = req.body.participator;
 				  											resultObj.participatorRole = req.body.participatorRole;			  											  											
-		  													res.status(201).end("upload succeded");
+		  													res.status(201).end('<div id="serverResponse">'
+																			+ ' <p>Edit successfull</p>'
+																			+ ' <button>Back to site</button>'
+																			+ ' </div>');
 				  										} else {
-				  											res.status(201).end("upload succeded");
+				  											res.status(201).end('<div id="serverResponse">'
+																			+ ' <p>Edit successfull</p>'
+																			+ ' <button>Back to site</button>'
+																			+ ' </div>');
 				  										}
 	  												});
 	  											} else {
-		  											res.status(201).end("upload succeded");
+		  											res.status(201).end('<div id="serverResponse">'
+																			+ ' <p>Edit successfull</p>'
+																			+ ' <button>Back to site</button>'
+																			+ ' </div>');
 	  											}
 	  										}
 	  									});
@@ -224,7 +233,11 @@ cloudinary = require('cloudinary');
 									console.log(err);
 									res.end(err);
 								} else {
-									res.status(200).json("The song "+ + req.body.title + " was updated successfully");
+
+									res.status(201).end('<div id="serverResponse">'
+																			+ ' <p>Edit successfull</p>'
+																			+ ' <button>Back to site</button>'
+																			+ ' </div>');
 									console.log('update of songname, email, about and influence OK');
 									
 								}

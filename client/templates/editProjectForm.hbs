@@ -51,16 +51,16 @@
 $(function() {
 	console.log("initiating transloadit EDIT");
   $('#projectForm').transloadit({
-    wait: false,
-    triggerUploadOnFileSelection: false,
+    wait: true,
+    triggerUploadOnFileSelection: true,
     params: {
       auth: { key: "63fac0a0b2c411e5b32187c4376b74f6" },
       steps: {
         resize_to_125: {
           robot: "/image/resize",
           use: ":original",
-          width: 225,
-          height: 225,
+          width: 250,
+          height: 250,
           result: true
         },
         resize_to_75: {

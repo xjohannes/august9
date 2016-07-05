@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "any-db": "^2.1.0",
+    "babel-preset-react": "^6.11.0",
+    "babelify": "^7.3.0",
     "backbone": "^1.2.1",
     "bcryptjs": "^2.2.1",
     "body-parser": "^1.13.2",
@@ -30,6 +32,8 @@
     "pg": "4.x",
     "pg-escape": "^0.1.0",
     "pg-query": "^0.11.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

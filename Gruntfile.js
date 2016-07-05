@@ -57,13 +57,13 @@ module.exports = function(grunt) {
         {
           src: 'build/app.js',
           dest: 'public/js/<%= pkg.name %>.js'
-        }, 
-        
+        },
+
         {
           src: 'build/css/<%= pkg.name %>.css',
           dest: 'public/css/<%= pkg.name %>.css'
-        }, 
-        
+        },
+
         {
           src: 'client/img/*',
           dest: 'public/img/'
@@ -189,6 +189,9 @@ module.exports = function(grunt) {
         },
 
         jshint: {
+          options: {
+            esnext:true
+          },
           all: ['Gruntfile.js', 'client/src/**/*.js', 'client/spec/**/*.js'],
           dev: ['client/src/**/*.js'],
           test: ['client/spec/**/*.js']
@@ -222,11 +225,11 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 // Register tasks
 grunt.registerTask('init:dev', ['clean', 'browserify:vendor']);
 
-grunt.registerTask('build:dev', ['browserify:app', 
-  'jshint:dev',  'compass:dev',   'env:dev']); //'clean:dev','browserify:test', 
+grunt.registerTask('build:dev', ['browserify:app',
+    'compass:dev',   'env:dev']); //'clean:dev','browserify:test','jshint:dev',
 
-grunt.registerTask('build:prod', ['clean:prod', 'browserify:vendor', 
-  'browserify:app', 'jshint:all',  'compass:prod', 'concat', 'cssmin', 'uglify', 
+grunt.registerTask('build:prod', ['clean:prod', 'browserify:vendor',
+  'browserify:app', 'jshint:all',  'compass:prod', 'concat', 'cssmin', 'uglify',
   'copy:prod']);
 
 grunt.registerTask('heroku', ['init:dev', 'build:dev']);

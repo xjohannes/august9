@@ -35,7 +35,8 @@ module.exports = Router = Backbone.Router.extend({
 		"project/:projectid/song/:id"						: "readSong",
 		"project/:projectid/song/:songid/edit"	: "updateSong",
 		"project/:projectid/song/:songid/delete": "deleteSong",
-		"project/:projectid/song/:songid/play" 	: "play", 
+		"project/:projectid/song/:songid/play" 	: "play",
+		"queue" : "queue",
 		"*actions"															: "defaultRoute"
 	},
 	url: "/",
@@ -75,6 +76,9 @@ module.exports = Router = Backbone.Router.extend({
 	},
 	play: function(projectid, songid) {
 		this.controller.play(projectid, songid);
+	},
+	queue: function() {
+		this.controller.queue();
 	},
 	allRoutes: function(e) {
 		this.controller.allRoutes(e);

@@ -22,7 +22,7 @@ var Backbone     					= require('Backbone'),
 		HeaderView 						= require('./views/headerView'),
 		LoginModel 						= require('./models/loginModel'),
 		LoginForm  						= require('./views/formViews/loginForm'),
-		PlayerCTRL  					= require('./controllers/playerController'),
+		Player  					= require('./controllers/player'),
 		QueueCollection    		= require('./collections/queueCollection'),
 		ProjectInfoView 			= require('./views/projectInfoView'),
 		AboutAugust9View      = require('./views/aboutAugust9View');
@@ -72,8 +72,7 @@ module.exports = function() {
 		$('#projectList').html(this.projectCollectionView.render().el);
 		
 		var self = this;
-		//if(that.projectList)
-		var projectItem = new ProjectModel({id: projectid});//this.projectList.get(projectid);
+		var projectItem = new ProjectModel({id: projectid});
 		
 		projectItem.fetch({
 			success: function(project) {
@@ -81,27 +80,25 @@ module.exports = function() {
 				//console.log(projectSongs);
 				self.songCollection = new SongCollection(projectSongs);//self.songCollection.set(projectSongs);//
 				self.songCollection.url = "/project/" + projectid + "/song";
-				self.songCollectionView = new SongCollectionView({collection:self.songCollection, 
-																													controller: that.playerController});
+				self.songCollectionView = new SongCollectionView({collection:self.songCollection, controller: that.player});
 				//$('#mainContent').html('<h2>' + project.attributes.projectname + "</h2>");
-				$("#mainContent").css("display", "block");
-				$('#songList').html(self.songCollectionView.render().el);
+				$('#mainContent').html(self.songCollectionView.render().el);
 				projectInfo = new ProjectInfoView({model: project});
 				$('#info').html(projectInfo.render().el);
 				//console.log("getting songs " + window.localStorage.getItem('token') );
 
-				if(window.localStorage.getItem('token')) {
-					$('.admin').removeClass('hidden'); 
-					//console.log("Token true");
-				} else {
-					$('.admin').addClass('hidden');
-					//console.log("Token false");
-				}
+
 			},
 			error: function(err) {
 				console.log(err);
 			}
 		}, this);
+	};
+	this.queue = function() {
+		var self = this;
+		that.queueCollectionView = new SongCollectionView({collection:that.queueCollection, controller: that.player});
+		$('#projectList').html(this.projectCollectionView.render().el);
+		$('#mainContent').html(self.queueCollectionView.render().el);
 	};
 	this.updateProject = function(projectid) {
 		var projectItem = this.projectList.get(projectid);
@@ -128,7 +125,7 @@ module.exports = function() {
 		$('#header').html(that.headerView.render().el);
 		$('#projectList').html(that.projectCollectionView.render().el);
 		
-		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
+		var songItem = new SongModel({id: songid});
 		var projectItem = new ProjectModel({id: projectid});
 		projectItem.fetch({
 			success: function(project) {
@@ -143,11 +140,8 @@ module.exports = function() {
 						if(!self.songCollection) {
 							var songs = project.attributes.songs;
 							self.songCollection = new SongCollection(songs);
-							//$('#mainContent').html('<h2>' + self.projectList.get(projectid).attributes.projectname + "</h2>");
 							self.songCollectionView = new SongCollectionView({collection:self.songCollection});
 							$('#songList').html(self.songCollectionView.render().el);
-							console.log("self.projectList.get(projectid).attributes" );
-							console.log(self.projectList.get(projectid).attributes );
 						}
 					},
 					error: function(err) {
@@ -160,7 +154,6 @@ module.exports = function() {
 		
 	};
 	this.updateSong = function(projectid, songid) {
-		
 		var songItem = new SongModel({id: songid});// songCollection.get({id:songid});
 		
 		songItem.fetch({
@@ -187,12 +180,13 @@ module.exports = function() {
 	};
 	this.play = function(projectid, songid) {
 		var songModel = this.songCollection.get(songid); 
-		this.playerController.playFromList(songModel);
+		this.player.playFromList(songModel);
 		
 		/*console.log($('#musicPlayer audio').attr('src'));
 		var player = $('#musicPlayer audio').attr('src', url );
 		$('#musicPlayer audio').get(0).play();*/
 	};
+
 	this.allRoutes = function(e) {
 		if(e === "login" || e === "createProject" ||
 			 e === "updateProject" || e === "createSong" ||
@@ -231,6 +225,11 @@ module.exports = function() {
 				}
 			});
 		}
+		if(window.localStorage.getItem('token')) {
+			$('.admin').removeClass('hidden');
+		} else {
+			$('.admin').addClass('hidden');
+		}
 	};
 	this.defaultRoute = function() {
 		//console.log("Default Route");
@@ -245,10 +244,11 @@ module.exports = function() {
 		that.queueCollection = new QueueCollection({projectList: that.projectList});
 		that.homeCollectionView = new HomeCollectionView({collection:that.projectList});
 		that.projectCollectionView = new ProjectCollectionView({collection:that.projectList});
-		that.playerController  = new PlayerCTRL();
-		that.playerController.initialize({collection:that.queueCollection, projectList: that.projectList});
+		that.player  = new Player();
+		that.player.initialize({collection:that.queueCollection, projectList: that.projectList});
 		that.headerView = new HeaderView({model: new UserModel()});
 		that.songCollectionView = null;
+		that.queueCollectionView = null;
 		$('#header').html(that.headerView.render().el);
 		
 	};

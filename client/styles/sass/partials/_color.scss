@@ -64,6 +64,15 @@ a {
 	color: $base_active;
 }
 
+#progressBar {
+	background-color: $base_background;
+}
+#playedBar {
+	background-color: $header_color;
+}
+#slider {
+	background-color: white;
+}
 
 .modalWindow {
 	background-color: $contrast_background;
@@ -75,6 +84,14 @@ a {
 .logo  {
 	color:$header_color;
 }
+
+.hidden {
+	visibility: hidden;
+}
+.visible {
+	visibility: visible;
+}
+
 
 
 

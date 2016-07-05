@@ -16,11 +16,9 @@ module.exports = Backbone.View.extend({
 		this.collection.on('remove', this.remove, this);	
 	},
 	addOne: function(songItem) {
-		//console.log("Add one : " );
-		//console.log(songItem.toJSON());
 		var songView = new SongListItemView({model: songItem, 
-																				 controller: this.controller,
-																				 project: this.project});
+			controller: this.controller,
+			project: this.project});
 		this.$el.append(songView.render().el);
 	},
 	addAll: function() {

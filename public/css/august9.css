@@ -284,7 +284,7 @@ button {
   position: absolute;
   top: 0px;
   bottom: 65px;
-  z-index: 50;
+  z-index: 0;
 }
 /* line 136, ../../client/styles/sass/partials/_layout.scss */
 #projectList img {
@@ -495,13 +495,67 @@ button {
   margin-bottom: 7px;
 }
 
+/* line 321, ../../client/styles/sass/partials/_layout.scss */
+#progressBar {
+  position: relative;
+  left: 16em;
+  top: -50px;
+  width: 70%;
+  height: 5px;
+}
+
+/* line 328, ../../client/styles/sass/partials/_layout.scss */
+#playedTime {
+  position: relative;
+  top: -5px;
+  left: -36px;
+}
+
+/* line 333, ../../client/styles/sass/partials/_layout.scss */
+#playedBar {
+  width: 0%;
+  height: 5px;
+  position: relative;
+  top: -14px;
+}
+
+/* line 339, ../../client/styles/sass/partials/_layout.scss */
+#dragBox {
+  width: 100%;
+  position: relative;
+  top: -14px;
+}
+
+/* line 344, ../../client/styles/sass/partials/_layout.scss */
+#slider {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  top: -22px;
+}
+
+/* line 351, ../../client/styles/sass/partials/_layout.scss */
+#duration {
+  position: relative;
+  top: -34px;
+  left: 101%;
+}
+
+/* line 356, ../../client/styles/sass/partials/_layout.scss */
+#queue {
+  position: relative;
+  top: -54px;
+  left: 106%;
+}
+
 @media (max-width: 822px) {
-  /* line 324, ../../client/styles/sass/partials/_layout.scss */
+  /* line 364, ../../client/styles/sass/partials/_layout.scss */
   .hidden-pad {
     display: none !important;
   }
 
-  /* line 327, ../../client/styles/sass/partials/_layout.scss */
+  /* line 367, ../../client/styles/sass/partials/_layout.scss */
   #info .moveRight-pad {
     top: 61px;
     left: 0%;
@@ -509,7 +563,7 @@ button {
   }
 }
 @media (min-width: 768px) {
-  /* line 334, ../../client/styles/sass/partials/_layout.scss */
+  /* line 374, ../../client/styles/sass/partials/_layout.scss */
   header + ul {
     position: relative;
     top: -140px;
@@ -517,23 +571,23 @@ button {
   }
 }
 @media (max-width: 320px) {
-  /* line 342, ../../client/styles/sass/partials/_layout.scss */
+  /* line 382, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 345, ../../client/styles/sass/partials/_layout.scss */
+  /* line 385, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 349, ../../client/styles/sass/partials/_layout.scss */
+  /* line 389, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 10px;
   }
 
-  /* line 354, ../../client/styles/sass/partials/_layout.scss */
+  /* line 394, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -543,33 +597,33 @@ button {
     font-size: 0.8em;
   }
 
-  /* line 358, ../../client/styles/sass/partials/_layout.scss */
+  /* line 398, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 362, ../../client/styles/sass/partials/_layout.scss */
+  /* line 402, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 365, ../../client/styles/sass/partials/_layout.scss */
+  /* line 405, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 369, ../../client/styles/sass/partials/_layout.scss */
+  /* line 409, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
 }
 @media (max-width: 474px) {
-  /* line 376, ../../client/styles/sass/partials/_layout.scss */
+  /* line 416, ../../client/styles/sass/partials/_layout.scss */
   .hidden-smartPhone {
     display: none !important;
   }
 
-  /* line 379, ../../client/styles/sass/partials/_layout.scss */
+  /* line 419, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.moveLeft-smartPhone, #description.moveLeft {
     left: 1%;
   }
@@ -655,13 +709,38 @@ a {
   color: #337ab7;
 }
 
-/* line 68, ../../client/styles/sass/partials/_color.scss */
+/* line 67, ../../client/styles/sass/partials/_color.scss */
+#progressBar {
+  background-color: #252929;
+}
+
+/* line 70, ../../client/styles/sass/partials/_color.scss */
+#playedBar {
+  background-color: #337a17;
+}
+
+/* line 73, ../../client/styles/sass/partials/_color.scss */
+#slider {
+  background-color: white;
+}
+
+/* line 77, ../../client/styles/sass/partials/_color.scss */
 .modalWindow {
   background-color: #f8f8f8;
   color: #222222;
 }
 
-/* line 75, ../../client/styles/sass/partials/_color.scss */
+/* line 84, ../../client/styles/sass/partials/_color.scss */
 .logo {
   color: #337a17;
+}
+
+/* line 88, ../../client/styles/sass/partials/_color.scss */
+.hidden {
+  visibility: hidden;
+}
+
+/* line 91, ../../client/styles/sass/partials/_color.scss */
+.visible {
+  visibility: visible;
 }

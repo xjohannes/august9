@@ -35,7 +35,7 @@ module.exports = Backbone.Model.extend({
 	index: function() {
 		this.trigger('index');
 	},
-	play: function() {
+	play: function(currentTime) {
 		var url, self = this;
 		if(!this.attributes.serverkey) {
 			this.fetch({
@@ -53,6 +53,10 @@ module.exports = Backbone.Model.extend({
 		} else {
 			url = this.attributes.serverkey;
 			this.audioObj = new Audio(url);
+			if(currentTime !== null) {
+				self.audioObj.currentTime = currentTime;
+				console.log(self.audioObj.currentTime);
+			}
 			this.audioObj.play();
 			this.trigger('playing', this.audioObj);
 		}

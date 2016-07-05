@@ -131,7 +131,7 @@ button {
   position:absolute;
   top: 0px;
   bottom:65px;
-  z-index: 50;
+  z-index: 0;
   
 	img {
 		width: 50px;
@@ -317,6 +317,46 @@ button {
 }
 .btn {
 	margin-bottom: 7px;
+}
+#progressBar {
+	position: relative;
+	left: 16em;
+	top: -50px;
+	width: 70%;
+	height: 5px;
+}
+#playedTime {
+	position: relative;
+	top: -5px;
+	left: -36px;
+}
+#playedBar {
+	width: 0%;
+	height: 5px;
+	position:relative;
+	top:-14px;
+}
+#dragBox {
+	width: 100%;
+	position:relative;
+	top:-14px;
+}
+#slider {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	position: relative;
+	top: -22px;
+}
+#duration {
+	position: relative;
+	top: -34px;
+	left: 101%;
+}
+#queue {
+	position: relative;
+	top: -54px;
+	left: 106%;
 }
 
 // Media

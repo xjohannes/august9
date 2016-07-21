@@ -30,12 +30,10 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	remove: function(project) {
-		console.log("remove item from song collection view");
 		this.$el.empty();
 		this.collection.forEach(this.addOne, this);
 	},
 	clean: function() {
-		console.log("cleaning songCollectionView");
 		this.$el.empty();
 	}
 	

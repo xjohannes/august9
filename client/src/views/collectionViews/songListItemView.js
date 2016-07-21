@@ -24,6 +24,14 @@ module.exports  = Backbone.View.extend({
 		var attributes = this.model.toJSON();
 		attributes.project = this.project;
 		this.$el.html(this.template(attributes));
+		if(this.model.audioObj) {
+			if(this.model.audioObj.paused) {
+				this.enablePlayButton();
+			} else {
+				this.disablePlayButton();
+			}
+		}
+
 		if(window.localStorage.getItem('token') !== null) {
 			$('.admin').removeClass('hidden');
 		}
@@ -34,15 +42,12 @@ module.exports  = Backbone.View.extend({
 		this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
-		console.log("toggleAdminButtons song item view");
 		$('.admin').show();
 	},
 	enablePlayButton: function() {
-		console.log('enablePlayButton List');
 		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
 	},
 	disablePlayButton: function() {
-		console.log('LIST: disablePlayButton list');
 		this.$el.find('.listPlayer').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
 	},
 	registerNewModel: function(newModel) {

@@ -33,11 +33,15 @@ module.exports = function() {
         $("#slider").on("stop", function(event) {
             self.seeking = false;
         });
-        $("#progressBar").on("click", function() {
-            var percentPlayed = (((event.clientX - self.dragBox.getBoundingClientRect().left) * 100)/self.dragBox.offsetWidth), currentTime;
-            self.playedBar.style.width = percentPlayed + "%";
-            //currentTime = (percentPlayed * self.currentAudio.duration /100);
-            self.currentAudio.currentTime = percentPlayed * self.currentAudio.duration /100;
+        $("#progressBar").on("click", function(event) {
+            if(self.currentAudio) {
+                var percentPlayed = (((event.clientX - self.dragBox.getBoundingClientRect().left) * 100) / self.dragBox.offsetWidth), currentTime;
+                if (percentPlayed <= 100) {
+                    self.playedBar.style.width = percentPlayed + "%";
+                    //currentTime = (percentPlayed * self.currentAudio.duration /100);
+                    self.currentAudio.currentTime = percentPlayed * self.currentAudio.duration /100;
+                }
+            }
         });
     };
 

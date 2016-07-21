@@ -22,7 +22,10 @@ module.exports = function () {
         self.timeBar = new TimeBar();
         self.timeBar.initialize();
     };
-    this.playNext = function () {
+    this.playNext = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Player: playNext");
         self.currentTime = null;
         if (self.loop) {
             self.play(self.currentSong);
@@ -32,24 +35,42 @@ module.exports = function () {
         }
     };
     this.play = function (songModel) {
-        if (songModel) {
-            self.currentSong = songModel;
-        } else {
-            self.currentSong = self.queueCollection.getQueueTop();
-        }
         if (self.currentSong.isPlaying()) {
             self.currentSong.stop();
         }
-        else {
-            self.playerControls.registerNewModel(self.currentSong);
-            self.currentSong.play(self.currentTime);
-            self.timeBar.play(self.currentSong);
-            self.currentSong.audioObj.addEventListener('ended', self.playNext);
-            self.currentSong.audioObj.addEventListener('pause', self.pause);
-        }
+        self.currentSong = self.queueCollection.getQueueTop();
+        self.playerControls.registerNewModel(self.currentSong);
+        self.currentSong.play(self.currentTime);
+        self.timeBar.play(self.currentSong);
+        self.currentSong.audioObj.addEventListener('ended', self.playNext);
+        //self.currentSong.audioObj.addEventListener('pause', self.pause);
+
     };
-    this.pause = function() {
-        console.log("Player. Pause: " + self.currentSong.audioObj.currentTime);
+    this.playFromList = function (songModel) {
+        self.queueCollection.addToTopOfQueue(songModel);
+        self.play(songModel);
+    };
+    /*this.play = function (songModel) {
+     if (songModel) {
+     self.currentSong = songModel;
+     } else {
+     self.currentSong = self.queueCollection.getQueueTop();
+     }
+     if (self.currentSong.isPlaying()) {
+     self.currentSong.stop();
+     }
+     else {
+     self.playerControls.registerNewModel(self.currentSong);
+     self.currentSong.play(self.currentTime);
+     self.timeBar.play(self.currentSong);
+     self.currentSong.audioObj.addEventListener('ended', self.playNext);
+     self.currentSong.audioObj.addEventListener('pause', self.pause);
+     }
+     };*/
+    this.pause = function (event) {
+        /*console.log("Player. Pause");
+        console.log(event);*/
+        self.currentSong.stop();
         self.currentTime = self.currentSong.audioObj.currentTime;
     };
     /*this.initializePlay = function() {
@@ -60,29 +81,29 @@ module.exports = function () {
      },*/
     this.stop = function (songModel) {
         songModel.stop();
-        console.log("Player: Stop");
     };
-    this.playFromList = function (songModel) {
-        if (songModel.isPlaying()) {
-            self.stop(songModel);
-        } else if (self.currentSong.isPlaying()) {
-            self.currentSong.stop();
-            self.currentSong = songModel;
-            self.playerControls.registerNewModel(songModel);
-            songModel.play();
-        } else {
-            self.currentSong = songModel;
-            self.playerControls.registerNewModel(songModel);
-            self.currentSong.play();
-        }
-    };
+
+    /*this.playFromList = function (songModel) {
+     if (songModel.isPlaying()) {
+     self.stop(songModel);
+     } else if (self.currentSong.isPlaying()) {
+     self.currentSong.stop();
+     self.currentSong = songModel;
+     self.playerControls.registerNewModel(songModel);
+     songModel.play();
+     } else {
+     self.currentSong = songModel;
+     self.playerControls.registerNewModel(songModel);
+     self.currentSong.play();
+     }
+     };*/
     this.previousTrack = function () {
         var songModel = self.queueCollection.previousTrack();
-        self.playFromList(songModel);
+        self.play(songModel);
     };
     this.nextTrack = function () {
         var songModel = self.queueCollection.nextTrack();
-
-        self.playFromList(songModel);
+        self.currentTime = 0;
+        self.play(songModel);
     };
 };

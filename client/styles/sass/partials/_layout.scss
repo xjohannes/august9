@@ -359,6 +359,12 @@ button {
 	top: -54px;
 	left: 107%;
 }
+#chorusTime {
+	position: relative;
+	top: -75px;
+	left: 111%;
+	cursor: crosshair;
+}
 
 // Media
 @media (max-width: 822px) {

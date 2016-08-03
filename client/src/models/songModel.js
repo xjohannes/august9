@@ -14,16 +14,18 @@ module.exports = Backbone.Model.extend({
 		id: null,
 		title: false,
 		projectid: null,
+		chorustime: '60',
 		productionstatus: 'raw',
 		added: 'today',
-		created: '',
+		created: '4',
 		likes: 0,
 		listens: 0,
 		notes: '',
 		participator: 1,
-		participatorRole: 'none',
+		participatorrole: 'none',
 		serverkey: false,
 		influence: 'none'
+
 	},
 	initialize: function() {
 		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);

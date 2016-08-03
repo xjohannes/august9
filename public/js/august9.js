@@ -305,16 +305,18 @@ module.exports = Backbone.Model.extend({
 		id: null,
 		title: false,
 		projectid: null,
+		chorustime: '60',
 		productionstatus: 'raw',
 		added: 'today',
-		created: '',
+		created: '4',
 		likes: 0,
 		listens: 0,
 		notes: '',
 		participator: 1,
-		participatorRole: 'none',
+		participatorrole: 'none',
 		serverkey: false,
 		influence: 'none'
+
 	},
 	initialize: function() {
 		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
@@ -476,8 +478,8 @@ module.exports = function () {
             collection: self.songCollection,
             controller: that.player
         });
-        $('#mainContent').html('<h2>' + projectItem.get('projectname') + "</h2>");
-        $('#mainContent').append(self.songCollectionView.render().el);
+        //$('#mainContent').html('<h2>' + projectItem.get('projectname') + "</h2>");
+        $('#songList').append(self.songCollectionView.render().el);
         projectInfo = new ProjectInfoView({model: projectItem});
         $('#info').html(projectInfo.render().el);
     };
@@ -1310,17 +1312,19 @@ module.exports = Backbone.View.extend({
 		var productionstatus = this.$('input[name=productionstatus]').val();
 		var title = this.$('input[name=title]').val();
 		var notes = this.$('input[name=notes]').val();
-		//var created = this.$('input[name=created]').val();
+		var created = this.$('input[name=created]').val();
 		var influence = this.$('input[name=influence]').val();
-		var participator = this.$('input[name=participator]').val();
+		var participator = (typeof this.$('input[name=participator]').val() === 'number'? this.$('input[name=participator]').val() : 1);
 		var participatorRole = this.$('input[name=participatorRole]').val();
 		var datafile = this.$('input[name=file]').val();
+		var chorustime = this.$('input[name=chorustime]').val();
 		this.model.save({
 			projectid: this.model.get('projectid'),
 			title: title,
+			chorustime: chorustime,
 			productionstatus: productionstatus,
 			notes: notes,
-			//created: created,
+			created: created,
 			influence: influence,
 			participator: participator,
 			participatorRole: participatorRole
@@ -1759,19 +1763,23 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n  <div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"productionstatus\">Productionstatus:</label>\n		<input class=\"form-control\" type=\"text\" name=\"productionstatus\" value=\"";
+    + "\" /><br>\n	</div>\n    <div class=\"form-group col-xs-12 col-sm-5\">\n        <label for=\"chorustime\">Chorus time in seconds:</label>\n        <input class=\"form-control\" type=\"text\" name=\"chorustime\" value=\"";
+  if (helper = helpers.chorustime) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.chorustime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n    </div>\n  <div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"productionstatus\">Productionstatus:</label>\n		<input class=\"form-control\" type=\"text\" name=\"productionstatus\" value=\"";
   if (helper = helpers.productionstatus) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.productionstatus); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"notes\">Notes:</label>\n		<input class=\"form-control\" type=\"text\" name=\"notes\" value=\"";
-  if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.notes); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"created\">Created:</label>\n		<input class=\"form-control\" type=\"text\" name=\"created\" value=\"";
+    + "\" /><br>\n	</div>\n    <div class=\"form-group col-xs-12 col-sm-5\">\n        <label for=\"created\">Created:</label>\n        <input class=\"form-control\" type=\"text\" name=\"created\" value=\"";
   if (helper = helpers.created) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.created); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"influence\">Influence:</label>\n		<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
+    + "\" /><br>\n    </div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"notes\">Notes:</label>\n		<input class=\"form-control\" type=\"text\" name=\"notes\" value=\"";
+  if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.notes); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\" /><br>\n	</div>\n\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"influence\">Influence:</label>\n		<input class=\"form-control\" type=\"text\" name=\"influence\" value=\"";
   if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -1779,11 +1787,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.participator) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.participator); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participator_role\">Participator Role:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participatorRole\" value=\"";
-  if (helper = helpers.participatorRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.participatorRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "\" /><br>\n	</div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"participatorrole\">Participator Role:</label>\n		<input class=\"form-control\" type=\"text\" name=\"participatorrole\" value=\"";
+  if (helper = helpers.participatorrole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.participatorrole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" /><br>\n	</div>\n		<div class=\"form-group col-xs-12 col-sm-5\"> \n			<label for=\"file\">Song:</label>\n			<input class=\"form-control btn btn-default \" type=\"file\" name=\"file\" /><br>   \n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">               \n			<input class=\"btn btn-warning \" type=\"submit\" value=\"Save\" name=\"submit\">\n		</div>\n		</form>\n</div>";
+    + "\" /><br>\n	</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">\n			<label for=\"file\">Song:</label>\n			<input class=\"form-control btn btn-default \" type=\"file\" name=\"file\" /><br>   \n		</div>\n		<div class=\"form-group col-xs-12 col-sm-5\">               \n			<input class=\"btn btn-warning \" type=\"submit\" value=\"Save\" name=\"submit\">\n		</div>\n		</form>\n</div>";
   return buffer;
   });
 
@@ -1905,7 +1913,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"playerControls\" class=\"\">\n	<i class=\"glyphicon glyphicon-step-backward\"></i>\n	<i class=\"glyphicon glyphicon-play\"></i>\n	<i class=\"glyphicon glyphicon-step-forward\"></i>\n	<div id=\"playCircle\" class=\"circle\"></div>\n</div>\n<div id=\"progressBar\">\n    <div id=\"playedTime\" >0:00</div>\n    <div id=\"playedBar\"></div>\n    <div id=\"dragBox\"></div>\n    <div id=\"slider\" ></div>\n    <div id=\"duration\" >0:00</div>\n    <a  href=\"#/queue\"><div id=\"queue\" class=\"glyphicon glyphicon-list\"></div></a>\n</div>\n\n\n\n\n\n\n";
+  return "<div id=\"playerControls\" class=\"\">\n	<i class=\"glyphicon glyphicon-step-backward\"></i>\n	<i class=\"glyphicon glyphicon-play\"></i>\n	<i class=\"glyphicon glyphicon-step-forward\"></i>\n	<div id=\"playCircle\" class=\"circle\"></div>\n</div>\n<div id=\"progressBar\">\n    <div id=\"playedTime\" >0:00</div>\n    <div id=\"playedBar\"></div>\n    <div id=\"dragBox\"></div>\n    <div id=\"slider\" ></div>\n    <div id=\"duration\" >0:00</div>\n    <a  href=\"#/queue\"><div id=\"queue\" class=\"glyphicon glyphicon-list\"></div></a>\n    <div id=\"chorusTime\" >Go to chorus</div>\n</div>\n\n\n\n\n\n\n";
   });
 
 },{"hbsfy/runtime":72}],44:[function(require,module,exports){
@@ -2093,17 +2101,17 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.productionstatus) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.productionstatus); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"influence\">Influence:";
-  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "</li>\n		<li class=\"chorustime\">Chorus time:";
+  if (helper = helpers.chorustime) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.chorustime); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</li>\n		<li class=\"participators\">Participator id:";
   if (helper = helpers.participators) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.participators); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</li>\n		<li class=\"participatorsRole\">Participators role:";
-  if (helper = helpers.participatorsRole) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.participatorsRole); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "</li>\n		<li class=\"influence\">Influence:";
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</li>\n	</ul>\n";
   return buffer;

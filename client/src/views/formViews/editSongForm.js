@@ -18,17 +18,19 @@ module.exports = Backbone.View.extend({
 		var productionstatus = this.$('input[name=productionstatus]').val();
 		var title = this.$('input[name=title]').val();
 		var notes = this.$('input[name=notes]').val();
-		//var created = this.$('input[name=created]').val();
+		var created = this.$('input[name=created]').val();
 		var influence = this.$('input[name=influence]').val();
-		var participator = this.$('input[name=participator]').val();
+		var participator = (typeof this.$('input[name=participator]').val() === 'number'? this.$('input[name=participator]').val() : 1);
 		var participatorRole = this.$('input[name=participatorRole]').val();
 		var datafile = this.$('input[name=file]').val();
+		var chorustime = this.$('input[name=chorustime]').val();
 		this.model.save({
 			projectid: this.model.get('projectid'),
 			title: title,
+			chorustime: chorustime,
 			productionstatus: productionstatus,
 			notes: notes,
-			//created: created,
+			created: created,
 			influence: influence,
 			participator: participator,
 			participatorRole: participatorRole

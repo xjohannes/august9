@@ -200,19 +200,23 @@ cloudinary = require('cloudinary');
 			var propertyNames,
 				newValues,
 				resultObj= {};
-
+			console.log(req.body);
+			propertyNames = ['title','chorustime', 'hasproductionstatus', 'created', 'notes']; //'participator',
+			newValues = ["'" + req.body.title + "'", "'" + req.body.chorustime + "'", "'" + req.body.productionstatus + "'"
+				,  "'" + req.body.created +"'" , "'" + req.body.notes + "'"]; //"'" + req.body.participator + "'",
 			// Update song table
-			if(req.body.notes !== '') {
+			/*if(req.body.notes !== '') {
 				propertyNames = ['title', 'hasproductionstatus', 'notes'];
 				newValues = ["'" + req.body.title + "'", "'" + req.body.productionstatus + "'"
 											, "'" + req.body.notes + "'"];
 			} else {
 				propertyNames = ['title', 'hasproductionstatus'];
 				newValues = ["'" + req.body.title + "'", "'" + req.body.productionstatus + "'"];
-			}
-			
+			}*/
+
 			Song.updateDB(req.body.id, "song" , propertyNames, newValues, function(err, rows) {
 				if(err) {
+					console.log("ERR: song");
 					console.log(err);
 					res.end(err);
 				} else {
@@ -221,15 +225,18 @@ cloudinary = require('cloudinary');
 					newValues = ["'" + req.body.influence + "'"];
 					Song.updateDB(req.body.id, "songinfluence" , propertyNames, newValues, function(err, rows) {
 						if(err) {
+							console.log("ERR: influence");
 							console.log(err);
 							res.end(err);
 						} else {
-							// Update songparticipation table
+							// Update songparticipation tabl
 						
 							propertyNames = ['userid', 'role'];
 							newValues = ["'" + req.body.participator + "'", "'" + req.body.participatorRole + "'"];
 							Song.updateDB(req.body.id, "songparticipation" , propertyNames, newValues, function(err, rows) {
 								if(err) {
+									console.log("ERR: songparticipation");
+
 									console.log(err);
 									res.end(err);
 								} else {

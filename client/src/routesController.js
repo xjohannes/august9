@@ -85,8 +85,8 @@ module.exports = function () {
             collection: self.songCollection,
             controller: that.player
         });
-        $('#mainContent').html('<h2>' + projectItem.get('projectname') + "</h2>");
-        $('#mainContent').append(self.songCollectionView.render().el);
+        //$('#mainContent').html('<h2>' + projectItem.get('projectname') + "</h2>");
+        $('#songList').append(self.songCollectionView.render().el);
         projectInfo = new ProjectInfoView({model: projectItem});
         $('#info').html(projectInfo.render().el);
     };

@@ -351,6 +351,7 @@ module.exports = Backbone.Model.extend({
 			}
 			this.audioObj.play();
 			this.trigger('playing', this.audioObj);
+			if(this.audioObj.currentTime === 0) {}
 		}
 	},
 	stop: function() {
@@ -479,7 +480,7 @@ module.exports = function () {
             controller: that.player
         });
         //$('#mainContent').html('<h2>' + projectItem.get('projectname') + "</h2>");
-        $('#songList').append(self.songCollectionView.render().el);
+        $('#songList').html(self.songCollectionView.render().el);
         projectInfo = new ProjectInfoView({model: projectItem});
         $('#info').html(projectInfo.render().el);
     };
@@ -917,6 +918,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	play_pause: function(event) {
+		new Audio("http://res.cloudinary.com/hpk8jms0s/raw/upload/v1453625058/gh1tolvvwrnzffltplw7").play();
 		if($("#playerControls i:nth-child(2)").attr('class') !== "glyphicon glyphicon-play") {
 			this.controller.pause();
 		} else {

@@ -203,7 +203,7 @@ cloudinary = require('cloudinary');
 			console.log(req.body);
 			propertyNames = ['title','chorustime', 'hasproductionstatus', 'created', 'notes']; //'participator',
 			newValues = ["'" + req.body.title + "'", "'" + req.body.chorustime + "'", "'" + req.body.productionstatus + "'"
-				,  "'" + req.body.created +"'" , "'" + req.body.notes + "'"]; //"'" + req.body.participator + "'",
+				,  "'" + (req.body.created !== ''? req.body.created : new Date()) +"'" , "'" + req.body.notes + "'"]; //"'" + req.body.participator + "'",
 			// Update song table
 			/*if(req.body.notes !== '') {
 				propertyNames = ['title', 'hasproductionstatus', 'notes'];

@@ -60,6 +60,7 @@ module.exports = Backbone.Model.extend({
 			}
 			this.audioObj.play();
 			this.trigger('playing', this.audioObj);
+			if(this.audioObj.currentTime === 0) {}
 		}
 	},
 	stop: function() {

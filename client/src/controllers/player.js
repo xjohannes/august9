@@ -106,4 +106,7 @@ module.exports = function () {
         self.currentTime = 0;
         self.play(songModel);
     };
+    this.goToChorus = function(event) {
+        self.currentSong.audioObj.currentTime = self.currentSong.attributes.chorustime;
+    }
 };

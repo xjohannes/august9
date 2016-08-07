@@ -220,6 +220,9 @@ module.exports = function () {
         self.currentTime = 0;
         self.play(songModel);
     };
+    this.goToChorus = function(event) {
+        self.currentSong.audioObj.currentTime = self.currentSong.attributes.chorustime;
+    }
 };
 },{"../views/collectionViews/currentSongView":15,"../views/collectionViews/durationsView":16,"../views/collectionViews/playerControlsView":19,"../views/collectionViews/playerView":20,"../views/react/timeBar":34,"Backbone":51,"jQuery":73}],7:[function(require,module,exports){
 var App = require('./app');
@@ -904,7 +907,8 @@ module.exports = Backbone.View.extend({
 	template: require('../../../templates/playerControls.hbs'),
 	events: {
 		'click #playerControls i': 'parseClick',
-		'click #playCircle': 'play_pause'
+		'click #playCircle': 'play_pause',
+		'click #chorusTime': 'goToChorus'
 	},
 	initialize: function(options) {
 		this.options = options || {};
@@ -947,6 +951,9 @@ module.exports = Backbone.View.extend({
 		this.model = newModel;
 		this.model.on('playing', this.disablePlayButton, this);
 		this.model.on('pause', this.enablePlayButton, this);
+	},
+	goToChorus: function(event) {
+		this.controller.goToChorus(event);
 	}
 
 });

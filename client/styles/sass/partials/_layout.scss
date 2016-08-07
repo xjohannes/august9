@@ -329,6 +329,7 @@ button {
 	position: relative;
 	top: -5px;
 	left: -36px;
+	cursor: pointer;
 }
 #playedBar {
 	width: 0%;
@@ -363,7 +364,7 @@ button {
 	position: relative;
 	top: -75px;
 	left: 111%;
-	cursor: crosshair;
+	cursor: pointer;
 }
 
 // Media

@@ -509,9 +509,10 @@ button {
   position: relative;
   top: -5px;
   left: -36px;
+  cursor: pointer;
 }
 
-/* line 333, ../../client/styles/sass/partials/_layout.scss */
+/* line 334, ../../client/styles/sass/partials/_layout.scss */
 #playedBar {
   width: 0%;
   height: 5px;
@@ -519,14 +520,14 @@ button {
   top: -14px;
 }
 
-/* line 339, ../../client/styles/sass/partials/_layout.scss */
+/* line 340, ../../client/styles/sass/partials/_layout.scss */
 #dragBox {
   width: 100%;
   position: relative;
   top: -14px;
 }
 
-/* line 344, ../../client/styles/sass/partials/_layout.scss */
+/* line 345, ../../client/styles/sass/partials/_layout.scss */
 #slider {
   width: 10px;
   height: 10px;
@@ -535,7 +536,7 @@ button {
   top: -22px;
 }
 
-/* line 351, ../../client/styles/sass/partials/_layout.scss */
+/* line 352, ../../client/styles/sass/partials/_layout.scss */
 #duration {
   position: relative;
   top: -34px;
@@ -543,28 +544,28 @@ button {
   width: 30px;
 }
 
-/* line 357, ../../client/styles/sass/partials/_layout.scss */
+/* line 358, ../../client/styles/sass/partials/_layout.scss */
 #queue {
   position: relative;
   top: -54px;
   left: 107%;
 }
 
-/* line 362, ../../client/styles/sass/partials/_layout.scss */
+/* line 363, ../../client/styles/sass/partials/_layout.scss */
 #chorusTime {
   position: relative;
   top: -75px;
   left: 111%;
-  cursor: crosshair;
+  cursor: pointer;
 }
 
 @media (max-width: 822px) {
-  /* line 371, ../../client/styles/sass/partials/_layout.scss */
+  /* line 372, ../../client/styles/sass/partials/_layout.scss */
   .hidden-pad {
     display: none !important;
   }
 
-  /* line 374, ../../client/styles/sass/partials/_layout.scss */
+  /* line 375, ../../client/styles/sass/partials/_layout.scss */
   #info .moveRight-pad {
     top: 61px;
     left: 0%;
@@ -572,7 +573,7 @@ button {
   }
 }
 @media (min-width: 768px) {
-  /* line 381, ../../client/styles/sass/partials/_layout.scss */
+  /* line 382, ../../client/styles/sass/partials/_layout.scss */
   header + ul {
     position: relative;
     top: -140px;
@@ -580,23 +581,23 @@ button {
   }
 }
 @media (max-width: 320px) {
-  /* line 389, ../../client/styles/sass/partials/_layout.scss */
+  /* line 390, ../../client/styles/sass/partials/_layout.scss */
   .homeItem {
     margin: 1em 1em 1em -2.5em;
   }
 
-  /* line 392, ../../client/styles/sass/partials/_layout.scss */
+  /* line 393, ../../client/styles/sass/partials/_layout.scss */
   .navbar-toggle {
     top: -136px;
     right: 10px;
   }
 
-  /* line 396, ../../client/styles/sass/partials/_layout.scss */
+  /* line 397, ../../client/styles/sass/partials/_layout.scss */
   .logoContainer {
     padding: 0px 10px;
   }
 
-  /* line 401, ../../client/styles/sass/partials/_layout.scss */
+  /* line 402, ../../client/styles/sass/partials/_layout.scss */
   .slogan {
     position: relative;
     top: 44px;
@@ -606,33 +607,33 @@ button {
     font-size: 0.8em;
   }
 
-  /* line 405, ../../client/styles/sass/partials/_layout.scss */
+  /* line 406, ../../client/styles/sass/partials/_layout.scss */
   .logo {
     position: relative;
   }
 
-  /* line 409, ../../client/styles/sass/partials/_layout.scss */
+  /* line 410, ../../client/styles/sass/partials/_layout.scss */
   #mainContent {
     left: -10px;
   }
 
-  /* line 412, ../../client/styles/sass/partials/_layout.scss */
+  /* line 413, ../../client/styles/sass/partials/_layout.scss */
   #mainContent ul {
     margin-left: -30px;
   }
 
-  /* line 416, ../../client/styles/sass/partials/_layout.scss */
+  /* line 417, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.admin {
     left: -20px;
   }
 }
 @media (max-width: 474px) {
-  /* line 423, ../../client/styles/sass/partials/_layout.scss */
+  /* line 424, ../../client/styles/sass/partials/_layout.scss */
   .hidden-smartPhone {
     display: none !important;
   }
 
-  /* line 426, ../../client/styles/sass/partials/_layout.scss */
+  /* line 427, ../../client/styles/sass/partials/_layout.scss */
   #mainContent.moveLeft-smartPhone, #description.moveLeft {
     left: 1%;
   }

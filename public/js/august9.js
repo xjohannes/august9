@@ -308,10 +308,10 @@ module.exports = Backbone.Model.extend({
 		chorustime: '60',
 		productionstatus: 'raw',
 		added: 'today',
-		created: '4',
+		created: 'today',
 		likes: 0,
 		listens: 0,
-		notes: '',
+		notes: 'No notes',
 		participator: 1,
 		participatorrole: 'none',
 		serverkey: false,
@@ -918,7 +918,6 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	play_pause: function(event) {
-		new Audio("http://res.cloudinary.com/hpk8jms0s/raw/upload/v1453625058/gh1tolvvwrnzffltplw7").play();
 		if($("#playerControls i:nth-child(2)").attr('class') !== "glyphicon glyphicon-play") {
 			this.controller.pause();
 		} else {
@@ -1306,6 +1305,7 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		var attributes = this.model.toJSON();
 		this.$el.html(this.template(this.model.attributes));
+		console.log(this.model.attributes);
 		return this;
 	},
 	save: function(e) {
@@ -1774,8 +1774,8 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { helper = (depth0 && depth0.productionstatus); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" /><br>\n	</div>\n    <div class=\"form-group col-xs-12 col-sm-5\">\n        <label for=\"created\">Created:</label>\n        <input class=\"form-control\" type=\"text\" name=\"created\" value=\"";
-  if (helper = helpers.created) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.created); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  if (helper = helpers.influence) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.influence); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" /><br>\n    </div>\n	<div class=\"form-group col-xs-12 col-sm-5\">   	\n		<label for=\"notes\">Notes:</label>\n		<input class=\"form-control\" type=\"text\" name=\"notes\" value=\"";
   if (helper = helpers.notes) { stack1 = helper.call(depth0, {hash:{},data:data}); }

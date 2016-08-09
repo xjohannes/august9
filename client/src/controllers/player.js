@@ -25,7 +25,6 @@ module.exports = function () {
     this.playNext = function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log("Player: playNext");
         self.currentTime = null;
         if (self.loop) {
             self.play(self.currentSong);
@@ -35,8 +34,6 @@ module.exports = function () {
         }
     };
     this.play = function (songModel) {
-        console.log("Player. Play songmodel: " );
-        console.log(songModel);
         if (self.currentSong.isPlaying()) {
             self.currentSong.stop();
         }

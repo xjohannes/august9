@@ -25,7 +25,13 @@ module.exports = Backbone.View.extend({
 		this.featuredModel.on('pause', this.enablePlayButton, this);
 	},
  	playFeatured: function(event) {
-		this.controller.play(this.model.attributes.songs[0], this);
+		//this.controller.play(this.model.attributes.songs[0], this);
+		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		if(!tmp) {
+			this.controller.pause();
+		} else {
+			this.controller.play();
+		}
 	},
 	enablePlayButton: function() {
 		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');

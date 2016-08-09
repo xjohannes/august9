@@ -140,7 +140,6 @@ module.exports = function () {
     this.playNext = function (e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log("Player: playNext");
         self.currentTime = null;
         if (self.loop) {
             self.play(self.currentSong);
@@ -150,8 +149,6 @@ module.exports = function () {
         }
     };
     this.play = function (songModel) {
-        console.log("Player. Play songmodel: " );
-        console.log(songModel);
         if (self.currentSong.isPlaying()) {
             self.currentSong.stop();
         }
@@ -645,7 +642,6 @@ module.exports = function () {
         that.projectList.fetch({
             success: function (projects) {
                 that.queueCollection.fetchProjectSongs(projects);
-                that.homeCollectionView.render().el;
             }
         });
         that.queueCollection = new QueueCollection({projectList: that.projectList});
@@ -910,7 +906,13 @@ module.exports = Backbone.View.extend({
 		this.featuredModel.on('pause', this.enablePlayButton, this);
 	},
  	playFeatured: function(event) {
-		this.controller.play(this.model.attributes.songs[0], this);
+		//this.controller.play(this.model.attributes.songs[0], this);
+		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		if(!tmp) {
+			this.controller.pause();
+		} else {
+			this.controller.play();
+		}
 	},
 	enablePlayButton: function() {
 		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
@@ -1146,7 +1148,6 @@ module.exports  = Backbone.View.extend({
 	template: require('../../../templates/songListItem.hbs'),
 	events: {
 		'click .listPlayer': 'play'
-
 	},
 	tagName: 'li',
 	className: '',
@@ -1177,9 +1178,16 @@ module.exports  = Backbone.View.extend({
 		
 		return this;
 	},
-	play: function() {
-		
-		this.controller.playFromList(this.model, this);
+	play: function(event) {
+
+		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		console.log(event);
+		if(!tmp) {
+			this.controller.pause();
+		} else {
+			this.controller.play();
+		}
+		//this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
 		$('.admin').show();
@@ -2174,7 +2182,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a> \n	</div>\n	<div class=\"col-xs-1 \">\n		<label class=\"admin hidden\" >Feat. </label>\n			<input type=\"radio\" class=\"btn btn-xs\" >\n		\n	</div>\n\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
+    + "</a> \n	</div>\n	<div class=\"col-xs-1 \">\n		<label class=\"admin hidden\" >Feature</label>\n			<input type=\"radio\" class=\"btn btn-xs\" >\n		\n	</div>\n\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
   if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

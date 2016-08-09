@@ -240,7 +240,6 @@ module.exports = function () {
         that.projectList.fetch({
             success: function (projects) {
                 that.queueCollection.fetchProjectSongs(projects);
-                that.homeCollectionView.render().el;
             }
         });
         that.queueCollection = new QueueCollection({projectList: that.projectList});

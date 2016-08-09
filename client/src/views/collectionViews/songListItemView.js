@@ -7,7 +7,6 @@ module.exports  = Backbone.View.extend({
 	template: require('../../../templates/songListItem.hbs'),
 	events: {
 		'click .listPlayer': 'play'
-
 	},
 	tagName: 'li',
 	className: '',
@@ -38,9 +37,16 @@ module.exports  = Backbone.View.extend({
 		
 		return this;
 	},
-	play: function() {
-		
-		this.controller.playFromList(this.model, this);
+	play: function(event) {
+
+		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		console.log(event);
+		if(!tmp) {
+			this.controller.pause();
+		} else {
+			this.controller.play();
+		}
+		//this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
 		$('.admin').show();

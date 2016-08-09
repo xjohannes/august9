@@ -39,6 +39,7 @@ module.exports  = Backbone.View.extend({
 		return this;
 	},
 	play: function() {
+		
 		this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {

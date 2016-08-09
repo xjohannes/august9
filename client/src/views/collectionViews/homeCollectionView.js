@@ -7,13 +7,15 @@ module.exports = Backbone.View.extend({
 	tagName: 'ul',
 	
 
-	initialize: function() {
+	initialize: function(options) {
+		this.options 		= options || {};
+		this.controller = options.controller;
 		this.collection.on('add', this.addOne, this);
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
 	},
 	addOne: function(projectItem) {
-		var homeView = new HomeListItemView({model: projectItem});
+		var homeView = new HomeListItemView({model: projectItem, controller: this.controller});
 		this.$el.append(homeView.render().el);
 	},
 	addAll: function() {

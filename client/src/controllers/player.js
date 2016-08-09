@@ -35,8 +35,13 @@ module.exports = function () {
         }
     };
     this.play = function (songModel) {
+        console.log("Player. Play songmodel: " );
+        console.log(songModel);
         if (self.currentSong.isPlaying()) {
             self.currentSong.stop();
+        }
+        if(songModel) {
+            self.queueCollection.addToTopOfQueue(songModel);
         }
         self.currentSong = self.queueCollection.getQueueTop();
         self.playerControls.registerNewModel(self.currentSong);

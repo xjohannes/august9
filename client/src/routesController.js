@@ -73,7 +73,7 @@ module.exports = function () {
 
         var self = this, projectid = parseInt(proid), projectItem = that.projectList.get(projectid),  projectInfo;
         self.projectSongs = [];
-            that.queueCollection.forEach(function(element,index, list) {
+        that.queueCollection.forEach(function(element,index, list) {
             if(element.attributes.projectid === projectid) {
                 self.projectSongs.push(element);
             }
@@ -188,15 +188,9 @@ module.exports = function () {
     };
 
     this.allRoutes = function (e) {
-
-        console.log("all routes: " + window.localStorage.getItem('token'));
-
-
         if (window.localStorage.getItem('token')) {
-            console.log("routesController. loged in: " + window.localStorage.getItem('token'));
             $('.admin').removeClass('hidden');
         } else {
-            console.log("routesController. NOT loged in: " + window.localStorage.getItem('token'));
             $('.admin').addClass('hidden');
         }
         if (e === "login" || e === "createProject" ||
@@ -246,13 +240,15 @@ module.exports = function () {
         that.projectList.fetch({
             success: function (projects) {
                 that.queueCollection.fetchProjectSongs(projects);
+                that.homeCollectionView.render().el;
             }
         });
         that.queueCollection = new QueueCollection({projectList: that.projectList});
-        that.homeCollectionView = new HomeCollectionView({collection: that.projectList});
-        that.projectCollectionView = new ProjectCollectionView({collection: that.projectList});
         that.player = new Player();
         that.player.initialize({collection: that.queueCollection, projectList: that.projectList});
+        that.homeCollectionView = new HomeCollectionView({collection: that.projectList, controller: that.player});
+        that.projectCollectionView = new ProjectCollectionView({collection: that.projectList});
+        
         that.headerView = new HeaderView({model: new UserModel()});
         that.songCollectionView = null;
         that.queueCollectionView = null;

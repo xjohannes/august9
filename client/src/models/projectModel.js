@@ -13,7 +13,8 @@ module.exports = Backbone.Model.extend({
 		about: "About text bla bla",
 		imgthumb: '',
 		imglarge: '',
-		imgalt:  ''
+		imgalt:  '',
+		featuredSong: "unavailable"
 	},
 	initialize: function() {
 		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);

@@ -69,6 +69,7 @@ module.exports = Backbone.Collection.extend({
 					_.each(projectSongs, function(element, index, list) {
 						self.add(element);
 					});
+					element.trigger('loadedFeaturedSong', self.get(projectSongs[0].id));
 				}
 			});
 		});
@@ -149,8 +150,13 @@ module.exports = function () {
         }
     };
     this.play = function (songModel) {
+        console.log("Player. Play songmodel: " );
+        console.log(songModel);
         if (self.currentSong.isPlaying()) {
             self.currentSong.stop();
+        }
+        if(songModel) {
+            self.queueCollection.addToTopOfQueue(songModel);
         }
         self.currentSong = self.queueCollection.getQueueTop();
         self.playerControls.registerNewModel(self.currentSong);
@@ -271,7 +277,8 @@ module.exports = Backbone.Model.extend({
 		about: "About text bla bla",
 		imgthumb: '',
 		imglarge: '',
-		imgalt:  ''
+		imgalt:  '',
+		featuredSong: "unavailable"
 	},
 	initialize: function() {
 		this.listenTo(window.Backbone_dispatcher, 'login:success', this.triggerLoginSuccess);
@@ -318,7 +325,8 @@ module.exports = Backbone.Model.extend({
 		participator: 1,
 		participatorrole: 'none',
 		serverkey: false,
-		influence: 'none'
+		influence: 'none',
+		featured: false
 
 	},
 	initialize: function() {
@@ -470,7 +478,7 @@ module.exports = function () {
 
         var self = this, projectid = parseInt(proid), projectItem = that.projectList.get(projectid),  projectInfo;
         self.projectSongs = [];
-            that.queueCollection.forEach(function(element,index, list) {
+        that.queueCollection.forEach(function(element,index, list) {
             if(element.attributes.projectid === projectid) {
                 self.projectSongs.push(element);
             }
@@ -585,15 +593,9 @@ module.exports = function () {
     };
 
     this.allRoutes = function (e) {
-
-        console.log("all routes: " + window.localStorage.getItem('token'));
-
-
         if (window.localStorage.getItem('token')) {
-            console.log("routesController. loged in: " + window.localStorage.getItem('token'));
             $('.admin').removeClass('hidden');
         } else {
-            console.log("routesController. NOT loged in: " + window.localStorage.getItem('token'));
             $('.admin').addClass('hidden');
         }
         if (e === "login" || e === "createProject" ||
@@ -643,13 +645,15 @@ module.exports = function () {
         that.projectList.fetch({
             success: function (projects) {
                 that.queueCollection.fetchProjectSongs(projects);
+                that.homeCollectionView.render().el;
             }
         });
         that.queueCollection = new QueueCollection({projectList: that.projectList});
-        that.homeCollectionView = new HomeCollectionView({collection: that.projectList});
-        that.projectCollectionView = new ProjectCollectionView({collection: that.projectList});
         that.player = new Player();
         that.player.initialize({collection: that.queueCollection, projectList: that.projectList});
+        that.homeCollectionView = new HomeCollectionView({collection: that.projectList, controller: that.player});
+        that.projectCollectionView = new ProjectCollectionView({collection: that.projectList});
+        
         that.headerView = new HeaderView({model: new UserModel()});
         that.songCollectionView = null;
         that.queueCollectionView = null;
@@ -848,13 +852,15 @@ module.exports = Backbone.View.extend({
 	tagName: 'ul',
 	
 
-	initialize: function() {
+	initialize: function(options) {
+		this.options 		= options || {};
+		this.controller = options.controller;
 		this.collection.on('add', this.addOne, this);
 		this.collection.on('reset', this.addAll, this);
 		this.collection.on('remove', this.remove, this);
 	},
 	addOne: function(projectItem) {
-		var homeView = new HomeListItemView({model: projectItem});
+		var homeView = new HomeListItemView({model: projectItem, controller: this.controller});
 		this.$el.append(homeView.render().el);
 	},
 	addAll: function() {
@@ -882,13 +888,35 @@ var Backbone = require('backbone'),
 		_ = require('underscore');
 
 module.exports = Backbone.View.extend({
-	
+	events: {
+		'click .listPlayer': 'playFeatured'
+
+	},
 	template: require('../../../templates/homeListItem.hbs'),
 	tagName: 'li',
 	className: 'homeItem',
 
-	initialize: function() {
+	initialize: function(options) {
+		this.options 		= options || {};
+		this.controller = options.controller;
 		this.model.on('change', this.render, this);
+		this.model.on('loadedFeaturedSong', this.setupSongModels, this);
+		
+	},
+	setupSongModels: function(songModel) {
+		this.featuredModel = songModel;
+		this.model.set({"featuredSong": this.model.attributes.songs[0].title});
+		this.featuredModel.on('playing', this.disablePlayButton, this);
+		this.featuredModel.on('pause', this.enablePlayButton, this);
+	},
+ 	playFeatured: function(event) {
+		this.controller.play(this.model.attributes.songs[0], this);
+	},
+	enablePlayButton: function() {
+		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
+	},
+	disablePlayButton: function() {
+		this.$el.find('.listPlayer').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
@@ -1150,6 +1178,7 @@ module.exports  = Backbone.View.extend({
 		return this;
 	},
 	play: function() {
+		
 		this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
@@ -1312,7 +1341,6 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		var attributes = this.model.toJSON();
 		this.$el.html(this.template(this.model.attributes));
-		console.log(this.model.attributes);
 		return this;
 	},
 	save: function(e) {
@@ -1541,7 +1569,6 @@ module.exports = function() {
 
     this.initialize = function(options) {
        // $('progressbar')
-        console.log("Initializing timeBar");
         self.playedBar = document.getElementById("playedBar");
         self.playedTime = document.getElementById("playedTime");
         self.slider =  document.getElementById("slider");
@@ -1868,9 +1895,9 @@ function program3(depth0,data) {
   if (helper = helpers.id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">Song title";
-  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+    + "\">";
+  if (helper = helpers.featuredSong) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.featuredSong); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</a> \n	</div>\n</aside>\n\n";
   return buffer;
@@ -2135,7 +2162,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"row\">\n	\n		<div class=\"col-xs-1 listPlayer glyphicon glyphicon-play-circle\">\n	\n\n		\n		</div>\n	\n	<div class=\"title col-xs-8 col-xs-offset-1\"><a href=\"#/project/";
+  buffer += "<div class=\"row\">\n	\n		<div class=\"col-xs-1 listPlayer glyphicon glyphicon-play-circle\">\n	\n\n		\n		</div>\n	\n	<div class=\"title col-xs-7 col-xs-offset-1\"><a href=\"#/project/";
   if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -2147,7 +2174,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</a> \n	</div>\n\n\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
+    + "</a> \n	</div>\n	<div class=\"col-xs-1 \">\n		<label class=\"admin hidden\" >Feat. </label>\n			<input type=\"radio\" class=\"btn btn-xs\" >\n		\n	</div>\n\n	<div class=\"col-xs-1 \">\n		<a class=\"admin hidden\" href=\"#/project/";
   if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

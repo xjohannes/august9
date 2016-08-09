@@ -69,6 +69,7 @@ module.exports = Backbone.Collection.extend({
 					_.each(projectSongs, function(element, index, list) {
 						self.add(element);
 					});
+					element.trigger('loadedFeaturedSong', self.get(projectSongs[0].id));
 				}
 			});
 		});

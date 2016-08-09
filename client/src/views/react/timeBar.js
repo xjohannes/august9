@@ -9,7 +9,6 @@ module.exports = function() {
 
     this.initialize = function(options) {
        // $('progressbar')
-        console.log("Initializing timeBar");
         self.playedBar = document.getElementById("playedBar");
         self.playedTime = document.getElementById("playedTime");
         self.slider =  document.getElementById("slider");

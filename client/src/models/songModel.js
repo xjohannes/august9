@@ -24,7 +24,8 @@ module.exports = Backbone.Model.extend({
 		participator: 1,
 		participatorrole: 'none',
 		serverkey: false,
-		influence: 'none'
+		influence: 'none',
+		featured: false
 
 	},
 	initialize: function() {

@@ -1,0 +1,423 @@
+@mixin position($top:0, $right:0, $bottom:0, $left:0, $pos:relative) {
+	position: $pos;
+	top: $top;
+	right:$right;
+	bottom: $bottom;
+	left: $left;
+}
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+body {
+	padding-top: 130px;
+}
+header {
+	/* background-image: url('/media/images/tre.jpg');
+	background-repeat:no-repeat;
+  background-size:cover; */
+} 
+header + ul {
+		float: right;
+		position: relative;
+		top: -45px;
+		right: -30px;
+	}	
+
+header + ul li {
+		float: left;
+	}	
+button {
+	color: $sidebar_background;
+}
+#august9 {
+	min-height: 100%;
+	position: relative;
+	width: 100%;
+	padding: 0;
+	
+}
+
+#aboutAugust9 {
+	width: 100%;
+	position: relative;
+	display: none;
+
+	span {
+		clear: both;
+	}
+	header {
+		float: left;
+		width: 85%;
+	}
+	
+	.homeItem {
+		width: 100%;
+	}
+}
+#homeList {
+	//@include position(-23px);
+	width: 100%;
+	position: relative;
+	top: 15px;
+	ul {
+		display: table;
+		margin: 0 auto;
+	}
+	ul li{
+		display: inline-block;
+	}
+	
+	aside {
+		clear: both;
+	}
+	
+	
+}
+.homeItem {
+	width: 400px;
+	height: auto;
+	padding: 0;
+	margin-right: 10px;
+	header {
+		float: left;
+	}
+	h4 {
+		padding-left: 15px;
+	}
+	section {
+		width:100%;
+		background-color: $sidebar_background;
+	}
+	.imgCrop {
+		float: left;
+		width: 200px;
+		height: 200px;
+		overflow: hidden;
+	}	
+	img {
+		width: 200px;
+		min-height: 200px;
+	}
+	.projectInfo {
+		width: 200px;
+		height: 161px;
+		overflow-y: scroll;
+		border-bottom: 1px solid $base_background;
+
+		p {
+			padding: 10px;
+		}
+	}
+	label {
+		width: 100%;
+	}
+	aside {
+		height: 40px;
+		background-color: $sidebar_background;
+		.listPlayer {
+			height: 30px;
+			margin: 7px 0;
+		}
+	}
+}
+
+ #projectList {
+ 	overflow-y: scroll;
+	float:left;
+  width:15%;
+  position:absolute;
+  top: 0px;
+  bottom:65px;
+  z-index: 0;
+  
+	img {
+		width: 50px;
+		height: auto;
+
+	}
+	li {
+		padding-top: 10px;
+		border-bottom: 1px solid $base_background;
+	}
+
+	.projectImgCrop {
+		border-radius: 50%;
+		width: 35px;
+		height: 35px; 
+		overflow: hidden;
+		margin-bottom: 5px;
+	}
+	.editButtons {
+ 		margin: 0 -13px;
+ }
+}
+
+#mainContent {
+	width: 77%;
+	float: left;
+	position: relative;
+	left: 20%;
+	margin-bottom: 65px;
+	h2 {
+		position: relative;
+		left: 45px;
+	}
+	.row {
+		border-bottom: 1px solid $sidebar_background;
+		padding: 2px;
+	}
+	.title {
+		position: relative;
+		top: 5px;
+	}
+	.listPlayer {
+		position: relative;
+		left: 10px;
+	}
+	//min-height: 100%;
+	//@include position(-30px);
+	
+}
+
+#info{
+	position: relative;
+	overflow: hidden;
+	
+	border-bottom: 2px solid $sidebar_background;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+	ul {
+		//float: right;
+	}
+	.about {
+		width: 30%;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: 41px;
+    left: 30%;
+	}
+	.details {
+		padding: 10px;
+		margin-left: 20px;
+	}
+	.details li {
+		padding: 3px 0;
+	}
+} /**/
+.projectInfoCrop {
+	float: right;
+}
+#songList {
+	float: left;
+	width: 70%;
+}
+#songInfo {
+	position: relative;
+    float: right;
+    top: -30px;
+    right: 0px;
+    overflow: hidden;
+}
+
+
+#musicPlayer {
+	width: 100%;
+  height: 65px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+#playerControls {
+	position: relative;
+	left: 40px;
+	width: 200px;
+	top: 10px;
+}
+
+#footer {
+	position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: red;
+}
+#userImg {
+	margin: 0 auto;
+}
+#userImg {
+	
+}
+#modal {
+	position: relative;
+	top: 10px;
+}
+.modalWindow {
+	padding: 10px;
+	
+	box-shadow: 1px 1px 10px 3px rgba(150, 150, 150, 0.5);
+	
+	border-radius: 5px;
+	z-index: 10;
+	width: 60%;
+
+}
+
+.userList {
+	position: absolute;
+	right: 1em;
+	top: 1em;
+}
+
+.imgCrop {
+	  width: 100px;
+    height: 100px;
+    
+    overflow: hidden;
+}
+
+// Navigation
+.logoContainer {
+	width: 30em;
+	height: 150px;
+  padding: 0 35px;
+  margin-top: -18px;
+}
+
+.logo  {
+	position: relative;
+}
+.slogan {
+	//@include position(37px, 0, 0, 45px);
+	
+		position: relative;
+		top: 37px;
+		left: 45px;
+	  width: 100%;
+	  
+}
+
+.navbar-default .navbar-collapse {
+	border: none;
+	position: relative;
+}
+.navbar-collapse {
+	padding-right: -10px;
+}
+.navbar-default {
+	height: 130px;
+}
+.navbar-toggle {
+		top: -125px;
+		margin-right: 5px;
+}
+.btn {
+	margin-bottom: 7px;
+}
+#progressBar {
+	position: relative;
+	left: 16em;
+	top: -50px;
+	width: 70%;
+	height: 5px;
+}
+#playedTime {
+	position: relative;
+	top: -5px;
+	left: -36px;
+}
+#playedBar {
+	width: 0%;
+	height: 5px;
+	position:relative;
+	top:-14px;
+}
+#dragBox {
+	width: 100%;
+	position:relative;
+	top:-14px;
+}
+#slider {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	position: relative;
+	top: -22px;
+}
+#duration {
+	position: relative;
+	top: -34px;
+	left: 102%;
+	width:30px;
+}
+#queue {
+	position: relative;
+	top: -54px;
+	left: 107%;
+}
+
+// Media
+@media (max-width: 822px) {
+	.hidden-pad {
+		display: none !important;
+	}
+	#info .moveRight-pad {
+    top: 61px;
+    left: 0% ;
+    width: 50%;
+	}
+}
+@media (min-width: 768px) {
+	header + ul {
+		position: relative;
+		top: -140px;
+		right: 15px;
+	}	
+}
+@media (max-width: 320px) {
+
+  .homeItem {
+    margin: 1em 1em 1em -2.5em;
+  }
+  .navbar-toggle {
+		top: -136px;
+		right: 10px;
+	}
+  .logoContainer {
+		padding: 0px 10px;
+	}	
+
+	
+ .slogan {
+		@include position(44px, 0, 0, 47px);
+		font-size: 0.8em;
+ }
+ .logo  {
+		position: relative;
+ }
+ 
+ #mainContent {
+	left: -10px;
+	}
+	#mainContent ul{
+		margin-left: -30px;
+	}
+	#mainContent {
+		&.admin {
+			left: -20px;
+		}
+	}
+}
+@media (max-width: 474px) {
+	
+	.hidden-smartPhone {
+		display: none !important;
+	}
+	#mainContent.moveLeft-smartPhone, #description.moveLeft {
+		left: 1%;
+	}
+}

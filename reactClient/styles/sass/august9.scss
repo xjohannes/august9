@@ -1,0 +1,28 @@
+// Modules and Variables
+// color = font color
+// background = background color
+$base_background:#252929;
+$base_color:#fff;
+$base_text_color:#999;
+$base_hover:#337ab7;
+$base_active:#337ab7;
+$header_color:#337A17;
+$sidebar_background:#222;
+$solgan_color:#333;
+$contrast_background:#F8F8F8; //Header background
+
+@import "partials/_typography";
+@import "partials/_layout";
+@import "partials/_color";
+
+//@import "partials/reset";
+
+//@import "partials/buttons";
+//@import "partials/figures";
+
+// ...
+
+// Third-party
+//@import "vendor/colorpicker";
+//@import "vendor/jquery.ui.core";
+

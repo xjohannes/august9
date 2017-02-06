@@ -1,0 +1,78 @@
+@font-face {
+	font-family: fanwood;
+	src: url('../fonts/theleagueof/fanwood_webfonts/fanwood-webfont.woff');
+}
+@font-face {
+	font-family: pt;
+	//src: url('../fonts/font_squirrel/PT-Sans/PTS75F.ttf');
+	src: url('../fonts/font_squirrel/PT-Sans/PTC55F.ttf');
+}
+
+
+body {
+	
+	
+}
+label {
+	font-weight: normal;
+}
+
+ol, ul {
+    list-style: none;
+}
+a {
+	font-size: .91em;
+}
+.logo  {
+	font-family: fanwood;
+  letter-spacing: .06em;
+  h1 {
+		font-size: 6em;
+	}
+	&:hover  {
+	color: $base_hover;
+	text-decoration: none;
+	}
+}
+
+.slogan {
+    font-size: .91em;
+}
+
+
+#mainContent .glyphicon {
+	font-size: 26px;
+}
+
+#musicPlayer .glyphicon {
+	font-size: 26px;
+}
+#musicPlayer .glyphicon-play, #musicPlayer .glyphicon-pause {
+	font-size: 32px;	
+	position: relative;
+	top: 4px;
+	padding: 0 8px 0 12px;
+	//float: left;
+}
+
+#playCircle  {
+	position: relative;
+    top: -34px;
+    left: 34px;
+}
+
+
+.circle {
+	border-radius: 50%;
+	width: 45px;
+	height: 45px;
+	border: 2px solid #fff;
+
+}
+
+@media (max-width: 320px) {
+ .logo  {
+	font-family: fanwood;
+  letter-spacing: .06em;
+ }
+}

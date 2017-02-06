@@ -1,0 +1,99 @@
+
+//variables
+
+
+body {
+	color: $base_color;
+}
+p {
+	color: $base_text_color;
+}
+
+header {
+	.slogan {
+		color:$solgan_color;
+	}
+}
+i {
+	color: $base_color;
+}
+i:hover {
+	color: $base_hover;
+}
+i:active {
+	color: $base_active;
+}
+a {
+	color: $base_text_color;
+}
+#august9 {
+	background-color: $base_background;
+}
+#container1 {
+	
+
+}
+
+#projectList {
+	background-color: $sidebar_background;
+}
+#mainContent {
+	//background-color: #000;
+}
+#info .details, #songInfo .details{
+	color: $base_text_color;
+}
+#musicPlayer {
+	background-color: $sidebar_background;
+	border-top: 1px solid $base_background; 
+}
+#playCircle:hover {
+	border: 2px solid $base_hover;
+}
+#playCircle:active {
+	border: 3px solid $base_active;
+}
+
+.listPlayer {
+	color: $base_color;
+}
+.listPlayer:hover {
+	color: $base_hover;
+}
+.listPlayer:active {
+	color: $base_active;
+}
+
+#progressBar {
+	background-color: $base_background;
+}
+#playedBar {
+	background-color: $header_color;
+}
+#slider {
+	background-color: white;
+}
+
+.modalWindow {
+	background-color: $contrast_background;
+	color: $sidebar_background;
+}
+.homeItem {
+	
+}
+.logo  {
+	color:$header_color;
+}
+
+.hidden {
+	visibility: hidden;
+}
+.visible {
+	visibility: visible;
+}
+
+
+
+
+
+

@@ -19,25 +19,30 @@ module.exports = Backbone.View.extend({
 		
 	},
 	setupSongModels: function(songModel) {
+		console.log("homeListItem. setupSongModels");
+		console.log(songModel);
 		this.featuredModel = songModel;
 		this.model.set({"featuredSong": this.model.attributes.songs[0].title});
 		this.featuredModel.on('playing', this.disablePlayButton, this);
 		this.featuredModel.on('pause', this.enablePlayButton, this);
 	},
  	playFeatured: function(event) {
-		//this.controller.play(this.model.attributes.songs[0], this);
-		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
-		if(!tmp) {
+ 		console.log("homeListItem");
+ 		console.log(this.featuredModel.attributes.title);
+		if(this.featuredModel.isPlaying()) {
 			this.controller.pause();
 		} else {
-			this.controller.play();
+			console.log("paused. Start playing");
+			this.controller.playFromList(this.model.attributes.songs[0], this);
 		}
 	},
 	enablePlayButton: function() {
+		console.log("enablePlayButton");
 		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
 	},
 	disablePlayButton: function() {
-		this.$el.find('.listPlayer').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
+		console.log("disablePlayButton");
+		this.$el.find('.glyphicon-play-circle').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
 	},
 	render: function() {
 		var attributes = this.model.toJSON();

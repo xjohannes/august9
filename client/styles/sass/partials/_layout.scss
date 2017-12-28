@@ -73,6 +73,8 @@ button {
 	aside {
 		clear: both;
 	}
+
+
 	
 	
 }
@@ -90,6 +92,9 @@ button {
 	section {
 		width:100%;
 		background-color: $sidebar_background;
+	}
+	aside label {
+		left: 2.0em;
 	}
 	.imgCrop {
 		float: left;

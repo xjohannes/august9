@@ -39,14 +39,14 @@ module.exports  = Backbone.View.extend({
 	},
 	play: function(event) {
 
-		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		/*var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
 		console.log(event);
 		if(!tmp) {
 			this.controller.pause();
 		} else {
 			this.controller.play();
-		}
-		//this.controller.playFromList(this.model, this);
+		}*/
+		this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
 		$('.admin').show();

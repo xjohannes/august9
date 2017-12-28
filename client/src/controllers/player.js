@@ -23,6 +23,7 @@ module.exports = function () {
         self.timeBar.initialize();
     };
     this.playNext = function (e) {
+        console.log("player. playNext");
         e.preventDefault();
         e.stopPropagation();
         self.currentTime = null;
@@ -35,11 +36,13 @@ module.exports = function () {
     };
     this.play = function (songModel) {
         if (self.currentSong.isPlaying()) {
+            console.log("Player: currentSong isPlaying");
             self.currentSong.stop();
+        } else {
+            console.log("Player: currentSong is *** NOT *** Playing");
+
         }
-        if(songModel) {
-            self.queueCollection.addToTopOfQueue(songModel);
-        }
+        
         self.currentSong = self.queueCollection.getQueueTop();
         self.playerControls.registerNewModel(self.currentSong);
         self.currentSong.play(self.currentTime);
@@ -49,61 +52,25 @@ module.exports = function () {
 
     };
     this.playFromList = function (songModel) {
+        console.log("Player. playFromList");
         self.queueCollection.addToTopOfQueue(songModel);
-        self.play(songModel);
+        self.play();
     };
-    /*this.play = function (songModel) {
-     if (songModel) {
-     self.currentSong = songModel;
-     } else {
-     self.currentSong = self.queueCollection.getQueueTop();
-     }
-     if (self.currentSong.isPlaying()) {
-     self.currentSong.stop();
-     }
-     else {
-     self.playerControls.registerNewModel(self.currentSong);
-     self.currentSong.play(self.currentTime);
-     self.timeBar.play(self.currentSong);
-     self.currentSong.audioObj.addEventListener('ended', self.playNext);
-     self.currentSong.audioObj.addEventListener('pause', self.pause);
-     }
-     };*/
     this.pause = function (event) {
         /*console.log("Player. Pause");
         console.log(event);*/
         self.currentSong.stop();
         self.currentTime = self.currentSong.audioObj.currentTime;
     };
-    /*this.initializePlay = function() {
-     self.playerControls.registerNewModel(self.currentSong);
-     self.currentSong.on('ended', self.playNext);
-     self.currentSong.play();
-     self.timeBar.play(self.currentSong);
-     },*/
     this.stop = function (songModel) {
         songModel.stop();
     };
-
-    /*this.playFromList = function (songModel) {
-     if (songModel.isPlaying()) {
-     self.stop(songModel);
-     } else if (self.currentSong.isPlaying()) {
-     self.currentSong.stop();
-     self.currentSong = songModel;
-     self.playerControls.registerNewModel(songModel);
-     songModel.play();
-     } else {
-     self.currentSong = songModel;
-     self.playerControls.registerNewModel(songModel);
-     self.currentSong.play();
-     }
-     };*/
     this.previousTrack = function () {
         var songModel = self.queueCollection.previousTrack();
         self.play(songModel);
     };
     this.nextTrack = function () {
+        console.log(nextTrack);
         var songModel = self.queueCollection.nextTrack();
         self.currentTime = 0;
         self.play(songModel);

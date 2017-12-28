@@ -138,6 +138,7 @@ module.exports = function () {
         self.timeBar.initialize();
     };
     this.playNext = function (e) {
+        console.log("player. playNext");
         e.preventDefault();
         e.stopPropagation();
         self.currentTime = null;
@@ -150,11 +151,13 @@ module.exports = function () {
     };
     this.play = function (songModel) {
         if (self.currentSong.isPlaying()) {
+            console.log("Player: currentSong isPlaying");
             self.currentSong.stop();
+        } else {
+            console.log("Player: currentSong is *** NOT *** Playing");
+
         }
-        if(songModel) {
-            self.queueCollection.addToTopOfQueue(songModel);
-        }
+        
         self.currentSong = self.queueCollection.getQueueTop();
         self.playerControls.registerNewModel(self.currentSong);
         self.currentSong.play(self.currentTime);
@@ -164,61 +167,25 @@ module.exports = function () {
 
     };
     this.playFromList = function (songModel) {
+        console.log("Player. playFromList");
         self.queueCollection.addToTopOfQueue(songModel);
-        self.play(songModel);
+        self.play();
     };
-    /*this.play = function (songModel) {
-     if (songModel) {
-     self.currentSong = songModel;
-     } else {
-     self.currentSong = self.queueCollection.getQueueTop();
-     }
-     if (self.currentSong.isPlaying()) {
-     self.currentSong.stop();
-     }
-     else {
-     self.playerControls.registerNewModel(self.currentSong);
-     self.currentSong.play(self.currentTime);
-     self.timeBar.play(self.currentSong);
-     self.currentSong.audioObj.addEventListener('ended', self.playNext);
-     self.currentSong.audioObj.addEventListener('pause', self.pause);
-     }
-     };*/
     this.pause = function (event) {
         /*console.log("Player. Pause");
         console.log(event);*/
         self.currentSong.stop();
         self.currentTime = self.currentSong.audioObj.currentTime;
     };
-    /*this.initializePlay = function() {
-     self.playerControls.registerNewModel(self.currentSong);
-     self.currentSong.on('ended', self.playNext);
-     self.currentSong.play();
-     self.timeBar.play(self.currentSong);
-     },*/
     this.stop = function (songModel) {
         songModel.stop();
     };
-
-    /*this.playFromList = function (songModel) {
-     if (songModel.isPlaying()) {
-     self.stop(songModel);
-     } else if (self.currentSong.isPlaying()) {
-     self.currentSong.stop();
-     self.currentSong = songModel;
-     self.playerControls.registerNewModel(songModel);
-     songModel.play();
-     } else {
-     self.currentSong = songModel;
-     self.playerControls.registerNewModel(songModel);
-     self.currentSong.play();
-     }
-     };*/
     this.previousTrack = function () {
         var songModel = self.queueCollection.previousTrack();
         self.play(songModel);
     };
     this.nextTrack = function () {
+        console.log(nextTrack);
         var songModel = self.queueCollection.nextTrack();
         self.currentTime = 0;
         self.play(songModel);
@@ -323,7 +290,8 @@ module.exports = Backbone.Model.extend({
 		participatorrole: 'none',
 		serverkey: false,
 		influence: 'none',
-		featured: false
+		featured: false,
+		isPlaying: false
 
 	},
 	initialize: function() {
@@ -344,7 +312,9 @@ module.exports = Backbone.Model.extend({
 					url = self.attributes.serverkey;
 					self.audioObj = new Audio(url);
 					self.audioObj.play();
+					console.log("songModel play onSuccess");
 					self.trigger('playing', self.audioObj);
+					self.isPlaying = true;
 				},
 				error: function(err) {
 					console.log('Could not load song');
@@ -358,13 +328,16 @@ module.exports = Backbone.Model.extend({
 				self.audioObj.currentTime = currentTime;
 			}
 			this.audioObj.play();
+			self.isPlaying = true;
 			this.trigger('playing', this.audioObj);
-			if(this.audioObj.currentTime === 0) {}
+			//if(this.audioObj.currentTime === 0) {}
 		}
 	},
 	stop: function() {
 		if(this.audioObj) {
 			this.audioObj.pause();
+			console.log("Songmodel pause");
+			self.isPlaying = false;
 			this.trigger('pause', this.audioObj);
 		}
 	},
@@ -900,25 +873,30 @@ module.exports = Backbone.View.extend({
 		
 	},
 	setupSongModels: function(songModel) {
+		console.log("homeListItem. setupSongModels");
+		console.log(songModel);
 		this.featuredModel = songModel;
 		this.model.set({"featuredSong": this.model.attributes.songs[0].title});
 		this.featuredModel.on('playing', this.disablePlayButton, this);
 		this.featuredModel.on('pause', this.enablePlayButton, this);
 	},
  	playFeatured: function(event) {
-		//this.controller.play(this.model.attributes.songs[0], this);
-		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
-		if(!tmp) {
+ 		console.log("homeListItem");
+ 		console.log(this.featuredModel.attributes.title);
+		if(this.featuredModel.isPlaying()) {
 			this.controller.pause();
 		} else {
-			this.controller.play();
+			console.log("paused. Start playing");
+			this.controller.playFromList(this.model.attributes.songs[0], this);
 		}
 	},
 	enablePlayButton: function() {
+		console.log("enablePlayButton");
 		this.$el.find('.glyphicon-pause').removeClass('glyphicon-pause').addClass('glyphicon-play-circle');
 	},
 	disablePlayButton: function() {
-		this.$el.find('.listPlayer').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
+		console.log("disablePlayButton");
+		this.$el.find('.glyphicon-play-circle').removeClass('glyphicon-play-circle').addClass('glyphicon-pause');
 	},
 	render: function() {
 		var attributes = this.model.toJSON();
@@ -1180,14 +1158,14 @@ module.exports  = Backbone.View.extend({
 	},
 	play: function(event) {
 
-		var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
+		/*var tmp = $(event.currentTarget).hasClass("glyphicon-play-circle");
 		console.log(event);
 		if(!tmp) {
 			this.controller.pause();
 		} else {
 			this.controller.play();
-		}
-		//this.controller.playFromList(this.model, this);
+		}*/
+		this.controller.playFromList(this.model, this);
 	},
 	showAdminButtons: function() {
 		$('.admin').show();
@@ -1895,7 +1873,7 @@ function program3(depth0,data) {
   if (helper = helpers.about) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.about); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</p>\n	</div>\n</section>\n<aside class=\"featuredSong\">\n	<label id=\"\" class=\"\">Featured song</label>\n	<div class=\"col-xs-1 listPlayer glyphicon glyphicon-play-circle\">\n	</div>\n	<div class=\"title col-xs-8 col-xs-offset-1\"><a href=\"#/project/";
+    + "</p>\n	</div>\n</section>\n<aside class=\"featuredSong\">\n	<label class=\"col-m-12\">Featured song</label>\n	<span class=\"col-xs-1 listPlayer glyphicon glyphicon-play-circle\">\n	</span>\n	<div class=\"title col-xs-8 col-xs-offset-1\"><a href=\"#/project/";
   if (helper = helpers.projectid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.projectid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

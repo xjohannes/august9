@@ -25,7 +25,8 @@ module.exports = Backbone.Model.extend({
 		participatorrole: 'none',
 		serverkey: false,
 		influence: 'none',
-		featured: false
+		featured: false,
+		isPlaying: false
 
 	},
 	initialize: function() {
@@ -46,7 +47,9 @@ module.exports = Backbone.Model.extend({
 					url = self.attributes.serverkey;
 					self.audioObj = new Audio(url);
 					self.audioObj.play();
+					console.log("songModel play onSuccess");
 					self.trigger('playing', self.audioObj);
+					self.isPlaying = true;
 				},
 				error: function(err) {
 					console.log('Could not load song');
@@ -60,13 +63,16 @@ module.exports = Backbone.Model.extend({
 				self.audioObj.currentTime = currentTime;
 			}
 			this.audioObj.play();
+			self.isPlaying = true;
 			this.trigger('playing', this.audioObj);
-			if(this.audioObj.currentTime === 0) {}
+			//if(this.audioObj.currentTime === 0) {}
 		}
 	},
 	stop: function() {
 		if(this.audioObj) {
 			this.audioObj.pause();
+			console.log("Songmodel pause");
+			self.isPlaying = false;
 			this.trigger('pause', this.audioObj);
 		}
 	},

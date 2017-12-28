@@ -1,0 +1,56 @@
+jqjsp({ok: "ASSEMBLY_EXECUTING", http_code: 200, message: "The assembly is currently being executed.",…});
+account_id: "a61cd7c04f0f11e5bf5c996568a98dd0"
+assembly_id: "d52c7270b2db11e58eb09b255bc02a25"
+assembly_ssl_url: "https://hadasah.transloadit.com/assemblies/d52c7270b2db11e58eb09b255bc02a25"
+assembly_url: "http://api2.hadasah.transloadit.com/assemblies/d52c7270b2db11e58eb09b255bc02a25"
+bytes_expected: 2591920
+bytes_received: 2591920
+bytes_usage: 0
+client_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+client_ip: "193.157.180.6"
+client_referer: "https://august9.herokuapp.com/"
+executing_jobs: ["thumbnail", "smartPhone", "fullsize"]
+execution_duration: 0
+execution_start: "2016/01/04 12:08:17 GMT"
+fields: {}
+has_dupe_jobs: false
+http_code: 200
+instance: "hadasah.transloadit.com"
+is_infinite: false
+last_job_completed: null
+message: "The assembly is currently being executed."
+notify_duration: null
+notify_response_code: null
+notify_start: null
+notify_status: null
+notify_url: null
+ok: "ASSEMBLY_EXECUTING"
+params: "{"auth":{"key":"****"},"template_id":"b68e53b051a611e59211375ae6c9147c"}"
+parent_assembly_status: null
+parent_id: null
+results: {}
+running_jobs: []
+start_date: "2016/01/04 12:08:15 GMT"
+started_jobs: ["thumbnail:::original", "smartPhone:::original", "fullsize:::original"]
+template: "{"steps":{"thumbnail":{"use":":original","robot":"/image/resize","width":"75","height":"75"},"smartPhone":{"use":":original","robot":"/image/resize","width":"200","height":"200"},"fullsize":{"use":":original","robot":"/image/resize","width":"400","height":"400"}}}"
+template_id: "b68e53b051a611e59211375ae6c9147c"
+upload_duration: 2.203
+uploads: [{id: "d669ad60b2db11e5be85ed45220c9a08", name: "IMG_9170.JPG", basename: "IMG_9170", ext: "jpg",…}]
+0: {id: "d669ad60b2db11e5be85ed45220c9a08", name: "IMG_9170.JPG", basename: "IMG_9170", ext: "jpg",…}
+basename: "IMG_9170"
+ext: "jpg"
+field: "file"
+from_batch_import: false
+id: "d669ad60b2db11e5be85ed45220c9a08"
+md5hash: "06c446a3d456f238500cc9236acf09dc"
+meta: {width: 3264, height: 2448, date_recorded: "2015/02/15 09:22:31",…}
+mime: "image/jpeg"
+name: "IMG_9170.JPG"
+original_basename: "IMG_9170"
+original_id: "d669ad60b2db11e5be85ed45220c9a08"
+original_md5hash: "06c446a3d456f238500cc9236acf09dc"
+original_path: "/"
+size: 2591541
+ssl_url: "https://s3-eu-west-1.amazonaws.com/tmp-eu-west-1.transloadit.com/d669ad60b2db11e5be85ed45220c9a08.jpg"
+type: "image"
+url: "http://tmp-eu-west-1.transloadit.com.s3-eu-west-1.amazonaws.com/d669ad60b2db11e5be85ed45220c9a08.jpg"
